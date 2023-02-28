@@ -1,0 +1,15 @@
+{
+  "name": "source-diffusion",
+  "version": "1.0.0",
+  "description": "This is an image generation GUI that uses diffusers",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm install --save-dev electron",
+    "start": "electron ."
+  },
+  "author": "Limitex",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^23.1.1"
+  }
+}
