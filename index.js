@@ -26,6 +26,9 @@ app.once('ready', createWindow);
 app.once('window-all-closed', app.quit);
 
 const ServerProcess = Process.exec('python -m uvicorn --host ' + HOST + ' --port=' + PORT + ' --workers 1 ' + WORK);
+ServerProcess.stdout.on('data', (data) => console.log(data.trim()));
+ServerProcess.stderr.on('data', (data) => console.error(data.trim()));
+ServerProcess.on('close', (code) => console.log(`Server process exited with code ${code}`));
 
 pids = []
 psTree(ServerProcess.pid, (err, children) => children.forEach(element => pids.push(element.PID)))
