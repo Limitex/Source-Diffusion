@@ -22,6 +22,25 @@ const generateImage = () => {
   )
 
   postRequest('/', g_data.convertToLiteral(), (data) => {
-    console.log(data)
+    const image_bod = document.getElementById('generate-images');
+    data.output.forEach(encoded_data => {
+      const decoded_data = window.atob(encoded_data);
+      const uint8_array = new Uint8Array([...decoded_data].map(c => c.charCodeAt(0)));
+      const blob = new Blob([uint8_array], { type: 'image/png' });
+      const url = URL.createObjectURL(blob);
+
+      const container = document.createElement('div')
+      image_bod.appendChild(container)
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.className = 'img-thumbnail';
+      container.appendChild(img)
+
+      const a = document.createElement('a')
+      a.href = url;
+      a.textContent = 'Download'
+      container.appendChild(a)
+    });
   })
 }

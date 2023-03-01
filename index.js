@@ -4,7 +4,7 @@ const psTree = require('ps-tree')
 
 const PORT = 8000
 const HOST = 'localhost'
-const WORK = 'py-src.main:app'
+const WORK = 'py_src.main:app'
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
