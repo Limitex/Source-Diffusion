@@ -16,7 +16,7 @@ const createWindow = () => {
       contextIsolation: true,
     }
   });
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('window_main/index.html');
 
   // DEBUG
   mainWindow.webContents.openDevTools(/*{ mode: 'detach' }*/);
