@@ -15,6 +15,7 @@ ipcMain.handle('exitAll', () => {
   app.once('window-all-closed', app.quit);
 })
 
+std_data.push('Starting background app...')
 server.StartServer(
   (std) => {
     std_data.push(std.trim())
