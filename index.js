@@ -2,27 +2,11 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const Process = require('child_process')
 const psTree = require('ps-tree')
 const path = require('path')
+const iwm = require('./index_w_main.js');
 
 const PORT = 8000
 const HOST = 'localhost'
 const WORK = 'py_src.main:app'
-
-const mainWindow = () => {
-  const mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    title: 'Source-Diffusion',
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-    }
-  });
-  mainWindow.loadFile('window_main/index.html');
-
-  // DEBUG
-  mainWindow.webContents.openDevTools(/*{ mode: 'detach' }*/);
-};
-
 
 std_data = []
 std_status = -1
@@ -60,7 +44,7 @@ ServerProcess.stderr.on('data', (data) => {
   if (data.includes('Uvicorn running')) {
     std_status = 0;
     loadWindowObj.close();
-    mainWindow();
+    iwm.mainWindow();
     app.once('window-all-closed', app.quit);
   }
 });
