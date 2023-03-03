@@ -7,7 +7,8 @@
     "setup": "npm install --save-dev electron",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "debug": "electron ."
   },
   "author": "Limitex",
   "license": "MIT",
