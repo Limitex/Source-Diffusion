@@ -6,7 +6,7 @@ const id = setInterval(async function () {
     console.log(result.length + result[result.length - 1]);
 
     const element = document.getElementById("log-text");
-    element.textContent = result;
+    element.innerHTML = result.join('<br>')
 
     lastResult = result.length;
   }
