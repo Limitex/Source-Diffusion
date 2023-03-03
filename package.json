@@ -5,16 +5,23 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install --save-dev electron",
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "Limitex",
   "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-squirrel": "^6.0.5",
+    "@electron-forge/maker-zip": "^6.0.5",
     "electron": "^23.1.1"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.6.3",
     "ps-tree": "^1.2.0"
   }
