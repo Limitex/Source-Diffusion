@@ -5,8 +5,10 @@ const id = setInterval(async function () {
   if (result.length !== lastResult) {
     console.log(result.length + result[result.length - 1]);
 
-    const element = document.getElementById("log-text");
-    element.innerHTML = result.join('<br>')
+    const logElementContainer = document.createElement('div');
+    logElementContainer.innerHTML = result.join('<br>')
+    const logElement = document.getElementById("log-text");
+    logElement.appendChild(logElementContainer)
 
     lastResult = result.length;
   }
