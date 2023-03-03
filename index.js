@@ -16,19 +16,7 @@ ipcMain.handle("exitAll", () => {
   app.once("window-all-closed", app.quit);
 });
 
-std_data.push("Checking required directories...");
-if (!startup.checkRequiredFiles()) {
-  std_data.push("This is the first boot.");
-  std_data.push("Python installing... Please wait.");
-  if (!startup.installPython()) {
-    std_data.push("Installation failed.");
-    std_status = 1;
-  } else {
-    std_data.push("Installation is complete.");
-  }
-}
-
-if (std_status != 1) {
+const StartBackground = () => {
   std_data.push("Starting background app...");
   server.StartServer(
     (std) => {
@@ -52,4 +40,47 @@ if (std_status != 1) {
       console.log(txt);
     }
   );
-}
+};
+
+std_data.push("Checking required directories...");
+startup.checkPython((result) => {
+  // Python Check
+  if (result) {
+    // Python is installed
+    startup.checkPythonModules((result) => {
+      // Module Check
+      if (result) {
+        // Module is installed
+        StartBackground();
+      } else {
+        // Module is not installed
+        std_data.push("Installing module...");
+        startup.installModules((result) => {
+          if (result) {
+            std_data.push("Installation complete.");
+            StartBackground();
+          } else {
+            std_data.push("Installation failed.");
+            std_status = 1;
+          }
+        });
+      }
+    });
+  } else {
+    // Python is not installed
+    std_data.push("This is the first boot.");
+    std_data.push("Python installing... Please wait.");
+    startup.installPython((result) => {
+      // Python install
+      if (result) {
+        // install is complete
+        std_data.push("Installation is complete.");
+        StartBackground();
+      } else {
+        // install is failed
+        std_data.push("Installation failed.");
+        std_status = 1;
+      }
+    });
+  }
+});
