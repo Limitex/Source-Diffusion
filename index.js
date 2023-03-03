@@ -3,6 +3,7 @@ const Process = require('child_process')
 const psTree = require('ps-tree')
 const path = require('path')
 const iwm = require('./index_w_main.js');
+const server = require('./index_server.js');
 
 const PORT = 8000
 const HOST = 'localhost'
@@ -33,29 +34,25 @@ const loadWindow = () => {
 }
 app.once('ready', loadWindow);
 
-const ServerProcess = Process.exec('python -m uvicorn --host ' + HOST + ' --port=' + PORT + ' --workers 1 ' + WORK);
-ServerProcess.stdout.on('data', (data) => {
-  std_data.push(data.trim())
-  console.log(data.trim())
-});
-ServerProcess.stderr.on('data', (data) => {
-  std_data.push(data.trim())
-  console.error(data.trim())
-  if (data.includes('Uvicorn running')) {
-    std_status = 0;
-    loadWindowObj.close();
-    iwm.mainWindow();
-    app.once('window-all-closed', app.quit);
+server.StartServer(
+  (std) => {
+    std_data.push(std.trim())
+    console.log(std.trim())
+  },
+  (err) => {
+    std_data.push(err.trim())
+    console.error(err.trim())
+    if (err.includes('Uvicorn running')) {
+      std_status = 0;
+      loadWindowObj.close();
+      iwm.mainWindow();
+      app.once('window-all-closed', app.quit);
+    }
+  },
+  (exi) => {
+    std_status = 1;
+    txt = `Server process exited with code ${exi}`
+    std_data.push(txt)
+    console.log(txt)
   }
-});
-ServerProcess.on('close', (code) => {
-  std_status = 1;
-  txt = `Server process exited with code ${code}`
-  std_data.push(txt)
-  console.log(txt)
-});
-
-pids = []
-psTree(ServerProcess.pid, (err, children) => children.forEach(element => pids.push(element.PID)))
-
-app.on('before-quit', () => pids.forEach(element => process.kill(element, 'SIGINT')))
+)
