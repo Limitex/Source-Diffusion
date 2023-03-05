@@ -1,10 +1,13 @@
 import io
 import torch
 import base64
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from py_src.apiModel import GenerateContainer, GenerationOutput
 from py_src.diffuserRapper import generate, load
+
+SERVER_READY_SHARE_STRING='Server is ready'
 
 app = FastAPI()
 
@@ -16,7 +19,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.INFO)
+fh = logging.StreamHandler()
+fh_formatter = logging.Formatter("%(asctime)s %(levelname)s %(filename)s(%(process)d) - %(message)s")
+fh.setFormatter(fh_formatter)
+logger.addHandler(fh)
+
 load('models/AbyssOrangeMix2_nsfw', 'models/AbyssOrangeMix2_nsfw.vae', torch.float16)
+
+@app.on_event("startup")
+def startup_event():
+    logger.info(SERVER_READY_SHARE_STRING)
 
 @app.post("/")
 async def root(gc: GenerateContainer):

@@ -4,6 +4,8 @@ const iwl = require("./index_w_load.js");
 const server = require("./index_server.js");
 const startup = require("./index_startup.js");
 
+const SERVER_READY_SHARE_STRING='Server is ready'
+
 let loadWindowObj = null;
 app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
@@ -26,7 +28,7 @@ const StartBackground = () => {
     (err) => {
       std_data.push(err.trim());
       console.error(err.trim());
-      if (err.includes("Uvicorn running")) {
+      if (err.includes(SERVER_READY_SHARE_STRING)) {
         std_status = 0;
         loadWindowObj.close();
         iwm.mainWindow();
