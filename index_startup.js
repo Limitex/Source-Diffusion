@@ -61,7 +61,7 @@ const installPython = (callback) => {
 };
 
 const installModules = (callback) => {
-  Process.exec(PipPath + " install -r py_src/requirements.txt", (error, stdout, stderr) => {
+  const pipprocess = Process.exec(config.PipPath + " install -r py_src/requirements.txt", (error, stdout, stderr) => {
     console.log(error ?? stdout ?? stderr)
     callback(true);
   });
