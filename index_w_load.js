@@ -12,7 +12,7 @@ const loadWindow = () => {
       preload: path.join(__dirname, "preload_load.js"),
     },
   });
-  loadWindowObj.setAlwaysOnTop(true);
+  // loadWindowObj.setAlwaysOnTop(true);
   loadWindowObj.loadFile("window_load/index.html");
   return loadWindowObj
 };
