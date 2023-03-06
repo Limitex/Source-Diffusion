@@ -4,12 +4,7 @@ const id = setInterval(async function () {
   const status = await window.background.stdstatus();
   if (result.length !== lastResult) {
     console.log(result.length + result[result.length - 1]);
-
-    const logElementContainer = document.createElement('div');
-    logElementContainer.innerHTML = result.join('<br>')
-    const logElement = document.getElementById("log-text");
-    logElement.appendChild(logElementContainer)
-
+    document.getElementById("log-text").innerHTML = result.join('<br>');
     lastResult = result.length;
   }
   if (status == 0 || status == 1) {
