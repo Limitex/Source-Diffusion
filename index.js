@@ -45,44 +45,35 @@ const StartBackground = () => {
 };
 
 std_data.push("Checking required directories...");
-startup.checkPython((result) => {
-  // Python Check
-  if (result) {
-    // Python is installed
-    startup.checkPythonModules((result) => {
-      // Module Check
-      if (result) {
-        // Module is installed
+startup.checkPython((pythonExist) => {
+  if (pythonExist) {
+    startup.checkPythonModules((moduleExist) => {
+      if (moduleExist) {
         StartBackground();
-      } else {
-        // Module is not installed
+      } else { // moduleExist
         std_data.push("Installing module...");
-        startup.installModules((result) => {
-          if (result) {
+        startup.installModules((installSuccess) => {
+          if (installSuccess) {
             std_data.push("Installation complete.");
             StartBackground();
-          } else {
+          } else { // installSuccess
             std_data.push("Installation failed.");
             std_status = 1;
-          }
+          } // installSuccess
         });
-      }
+      } // moduleExist
     });
-  } else {
-    // Python is not installed
+  } else { // pythonExist
     std_data.push("This is the first boot.");
     std_data.push("Python installing... Please wait.");
-    startup.installPython((result) => {
-      // Python install
-      if (result) {
-        // install is complete
+    startup.installPython((installSuccess) => {
+      if (installSuccess) {
         std_data.push("Installation is complete.");
         StartBackground();
-      } else {
-        // install is failed
+      } else { // installSuccess
         std_data.push("Installation failed.");
         std_status = 1;
-      }
+      } // installSuccess
     });
-  }
+  } // pythonExist
 });
