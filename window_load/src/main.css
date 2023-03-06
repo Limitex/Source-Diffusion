@@ -37,8 +37,8 @@ body {
   min-height: 100px;
 }
 
-#log-text {
-  margin-bottom: 10px;
+#log-text-container {
+  overflow-y: auto
 }
 
 ::-webkit-scrollbar {

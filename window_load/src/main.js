@@ -4,8 +4,11 @@ const id = setInterval(async function () {
   const status = await window.background.stdstatus();
   if (result.length !== lastResult) {
     console.log(result.length + result[result.length - 1]);
-    document.getElementById("log-text").innerHTML = result.join('<br>');
+    const logTextConteiner = document.getElementById("log-text-container")
+    const logText = document.getElementById("log-text")
+    logText.innerHTML = result.join('<br>');
     lastResult = result.length;
+    logTextConteiner.scrollTop = logText.scrollHeight;
   }
   if (status == 0 || status == 1) {
     const exitButtonContainer = document.createElement("div");
