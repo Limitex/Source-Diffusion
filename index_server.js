@@ -1,19 +1,16 @@
 const { app } = require("electron");
 const Process = require("child_process");
 const psTree = require("ps-tree");
-
-const PORT = 8000;
-const HOST = "localhost";
-const WORK = "py_src.main:app";
+const config = require("./config.js")
 
 const StartServer = (stdout, stderr, exited) => {
   const ServerProcess = Process.exec(
     "python -m uvicorn --host " +
-      HOST +
+      config.HOST +
       " --port=" +
-      PORT +
+      config.PORT +
       " --workers 1 " +
-      WORK
+      config.WORK
   );
   ServerProcess.stdout.on("data", stdout);
   ServerProcess.stderr.on("data", stderr);
