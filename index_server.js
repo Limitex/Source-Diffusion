@@ -1,11 +1,12 @@
 const { app } = require("electron");
 const Process = require("child_process");
 const psTree = require("ps-tree");
-const config = require("./config.js")
+const config = require("./config.js");
 
 const StartServer = (stdout, stderr, exited) => {
   const ServerProcess = Process.exec(
-    "python -m uvicorn --host " +
+    config.PythonPath +
+      " -m uvicorn --host " +
       config.HOST +
       " --port=" +
       config.PORT +
@@ -27,5 +28,5 @@ const StartServer = (stdout, stderr, exited) => {
 };
 
 module.exports = {
-  StartServer: StartServer
+  StartServer: StartServer,
 };
