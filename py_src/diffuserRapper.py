@@ -22,7 +22,7 @@ def load(model_path, vae_path, torch_dtype):
     time_load = time.time() - load_time
     print(f"Models loaded in {time_load:.2f}s")
 
-def generate(gc: GenerateContainer):
+def diffusionGenerate(gc: GenerateContainer):
     global pipe
     return pipe(
         prompt=gc.positive,

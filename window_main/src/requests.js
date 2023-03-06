@@ -29,6 +29,20 @@ const GenerateContainer = class {
   }
 }
 
+const ModelChangeContainer = class {
+  constructor(model_name, vae_model_name) {
+    this.model_name = model_name
+    this.vae_model_name = vae_model_name
+  }
+
+  convertToLiteral() {
+    return {
+      model_name: this.model_name,
+      vae_model_name: this.vae_model_name
+    }
+  }
+}
+
 const postRequest = (path, body, result) => {
   fetch('http://' + HOST + ':' + PORT + path, {
     method: 'POST',

@@ -1,3 +1,9 @@
+const startupHeartBeat = setInterval(() => {
+  postRequest('/','', (data) => {
+    if (data.status == 0) clearInterval(startupHeartBeat);
+  })
+}, 100);
+
 const generateImage = () => {
   let pp = document.getElementById('positive-prompts').value;
   let np = document.getElementById('negative-prompts').value;
@@ -21,7 +27,7 @@ const generateImage = () => {
     seed = is
   )
 
-  postRequest('/', g_data.convertToLiteral(), (data) => {
+  postRequest('/generate', g_data.convertToLiteral(), (data) => {
     const image_bod = document.getElementById('generate-images');
     data.output.forEach(encoded_data => {
       const decoded_data = window.atob(encoded_data);
@@ -42,5 +48,22 @@ const generateImage = () => {
       a.textContent = 'Download'
       container.appendChild(a)
     });
+  })
+}
+
+const getModelsList = () => {
+  postRequest('/getmodelslist', '', (data) => {
+    console.log(data)
+  })
+}
+
+
+const switchModel = () => {
+  let g_data = new ModelChangeContainer(
+    model_name = 'AbyssOrangeMix2_nsfw',
+    vae_model_name = 'AbyssOrangeMix2_nsfw.vae'
+  )
+  postRequest('/switchModel', g_data.convertToLiteral(), (data) => {
+    console.log(data)
   })
 }
