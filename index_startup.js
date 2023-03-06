@@ -47,7 +47,9 @@ const installPython = (callback) => {
                   );
                   fs.writeFile(pthPath, updatedData, "utf8", (err) => {
                     if (err) throw err;
-                    callback(true);
+                    installModules((response) => {
+                      callback(response);
+                    })
                   });
                 });
               }
@@ -59,7 +61,10 @@ const installPython = (callback) => {
 };
 
 const installModules = (callback) => {
-  callback(true);
+  Process.exec(PipPath + " install -r py_src/requirements.txt", (error, stdout, stderr) => {
+    console.log(error ?? stdout ?? stderr)
+    callback(true);
+  });
 };
 
 module.exports = {
