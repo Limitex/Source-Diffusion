@@ -20,12 +20,12 @@ const StartBackground = () => {
   std_data.push("Starting background app...");
   server.StartServer(
     (std) => {
-      std_data.push(std.trim());
-      console.log(std.trim());
+      std_data.push(std.trimEnd());
+      console.log(std.trimEnd());
     },
     (err) => {
-      std_data.push(err.trim());
-      console.error(err.trim());
+      std_data.push(err.trimEnd());
+      console.error(err.trimEnd());
       if (err.includes("Uvicorn running")) {
         std_status = 0;
         loadWindowObj.close();
@@ -35,7 +35,7 @@ const StartBackground = () => {
     },
     (exi) => {
       std_status = 1;
-      txt = `Server process exited with code ${exi}`;
+      txt = `Process exited with code ${exi}`;
       std_data.push(txt);
       console.log(txt);
     }
@@ -49,7 +49,6 @@ startup.checkPython((pythonExist) => {
       if (moduleExist) {
         StartBackground();
       } else { // moduleExist
-        std_data.push("Installing module...");
         startup.installModules((installSuccess) => {
           if (installSuccess) {
             std_data.push("Installation complete.");
@@ -58,7 +57,7 @@ startup.checkPython((pythonExist) => {
             std_data.push("Installation failed.");
             std_status = 1;
           } // installSuccess
-        });
+        }, std_data);
       } // moduleExist
     });
   } else { // pythonExist
@@ -72,6 +71,6 @@ startup.checkPython((pythonExist) => {
         std_data.push("Installation failed.");
         std_status = 1;
       } // installSuccess
-    });
+    }, std_data);
   } // pythonExist
 });
