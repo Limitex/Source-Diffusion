@@ -4,4 +4,4 @@ diffusers
 transformers
 accelerate
 fastapi
-uvicorn
+uvicorn[standard]
