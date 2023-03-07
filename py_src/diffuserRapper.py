@@ -24,6 +24,9 @@ def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
     time_load = time.time() - load_time
     print(f"Models loaded in {time_load:.2f}s")
 
+def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):
+    pass
+
 def diffusionGenerate(gc: GenerateContainer):
     global pipe
     return pipe(
@@ -36,4 +39,5 @@ def diffusionGenerate(gc: GenerateContainer):
         num_images_per_prompt=gc.num,
         eta=gc.eta,
         generator= None if gc.seed == -1 else torch.manual_seed(gc.seed),
+        callback=diffusionGenerate_progress_callback
     ).images
