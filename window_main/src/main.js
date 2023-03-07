@@ -40,7 +40,13 @@ const generateImage = () => {
     seed = is
   )
 
-  postRequest('/generate', g_data.convertToLiteral(), (data) => {
+  const socket = new WebSocket("ws://localhost:8000/generate");
+  socket.addEventListener("open", (event) => {
+    socket.send(JSON.stringify(g_data.convertToLiteral()))
+  });
+
+  socket.addEventListener("message", (event) => {
+    const data = JSON.parse(event.data);
     const image_bod = document.getElementById('generate-images');
     data.output.forEach(encoded_data => {
       const decoded_data = window.atob(encoded_data);
@@ -65,7 +71,13 @@ const generateImage = () => {
       genb.disabled = false
       genl.className = ''
     });
-  })
+  });
+
+  socket.addEventListener("close", function(event) {
+    gent.innerText = gent_txt
+    genb.disabled = false
+    genl.className = ''
+  });
 }
 
 const getModelsList = () => {
