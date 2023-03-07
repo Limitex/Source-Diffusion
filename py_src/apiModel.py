@@ -19,6 +19,10 @@ class ModelListOutput(BaseModel):
     model_list: List[str]
     vae_model_list: List[str]
 
+class ModelOutput(BaseModel):
+    model: str
+    vae_model: str
+
 class ModelChangeContainer(BaseModel):
     model_name: str
     vae_model_name: str

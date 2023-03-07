@@ -1,7 +1,11 @@
 .input-container {
-    margin: 10px;
+    margin: 10px 0;
 }
 
 .progress-container {
+    margin: 10px 0;
+}
+
+.form-group {
     margin: 10px;
 }

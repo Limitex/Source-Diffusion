@@ -1,10 +1,23 @@
 const startupHeartBeat = setInterval(() => {
   postRequest('/','', (data) => {
-    if (data.status == 0) clearInterval(startupHeartBeat);
+    if (data.status == 0) {
+      clearInterval(startupHeartBeat);
+
+      getModelsList()
+      getLoadedModel()
+    }
   })
 }, 100);
 
 const generateImage = () => {
+  const genb = document.getElementById('generatebutton')
+  const genl = document.getElementById('generateloading')
+  const gent = document.getElementById('generatetext')
+  const gent_txt = gent.innerText
+  gent.innerText = 'Generating...'
+  genb.disabled = true
+  genl.className = 'spinner-border spinner-border-sm'
+
   let pp = document.getElementById('positive-prompts').value;
   let np = document.getElementById('negative-prompts').value;
   let ih = document.getElementById('input-height').value;
@@ -47,23 +60,59 @@ const generateImage = () => {
       a.href = url;
       a.textContent = 'Download'
       container.appendChild(a)
+
+      gent.innerText = gent_txt
+      genb.disabled = false
+      genl.className = ''
     });
   })
 }
 
 const getModelsList = () => {
-  postRequest('/getmodelslist', '', (data) => {
-    console.log(data)
+  postRequest('/getmodelslist','', (data) => {
+    const ml = document.getElementById('model-list')
+    const vl = document.getElementById('vae-list')
+    data.model_list.forEach(element => {
+      const i = document.createElement('option')
+      i.textContent = element
+      ml.appendChild(i)
+    });
+    data.vae_model_list.forEach(element => {
+      const i = document.createElement('option')
+      i.textContent = element
+      vl.appendChild(i)
+    });
   })
 }
 
+const getLoadedModel = () => {
+  postRequest('/getloadedmodel', '', (data) => {
+    const c = document.getElementById('loadedModelText')
+    if (data.model == '') data.model = 'None'
+    if (data.vae_model == '') data.vae_model = 'None'
+    c.innerText = data.model + ' / ' + data.vae_model
+  })
+}
 
 const switchModel = () => {
-  let g_data = new ModelChangeContainer(
-    model_name = 'AbyssOrangeMix2_nsfw',
-    vae_model_name = 'AbyssOrangeMix2_nsfw.vae'
+  const smb = document.getElementById('switchmodelbutton')
+  const sml = document.getElementById('switchmodelloading')
+  const smt = document.getElementById('switchmodeltext')
+  const smt_txt = smt.innerText
+  smt.innerText = 'Loading...'
+  smb.disabled = true
+  sml.className = 'spinner-border spinner-border-sm'
+
+  const modelElm = document.getElementById('model-list')
+  const vaeElm = document.getElementById('vae-list')
+  const g_data = new ModelChangeContainer(
+    model_name = modelElm.options[modelElm.selectedIndex].value,
+    vae_model_name = vaeElm.options[vaeElm.selectedIndex].value
   )
   postRequest('/switchModel', g_data.convertToLiteral(), (data) => {
-    console.log(data)
+    getLoadedModel()
+    smt.innerText = smt_txt
+    smb.disabled = false
+    sml.className = ''
   })
 }

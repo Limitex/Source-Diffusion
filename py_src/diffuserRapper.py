@@ -1,3 +1,4 @@
+import os
 import time
 import torch
 from diffusers import StableDiffusionPipeline
@@ -5,15 +6,16 @@ from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
 
 global pipe
-def load(model_path, vae_path, torch_dtype):
+
+def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
     global pipe
     print('start model load.')
     load_time = time.time()
     pipe = StableDiffusionPipeline.from_pretrained(
-        pretrained_model_name_or_path = model_path,
+        pretrained_model_name_or_path = os.path.join(userDataPath, modelDirName),
         torch_dtype = torch_dtype,
         vae=AutoencoderKL.from_pretrained(
-            pretrained_model_name_or_path = vae_path, 
+            pretrained_model_name_or_path = os.path.join(userDataPath, vaeDirName), 
             torch_dtype = torch_dtype
         ),
     ).to("cuda")

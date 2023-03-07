@@ -26,6 +26,23 @@
           <textarea class="form-control" id="negative-prompts" rows="3" placeholder="Negative Prompts"></textarea>
         </div>
       </div>
+      <div id="model-selector">
+        <div class="input-container">
+          <select class="form-control" id="model-list"></select>
+        </div>
+        <div class="input-container">
+          <select class="form-control" id="vae-list"></select>
+        </div>
+        <div class="input-container">
+          <div id="loadedModelText"></div>
+        </div>
+        <div class="input-container">
+          <button id="switchmodelbutton" class="btn btn-primary" type="button" onclick="switchModel()">
+            <span id="switchmodelloading" class="" role="status" aria-hidden="true"></span>
+            <span id="switchmodeltext" class="sr-only">Load</span>
+          </button>
+        </div>
+      </div>
       <div id="generate-property">
         <div class="input-container">
           <input min="1" max="1024" step="8" value="768" type="number" id="input-height" placeholder="height" class="form-control"/>
@@ -49,7 +66,10 @@
           <input step="1" value="-1" type="number" id="input-seed" class="form-control" placeholder="Seed"/>
         </div>
         <div class="input-container">
-          <button type="button" class="btn btn-primary" onclick="generateImage()">Generate</button>
+          <button id="generatebutton" class="btn btn-primary" type="button" onclick="generateImage()">
+            <span id="generateloading" class="" role="status" aria-hidden="true"></span>
+            <span id="generatetext" class="sr-only">Generate</span>
+          </button>
         </div>
       </div>
     </div>
