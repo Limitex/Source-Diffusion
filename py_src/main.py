@@ -41,7 +41,7 @@ async def generate(websocket: WebSocket):
         byte_image = output.getvalue()
         encoded_data = base64.b64encode(byte_image).decode('ascii')
         images_encoded.append(encoded_data)
-    data = GenerationOutput(output=images_encoded).json()
+    data = GenerationOutput(type="generate" ,output=images_encoded).json()
     await websocket.send_bytes(data)
 
 @app.post('/getmodelslist')

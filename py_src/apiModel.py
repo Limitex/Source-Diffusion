@@ -13,6 +13,7 @@ class GenerateContainer(BaseModel):
     seed: int
 
 class GenerationOutput(BaseModel):
+    type: str
     output: List[str]
 
 class ModelListOutput(BaseModel):
