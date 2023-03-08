@@ -1,5 +1,6 @@
 import asyncio
 import io
+import json
 import os
 import torch
 import base64
@@ -35,11 +36,17 @@ async def ready():
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
     def progress(step: int, timestep: int, latents: torch.FloatTensor):
-        executor.submit(asyncio.run, websocket.send_bytes( "{\"type\":\"\"}"))
-    py_src.diffuserRapper.generate_progress_callback = progress
-    
+        out = {
+            "step":int(step),
+            "max_step":int(gc.steps),
+            "timetep":int(timestep)
+        }
+        data = GenerationOutput(type="progress", json_output=json.dumps(out)).json()
+        executor.submit(asyncio.run, websocket.send_bytes(data))
+
     await websocket.accept()
     gc = GenerateContainer.parse_raw(await websocket.receive_text())
+    py_src.diffuserRapper.generate_progress_callback = progress
     images = await diffusionGenerate_async(gc)
     print(gc)
     images_encoded = []

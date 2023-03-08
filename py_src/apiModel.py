@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 class GenerateContainer(BaseModel):
@@ -14,7 +14,8 @@ class GenerateContainer(BaseModel):
 
 class GenerationOutput(BaseModel):
     type: str
-    output: List[str]
+    output: Optional[List[str]] = None
+    json_output: Optional[str] = None
 
 class ModelListOutput(BaseModel):
     model_list: List[str]
