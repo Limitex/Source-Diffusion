@@ -5,7 +5,7 @@ import base64
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from py_src.apiModel import *
-from py_src.diffuserRapper import diffusionGenerate, load
+from py_src.diffuserRapper import diffusionGenerate_async, load
 from py_src.osPath import get_user_data
 
 app = FastAPI()
@@ -31,7 +31,7 @@ async def ready():
 async def generate(websocket: WebSocket):
     await websocket.accept()
     gc = GenerateContainer.parse_raw(await websocket.receive_text())
-    images = diffusionGenerate(gc)
+    images = await diffusionGenerate_async(gc)
     print(gc)
     images_encoded = []
     for x in range(len(images)):

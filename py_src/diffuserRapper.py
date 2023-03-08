@@ -1,3 +1,4 @@
+import asyncio
 import os
 import time
 import torch
@@ -27,9 +28,10 @@ def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
 def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):
     pass
 
-def diffusionGenerate(gc: GenerateContainer):
+async def diffusionGenerate_async(gc: GenerateContainer):
     global pipe
-    return pipe(
+    return (await asyncio.to_thread(
+        pipe,
         prompt=gc.positive,
         height=gc.height,
         width=gc.width,
@@ -40,4 +42,4 @@ def diffusionGenerate(gc: GenerateContainer):
         eta=gc.eta,
         generator= None if gc.seed == -1 else torch.manual_seed(gc.seed),
         callback=diffusionGenerate_progress_callback
-    ).images
+    )).images
