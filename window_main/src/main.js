@@ -40,7 +40,7 @@ const generateImage = () => {
     seed = is
   )
 
-  const socket = new WebSocket("ws://localhost:8000/generate");
+  const socket = new WebSocket("ws://" + HOST + ":" + PORT + "/generate");
   socket.addEventListener("open", (event) => {
     socket.send(JSON.stringify(g_data.convertToLiteral()))
   });
