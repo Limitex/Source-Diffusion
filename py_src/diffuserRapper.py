@@ -8,9 +8,11 @@ from py_src.apiModel import GenerateContainer
 
 global pipe
 generate_progress_callback = None
+loadedModelName = ''
+loadedVaeModelName = ''
 
 def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
-    global pipe
+    global pipe, loadedModelName, loadedVaeModelName
     print('start model load.')
     load_time = time.time()
     pipe = StableDiffusionPipeline.from_pretrained(
@@ -24,6 +26,8 @@ def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
     pipe.safety_checker = lambda images, **kwargs: (images, False)
     pipe.enable_attention_slicing()
     time_load = time.time() - load_time
+    loadedModelName = modelDirName
+    loadedVaeModelName = vaeDirName
     print(f"Models loaded in {time_load:.2f}s")
 
 def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):

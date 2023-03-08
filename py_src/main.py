@@ -25,9 +25,6 @@ app.add_middleware(
 
 executor = ThreadPoolExecutor()
 
-global modelName, vaeName
-modelName, vaeName = '', ''
-
 modelsPath = os.path.join(get_user_data(), 'models')
 
 @app.post('/')
@@ -75,15 +72,12 @@ async def getModelsList():
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
-    global modelName, vaeName
-    return ModelOutput(model=modelName, vae_model=vaeName)
+    return ModelOutput(model=py_src.diffuserRapper.loadedModelName, vae_model=py_src.diffuserRapper.loadedVaeModelName)
 
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):
-    global modelName, vaeName
     try:
         load(modelsPath, mcc.model_name, mcc.vae_model_name, torch.float16)
-        modelName, vaeName = mcc.model_name, mcc.vae_model_name
         return ServerStatus(status=0, status_str='server is ready')
     except :
         return ServerStatus(status=1, status_str=traceback.format_exc())
