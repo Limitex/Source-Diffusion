@@ -7,6 +7,7 @@ from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
 
 global pipe
+generate_progress_callback = None
 
 def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
     global pipe
@@ -26,7 +27,8 @@ def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
     print(f"Models loaded in {time_load:.2f}s")
 
 def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):
-    pass
+    if generate_progress_callback is not None:
+        generate_progress_callback(step, timestep, latents)
 
 async def diffusionGenerate_async(gc: GenerateContainer):
     global pipe
