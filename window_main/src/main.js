@@ -17,6 +17,8 @@ const generateImage = () => {
   gent.innerText = 'Generating...'
   genb.disabled = true
   genl.className = 'spinner-border spinner-border-sm'
+  let progress = document.getElementById('generate-progressbar')
+  progress.style.width = '0%'
 
   let pp = document.getElementById('positive-prompts').value;
   let np = document.getElementById('negative-prompts').value;
@@ -43,6 +45,8 @@ const generateImage = () => {
   const socket = new WebSocket("ws://" + HOST + ":" + PORT + "/generate");
   socket.addEventListener("open", (event) => {
     socket.send(JSON.stringify(g_data.convertToLiteral()))
+    progress.classList.add("progress-bar-striped")
+    progress.classList.add("progress-bar-animated")
   });
 
   socket.addEventListener("message", (event) => {
@@ -74,7 +78,8 @@ const generateImage = () => {
       });
     }
     else if (data.type == "progress") {
-
+      const progresData = JSON.parse(data.json_output);
+      progress.style.width = ((progresData.steps / (progresData.max_steps - 1)) * 100) + '%'
     }
 
   });
@@ -83,6 +88,8 @@ const generateImage = () => {
     gent.innerText = gent_txt
     genb.disabled = false
     genl.className = ''
+    progress.classList.remove("progress-bar-striped")
+    progress.classList.remove("progress-bar-animated")
   });
 }
 

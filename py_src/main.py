@@ -37,8 +37,8 @@ async def ready():
 async def generate(websocket: WebSocket):
     def progress(step: int, timestep: int, latents: torch.FloatTensor):
         out = {
-            "step":int(step),
-            "max_step":int(gc.steps),
+            "steps":int(step),
+            "max_steps":int(gc.steps),
             "timetep":int(timestep)
         }
         data = GenerationOutput(type="progress", json_output=json.dumps(out)).json()
