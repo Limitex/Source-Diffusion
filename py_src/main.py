@@ -1,9 +1,12 @@
+import asyncio
 import io
 import os
 import torch
 import base64
+import py_src.diffuserRapper
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
 from py_src.diffuserRapper import diffusionGenerate_async, load
 from py_src.osPath import get_user_data
@@ -18,6 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+executor = ThreadPoolExecutor()
+
 global modelName, vaeName
 modelName, vaeName = '', ''
 
@@ -29,6 +34,10 @@ async def ready():
 
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
+    def progress(step: int, timestep: int, latents: torch.FloatTensor):
+        executor.submit(asyncio.run, websocket.send_bytes( "{\"type\":\"\"}"))
+    py_src.diffuserRapper.generate_progress_callback = progress
+    
     await websocket.accept()
     gc = GenerateContainer.parse_raw(await websocket.receive_text())
     images = await diffusionGenerate_async(gc)
