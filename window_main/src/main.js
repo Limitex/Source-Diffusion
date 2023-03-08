@@ -10,10 +10,12 @@ const startupHeartBeat = setInterval(() => {
 }, 100);
 
 const generateImage = () => {
+  const smb = document.getElementById('switchmodelbutton')
   const genb = document.getElementById('generatebutton')
   const genl = document.getElementById('generateloading')
   const gent = document.getElementById('generatetext')
   const gent_txt = gent.innerText
+  smb.disabled = true
   gent.innerText = 'Generating...'
   genb.disabled = true
   genl.className = 'spinner-border spinner-border-sm'
@@ -71,10 +73,6 @@ const generateImage = () => {
         a.href = url;
         a.textContent = 'Download'
         container.appendChild(a)
-
-        gent.innerText = gent_txt
-        genb.disabled = false
-        genl.className = ''
       });
     }
     else if (data.type == "progress") {
@@ -86,6 +84,7 @@ const generateImage = () => {
 
   socket.addEventListener("close", function(event) {
     gent.innerText = gent_txt
+    smb.disabled = false
     genb.disabled = false
     genl.className = ''
     progress.classList.remove("progress-bar-striped")
@@ -121,10 +120,12 @@ const getLoadedModel = () => {
 }
 
 const switchModel = () => {
+  const genb = document.getElementById('generatebutton')
   const smb = document.getElementById('switchmodelbutton')
   const sml = document.getElementById('switchmodelloading')
   const smt = document.getElementById('switchmodeltext')
   const smt_txt = smt.innerText
+  genb.disabled = true
   smt.innerText = 'Loading...'
   smb.disabled = true
   sml.className = 'spinner-border spinner-border-sm'
@@ -135,6 +136,7 @@ const switchModel = () => {
   if (modelElm.options.length == 0 || vaeElm.options.length == 0) {
     getLoadedModel()
     smt.innerText = smt_txt
+    genb.disabled = false
     smb.disabled = false
     sml.className = ''
     return
@@ -147,6 +149,7 @@ const switchModel = () => {
   postRequest('/switchModel', g_data.convertToLiteral(), (data) => {
     getLoadedModel()
     smt.innerText = smt_txt
+    genb.disabled = false
     smb.disabled = false
     sml.className = ''
   })
