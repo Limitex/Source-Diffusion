@@ -131,6 +131,15 @@ const switchModel = () => {
 
   const modelElm = document.getElementById('model-list')
   const vaeElm = document.getElementById('vae-list')
+
+  if (modelElm.options.length == 0 || vaeElm.options.length == 0) {
+    getLoadedModel()
+    smt.innerText = smt_txt
+    smb.disabled = false
+    sml.className = ''
+    return
+  }
+  
   const g_data = new ModelChangeContainer(
     model_name = modelElm.options[modelElm.selectedIndex].value,
     vae_model_name = vaeElm.options[vaeElm.selectedIndex].value

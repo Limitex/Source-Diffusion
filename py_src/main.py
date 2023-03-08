@@ -2,6 +2,7 @@ import asyncio
 import io
 import json
 import os
+import traceback
 import torch
 import base64
 import py_src.diffuserRapper
@@ -62,9 +63,14 @@ async def generate(websocket: WebSocket):
 
 @app.post('/getmodelslist')
 async def getModelsList():
-    dirList = [d for d in os.listdir(modelsPath) if os.path.isdir(os.path.join(modelsPath, d))]
-    vae_dirs = [d for d in dirList if '.vae' in d]
-    model_dirs = [d for d in dirList if '.vae' not in d]
+    if os.path.isdir(modelsPath):
+        dirList = [d for d in os.listdir(modelsPath) if os.path.isdir(os.path.join(modelsPath, d))]
+        vae_dirs = [d for d in dirList if '.vae' in d]
+        model_dirs = [d for d in dirList if '.vae' not in d]
+    else:
+        vae_dirs = []
+        model_dirs = []
+
     return ModelListOutput(model_list=model_dirs, vae_model_list=vae_dirs)
 
 @app.post('/getloadedmodel')
@@ -75,6 +81,9 @@ async def getloadedmodel():
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):
     global modelName, vaeName
-    load(modelsPath, mcc.model_name, mcc.vae_model_name, torch.float16)
-    modelName, vaeName = mcc.model_name, mcc.vae_model_name
-    return ServerStatus(status=0, status_str='server is ready')
+    try:
+        load(modelsPath, mcc.model_name, mcc.vae_model_name, torch.float16)
+        modelName, vaeName = mcc.model_name, mcc.vae_model_name
+        return ServerStatus(status=0, status_str='server is ready')
+    except :
+        return ServerStatus(status=1, status_str=traceback.format_exc())
