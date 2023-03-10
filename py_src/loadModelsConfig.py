@@ -1,9 +1,14 @@
 import json
 import os
 from py_src.osPath import get_models_config_path
+from enum import Enum
+
+class ModelType(Enum):
+    Model = 0
+    Vae = 1
 
 class DiffusersModel:
-    def __init__(self, type: str, path: str, name: str, discription: str) -> None:
+    def __init__(self, type: ModelType, path: str, name: str, discription: str) -> None:
         self.type = type
         self.path = path
         self.name = name
@@ -16,8 +21,16 @@ def loadConfig():
         json_load = json.load(json_open)
         data = []
         for json_data in json_load:
+            if json_data['type'] == 'model':
+                modelType = ModelType.Model
+            elif json_data['type'] == 'vae':
+                modelType = ModelType.Vae
+            else:
+                raise ValueError('An unsupported model type was found.'
+                                 'Please correct the contents of the file or delete it and try again.')
+            
             data.append(DiffusersModel(
-                type=json_data['type'],
+                type=modelType,
                 path=json_data['path'],
                 name=json_data['name'],
                 discription=json_data['discription']
