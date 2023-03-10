@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
 from py_src.diffuserRapper import diffusionGenerate_async, load
 from py_src.osPath import get_models_path
-from py_src.loadModelsConfig import ModelType, loadConfig
+from py_src.loadModelsConfig import ModelType, idToName, loadConfig
 
 app = FastAPI()
 
@@ -78,7 +78,9 @@ async def getModelsList():
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
-    return ModelOutput(model=py_src.diffuserRapper.loadedModelId, vae_model=py_src.diffuserRapper.loadedVaeModelId)
+    modelName = idToName(config, py_src.diffuserRapper.loadedModelId)
+    vaeName = idToName(config, py_src.diffuserRapper.loadedVaeModelId)
+    return ModelOutput(model=modelName, vae_model=vaeName)
 
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):

@@ -41,4 +41,5 @@ def loadConfig():
             f.write('[]')
         return []
 
-
+def idToName(config, id):
+    return next((c.name for c in config if c.path == id), None)
