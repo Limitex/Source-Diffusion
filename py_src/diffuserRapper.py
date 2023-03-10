@@ -11,18 +11,32 @@ generate_progress_callback = None
 loadedModelName = ''
 loadedVaeModelName = ''
 
+def loadPipeline(modelName, torch_dtype, vaeName = None):
+    if vaeName is None:
+        pipeline = StableDiffusionPipeline.from_pretrained(
+            pretrained_model_name_or_path = modelName,
+            torch_dtype = torch_dtype
+        )
+    else:
+        pipeline = StableDiffusionPipeline.from_pretrained(
+            pretrained_model_name_or_path = modelName,
+            torch_dtype = torch_dtype,
+            vae = AutoencoderKL.from_pretrained(
+                pretrained_model_name_or_path = vaeName, 
+                torch_dtype = torch_dtype
+            )
+        )
+    return pipeline.to("cuda")
+
 def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
     global pipe, loadedModelName, loadedVaeModelName
     print('start model load.')
     load_time = time.time()
-    pipe = StableDiffusionPipeline.from_pretrained(
-        pretrained_model_name_or_path = os.path.join(userDataPath, modelDirName),
-        torch_dtype = torch_dtype,
-        vae=AutoencoderKL.from_pretrained(
-            pretrained_model_name_or_path = os.path.join(userDataPath, vaeDirName), 
-            torch_dtype = torch_dtype
-        ),
-    ).to("cuda")
+    pipe = loadPipeline(
+        os.path.join(userDataPath, modelDirName), 
+        torch_dtype, 
+        os.path.join(userDataPath, vaeDirName)
+    )
     pipe.safety_checker = lambda images, **kwargs: (images, False)
     pipe.enable_attention_slicing()
     time_load = time.time() - load_time
