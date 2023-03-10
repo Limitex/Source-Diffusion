@@ -5,11 +5,12 @@ import torch
 from diffusers import StableDiffusionPipeline
 from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
+from py_src.osPath import get_models_path
 
 global pipe
 generate_progress_callback = None
-loadedModelName = ''
-loadedVaeModelName = ''
+loadedModelName = None
+loadedVaeModelName = None
 
 def loadPipeline(modelName, torch_dtype, vaeName = None):
     if vaeName is None:
@@ -28,20 +29,20 @@ def loadPipeline(modelName, torch_dtype, vaeName = None):
         )
     return pipeline.to("cuda")
 
-def load(userDataPath, modelDirName, vaeDirName, torch_dtype):
+def load(modelId, torch_dtype, vaeId = None):
     global pipe, loadedModelName, loadedVaeModelName
     print('start model load.')
     load_time = time.time()
     pipe = loadPipeline(
-        os.path.join(userDataPath, modelDirName), 
+        os.path.join(get_models_path(), modelId), 
         torch_dtype, 
-        os.path.join(userDataPath, vaeDirName)
+        None if vaeId == None else os.path.join(get_models_path(), vaeId)
     )
     pipe.safety_checker = lambda images, **kwargs: (images, False)
     pipe.enable_attention_slicing()
     time_load = time.time() - load_time
-    loadedModelName = modelDirName
-    loadedVaeModelName = vaeDirName
+    loadedModelName = modelId
+    loadedVaeModelName = vaeId
     print(f"Models loaded in {time_load:.2f}s")
 
 def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):

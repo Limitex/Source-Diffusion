@@ -117,8 +117,8 @@ const getLoadedModel = () => {
   postRequest('/getloadedmodel', '', (data) => {
     const c = document.getElementById('loadedModelText')
     document.getElementById('generatebutton').disabled = data.model == '' || data.vae_model == ''
-    if (data.model == '') data.model = 'None'
-    if (data.vae_model == '') data.vae_model = 'None'
+    if (data.model == null) data.model = 'None'
+    if (data.vae_model == null) data.vae_model = 'None'
     c.innerText = data.model + ' / ' + data.vae_model
   })
 }

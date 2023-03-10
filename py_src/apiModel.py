@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 from pydantic import BaseModel
 
 class GenerateContainer(BaseModel):
@@ -21,12 +21,12 @@ class ModelListOutput(BaseModel):
     models_json: str
 
 class ModelOutput(BaseModel):
-    model: str
-    vae_model: str
+    model: Union[str, None]
+    vae_model: Union[str, None]
 
 class ModelChangeContainer(BaseModel):
-    model_id: str
-    vae_id: str
+    model_id: Union[str, None]
+    vae_id: Union[str, None]
 
 class ServerStatus(BaseModel):
     status: int
