@@ -96,12 +96,12 @@ const getModelsList = () => {
   postRequest('/getmodelslist','', (data) => {
     const ml = document.getElementById('model-list')
     const vl = document.getElementById('vae-list')
-    data.model_list.forEach(element => {
+    data.model_id_list.forEach(element => {
       const i = document.createElement('option')
       i.textContent = element
       ml.appendChild(i)
     });
-    data.vae_model_list.forEach(element => {
+    data.vae_id_list.forEach(element => {
       const i = document.createElement('option')
       i.textContent = element
       vl.appendChild(i)

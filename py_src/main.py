@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
 from py_src.diffuserRapper import diffusionGenerate_async, load
 from py_src.osPath import get_models_path
-from py_src.loadModelsConfig import loadConfig
+from py_src.loadModelsConfig import ModelType, loadConfig
 
 app = FastAPI()
 
@@ -30,7 +30,7 @@ try:
     config = loadConfig()
 except:
     raise FileNotFoundError('It could not be read because the structure of the models.json file is different.'
-        'Please correct the contents of the file or delete it and try again.')
+                            'Please correct the contents of the file or delete it and try again.')
 
 @app.post('/')
 async def ready():
@@ -65,15 +65,23 @@ async def generate(websocket: WebSocket):
 
 @app.post('/getmodelslist')
 async def getModelsList():
-    if os.path.isdir(get_models_path()):
-        dirList = [d for d in os.listdir(get_models_path()) if os.path.isdir(os.path.join(get_models_path(), d))]
-        vae_dirs = [d for d in dirList if '.vae' in d]
-        model_dirs = [d for d in dirList if '.vae' not in d]
-    else:
-        vae_dirs = []
-        model_dirs = []
-
-    return ModelListOutput(model_list=model_dirs, vae_model_list=vae_dirs)
+    models = []
+    vaes = []
+    modelNames = []
+    vaeNames = []
+    for data in config:
+        if data.type == ModelType.Model:
+            models.append(data.path)
+            modelNames.append(data.name)
+        elif data.type == ModelType.Vae:
+            vaes.append(data.path)
+            vaeNames.append(data.name)
+    return ModelListOutput(
+        model_id_list=models,
+        model_name_list=modelNames,
+        vae_id_list=vaes,
+        vae_name_list=vaeNames,
+    )
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
