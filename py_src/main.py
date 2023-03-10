@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
 from py_src.diffuserRapper import diffusionGenerate_async, load
-from py_src.osPath import get_user_data
+from py_src.osPath import get_models_path
 
 app = FastAPI()
 
@@ -24,8 +24,6 @@ app.add_middleware(
 )
 
 executor = ThreadPoolExecutor()
-
-modelsPath = os.path.join(get_user_data(), 'models')
 
 @app.post('/')
 async def ready():
@@ -60,8 +58,8 @@ async def generate(websocket: WebSocket):
 
 @app.post('/getmodelslist')
 async def getModelsList():
-    if os.path.isdir(modelsPath):
-        dirList = [d for d in os.listdir(modelsPath) if os.path.isdir(os.path.join(modelsPath, d))]
+    if os.path.isdir(get_models_path()):
+        dirList = [d for d in os.listdir(get_models_path()) if os.path.isdir(os.path.join(get_models_path(), d))]
         vae_dirs = [d for d in dirList if '.vae' in d]
         model_dirs = [d for d in dirList if '.vae' not in d]
     else:
@@ -77,7 +75,7 @@ async def getloadedmodel():
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):
     try:
-        load(modelsPath, mcc.model_name, mcc.vae_model_name, torch.float16)
+        load(get_models_path(), mcc.model_name, mcc.vae_model_name, torch.float16)
         return ServerStatus(status=0, status_str='server is ready')
     except :
         return ServerStatus(status=1, status_str=traceback.format_exc())

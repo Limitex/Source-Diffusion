@@ -13,3 +13,9 @@ def get_user_data():
         return os.path.join(os.environ['APPDATA'], APP_NAME)
     else:
         raise OSError("Unsupported operating system")
+    
+def get_models_path():
+    return os.path.join(get_user_data(), 'models')
+
+def get_models_config_path():
+    return os.path.join(get_models_path(), 'models.json')
