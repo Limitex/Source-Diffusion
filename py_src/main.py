@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
 from py_src.diffuserRapper import diffusionGenerate_async, load
 from py_src.osPath import get_models_path
+from py_src.loadModelsConfig import loadConfig
 
 app = FastAPI()
 
@@ -24,6 +25,12 @@ app.add_middleware(
 )
 
 executor = ThreadPoolExecutor()
+
+try:
+    config = loadConfig()
+except:
+    raise FileNotFoundError('It could not be read because the structure of the models.json file is different.'
+        'Please correct the contents of the file or delete it and try again.')
 
 @app.post('/')
 async def ready():
