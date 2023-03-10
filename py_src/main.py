@@ -78,7 +78,7 @@ async def getModelsList():
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
-    return ModelOutput(model=py_src.diffuserRapper.loadedModelName, vae_model=py_src.diffuserRapper.loadedVaeModelName)
+    return ModelOutput(model=py_src.diffuserRapper.loadedModelId, vae_model=py_src.diffuserRapper.loadedVaeModelId)
 
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):

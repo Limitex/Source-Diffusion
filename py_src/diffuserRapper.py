@@ -9,8 +9,8 @@ from py_src.osPath import get_models_path
 
 global pipe
 generate_progress_callback = None
-loadedModelName = None
-loadedVaeModelName = None
+loadedModelId = None
+loadedVaeModelId = None
 
 def loadPipeline(modelName, torch_dtype, vaeName = None):
     if vaeName is None:
@@ -30,7 +30,7 @@ def loadPipeline(modelName, torch_dtype, vaeName = None):
     return pipeline.to("cuda")
 
 def load(modelId, torch_dtype, vaeId = None):
-    global pipe, loadedModelName, loadedVaeModelName
+    global pipe, loadedModelId, loadedVaeModelId
     print('start model load.')
     load_time = time.time()
     pipe = loadPipeline(
@@ -41,8 +41,8 @@ def load(modelId, torch_dtype, vaeId = None):
     pipe.safety_checker = lambda images, **kwargs: (images, False)
     pipe.enable_attention_slicing()
     time_load = time.time() - load_time
-    loadedModelName = modelId
-    loadedVaeModelName = vaeId
+    loadedModelId = modelId
+    loadedVaeModelId = vaeId
     print(f"Models loaded in {time_load:.2f}s")
 
 def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):
