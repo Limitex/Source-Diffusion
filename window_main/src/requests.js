@@ -30,15 +30,15 @@ const GenerateContainer = class {
 }
 
 const ModelChangeContainer = class {
-  constructor(model_name, vae_model_name) {
-    this.model_name = model_name
-    this.vae_model_name = vae_model_name
+  constructor(model_id, vae_id) {
+    this.model_id = model_id
+    this.vae_id = vae_id
   }
 
   convertToLiteral() {
     return {
-      model_name: this.model_name,
-      vae_model_name: this.vae_model_name
+      model_id: this.model_id,
+      vae_id: this.vae_id
     }
   }
 }

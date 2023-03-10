@@ -143,8 +143,8 @@ const switchModel = () => {
   }
   
   const g_data = new ModelChangeContainer(
-    model_name = modelElm.options[modelElm.selectedIndex].value,
-    vae_model_name = vaeElm.options[vaeElm.selectedIndex].value
+    model_id = modelElm.options[modelElm.selectedIndex].value,
+    vae_id = vaeElm.options[vaeElm.selectedIndex].value
   )
   postRequest('/switchModel', g_data.convertToLiteral(), (data) => {
     getLoadedModel()

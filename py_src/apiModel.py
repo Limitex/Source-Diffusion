@@ -28,8 +28,8 @@ class ModelOutput(BaseModel):
     vae_model: str
 
 class ModelChangeContainer(BaseModel):
-    model_name: str
-    vae_model_name: str
+    model_id: str
+    vae_id: str
 
 class ServerStatus(BaseModel):
     status: int
