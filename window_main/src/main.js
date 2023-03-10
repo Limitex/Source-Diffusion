@@ -94,17 +94,21 @@ const generateImage = () => {
 
 const getModelsList = () => {
   postRequest('/getmodelslist','', (data) => {
+    const modelList = JSON.parse(data.models_json);
     const ml = document.getElementById('model-list')
     const vl = document.getElementById('vae-list')
-    data.model_id_list.forEach(element => {
-      const i = document.createElement('option')
-      i.textContent = element
-      ml.appendChild(i)
-    });
-    data.vae_id_list.forEach(element => {
-      const i = document.createElement('option')
-      i.textContent = element
-      vl.appendChild(i)
+    modelList.forEach(model => {
+      if (model.type == 'model') {
+        const i = document.createElement('option')
+        i.textContent = model.name
+        i.value = model.id
+        ml.appendChild(i)
+      } else if (model.type == 'vae') {
+        const i = document.createElement('option')
+        i.textContent = model.name
+        i.value = model.id
+        vl.appendChild(i)
+      }
     });
   })
 }

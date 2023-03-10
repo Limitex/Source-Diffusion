@@ -65,23 +65,16 @@ async def generate(websocket: WebSocket):
 
 @app.post('/getmodelslist')
 async def getModelsList():
-    models = []
-    vaes = []
-    modelNames = []
-    vaeNames = []
+    sendData = []
     for data in config:
-        if data.type == ModelType.Model:
-            models.append(data.path)
-            modelNames.append(data.name)
-        elif data.type == ModelType.Vae:
-            vaes.append(data.path)
-            vaeNames.append(data.name)
-    return ModelListOutput(
-        model_id_list=models,
-        model_name_list=modelNames,
-        vae_id_list=vaes,
-        vae_name_list=vaeNames,
-    )
+        sendData.append(
+            {
+                "type": data.type.value,
+                "id": data.path,                
+                "name": data.name,   
+            }
+        )
+    return ModelListOutput(models_json=json.dumps(sendData))
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():

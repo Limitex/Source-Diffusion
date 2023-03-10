@@ -18,10 +18,7 @@ class GenerationOutput(BaseModel):
     json_output: Optional[str] = None
 
 class ModelListOutput(BaseModel):
-    model_id_list: List[str]
-    model_name_list: List[str]
-    vae_id_list: List[str]
-    vae_name_list: List[str]
+    models_json: str
 
 class ModelOutput(BaseModel):
     model: str

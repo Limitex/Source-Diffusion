@@ -4,8 +4,8 @@ from py_src.osPath import get_models_config_path
 from enum import Enum
 
 class ModelType(Enum):
-    Model = 0
-    Vae = 1
+    Model = 'model'
+    Vae = 'vae'
 
 class DiffusersModel:
     def __init__(self, type: ModelType, path: str, name: str, discription: str) -> None:
