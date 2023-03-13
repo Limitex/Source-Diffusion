@@ -45,6 +45,13 @@
           </button>
         </div>
       </div>
+      <div id="model-loader">
+        <input class="form-control" id="input-model-path" placeholder="Model Path">
+        <button id="loadnewmodelbutton" class="btn btn-primary" type="button" onclick="loadNewModel()">
+          <span id="loadnewmodelloading" class="" role="status" aria-hidden="true"></span>
+          <span id="loadnewmodeltext" class="sr-only">Load</span>
+        </button>
+      </div>
       <div id="generate-property">
         <div class="input-container">
           <input min="1" max="1024" step="8" value="768" type="number" id="input-height" placeholder="height" class="form-control"/>

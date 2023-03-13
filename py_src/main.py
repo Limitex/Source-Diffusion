@@ -89,3 +89,8 @@ async def switchModel(mcc: ModelChangeContainer):
         return ServerStatus(status=0, status_str='server is ready')
     except :
         return ServerStatus(status=1, status_str=traceback.format_exc())
+
+@app.post('/loadnewmodel')
+async def loadNewModel(lnmi: LoadNewModelInfo):
+    print(lnmi)
+    return ServerStatus(status=0, status_str='server is ready')

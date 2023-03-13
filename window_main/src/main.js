@@ -159,3 +159,11 @@ const switchModel = () => {
     sml.className = ''
   })
 }
+
+const loadNewModel = () => {
+  const value = document.getElementById('input-model-path').value
+  const data = new LoadNewModelInfo(path = value)
+  postRequest('/loadnewmodel', data.convertToLiteral(), (data) => {
+    console.log(data)
+  })
+}

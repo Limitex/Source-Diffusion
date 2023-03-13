@@ -43,6 +43,18 @@ const ModelChangeContainer = class {
   }
 }
 
+const LoadNewModelInfo = class {
+  constructor(path) {
+    this.path = path
+  }
+
+  convertToLiteral() {
+    return {
+      path: this.path,
+    }
+  }
+}
+
 const postRequest = (path, body, result) => {
   fetch('http://' + HOST + ':' + PORT + path, {
     method: 'POST',

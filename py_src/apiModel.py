@@ -31,3 +31,6 @@ class ModelChangeContainer(BaseModel):
 class ServerStatus(BaseModel):
     status: int
     status_str: str
+
+class LoadNewModelInfo(BaseModel):
+    path: str
