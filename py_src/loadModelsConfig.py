@@ -1,6 +1,6 @@
 import json
 import os
-from py_src.osPath import get_models_config_path
+from py_src.osPath import get_models_config_path, get_models_path
 from enum import Enum
 
 class ModelType(Enum):
@@ -37,6 +37,7 @@ def loadConfig():
             ))
         return data
     else:
+        os.mkdir(get_models_path())
         with open(configPath, "w") as f:
             f.write('[]')
         return []
