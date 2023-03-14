@@ -177,6 +177,10 @@ const switchModel = () => {
 };
 
 const loadNewModel = () => {
+  SwitchModelButton.Disable();
+  GenerateButton.Disable();
+  LoadNewModelButton.Loading();
+
   const typeData = document.getElementById("input-model-type");
   const pathData = document.getElementById("input-model-path").value;
   const nameData = document.getElementById("input-model-name").value;
@@ -192,5 +196,9 @@ const loadNewModel = () => {
   postRequest("/loadnewmodel", data.convertToLiteral(), (data) => {
     getModelsList();
     console.log(data);
+
+    SwitchModelButton.Undo();
+    GenerateButton.Undo();
+    LoadNewModelButton.Undo();
   });
 };
