@@ -46,13 +46,14 @@ const generateImage = () => {
     seed = is
   )
 
-  const socket = new WebSocket("ws://" + HOST + ":" + PORT + "/generate");
-  socket.addEventListener("open", (event) => {
+  socketRequest("/generate", (event, socket) => {
     socket.send(JSON.stringify(g_data.convertToLiteral()))
     GenerationProgress.animated(true)
-  });
-
-  socket.addEventListener("message", (event) => {
+  }, (event, socket) => {
+    SwitchModelButton.Undo()
+    GenerateButton.Undo()
+    GenerationProgress.animated(false)
+  }, (event, socket) => {
     const data = JSON.parse(event.data);
     if (data.type == "generate") {
       const image_bod = document.getElementById('generate-images');
@@ -80,13 +81,7 @@ const generateImage = () => {
       const progresData = JSON.parse(data.json_output);
       GenerationProgress.current((progresData.steps / (progresData.max_steps - 1)) * 100)
     }
-  });
-
-  socket.addEventListener("close", function(event) {
-    SwitchModelButton.Undo()
-    GenerateButton.Undo()
-    GenerationProgress.animated(false)
-  });
+  })
 }
 
 const getModelsList = () => {

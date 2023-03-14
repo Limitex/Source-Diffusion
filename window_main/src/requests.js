@@ -77,3 +77,10 @@ const postRequest = (path, body, result) => {
     console.error('There was a problem with the fetch operation:', error);
   });
 }
+
+const socketRequest = (path, open, close, message) => {
+  const socket = new WebSocket("ws://" + HOST + ":" + PORT + path);
+  socket.addEventListener("open", (event) => open(event, socket));
+  socket.addEventListener("message", (event) => message(event, socket));
+  socket.addEventListener("close", (event) => close(event, socket));
+}
