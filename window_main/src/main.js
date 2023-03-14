@@ -9,36 +9,12 @@ const startupHeartBeat = setInterval(() => {
   })
 }, 100);
 
-class LoadingButton {
-  constructor(element, processingText) {
-    this.processingText = processingText,
-    this.before_text = element.innerText,
-    this.button_element = element,
-    this.loading_element = element.querySelectorAll('.loadingStatus')[0],
-    this.text_element = element.querySelectorAll('.loadingText')[0]
-  }
-
-  Loading() {
-    this.text_element.innerText = this.processingText
-    this.button_element.disabled = true
-    this.loading_element.className = 'spinner-border spinner-border-sm'
-  }
-  
-  Disable() {
-    this.button_element.disabled = true
-  }
-
-  Undo() {
-    this.text_element.innerText = this.before_text
-    this.button_element.disabled = false
-    this.loading_element.className = ''
-  }
-}
-
+let GenerationProgress
 let SwitchModelButton
 let GenerateButton 
 
 window.onload = () => {
+  GenerationProgress = new ProgressBar(document.getElementById('generate-progressbar'))
   SwitchModelButton = new LoadingButton(document.getElementById('switchmodelbutton'), 'Loading...')
   GenerateButton = new LoadingButton(document.getElementById('generatebutton'), 'Generating...')
 };
@@ -46,9 +22,7 @@ window.onload = () => {
 const generateImage = () => {
   SwitchModelButton.Disable()
   GenerateButton.Loading()
-
-  let progress = document.getElementById('generate-progressbar')
-  progress.style.width = '0%'
+  GenerationProgress.current(0)
 
   let pp = document.getElementById('positive-prompts').value;
   let np = document.getElementById('negative-prompts').value;
@@ -75,8 +49,7 @@ const generateImage = () => {
   const socket = new WebSocket("ws://" + HOST + ":" + PORT + "/generate");
   socket.addEventListener("open", (event) => {
     socket.send(JSON.stringify(g_data.convertToLiteral()))
-    progress.classList.add("progress-bar-striped")
-    progress.classList.add("progress-bar-animated")
+    GenerationProgress.animated(true)
   });
 
   socket.addEventListener("message", (event) => {
@@ -105,16 +78,14 @@ const generateImage = () => {
     }
     else if (data.type == "progress") {
       const progresData = JSON.parse(data.json_output);
-      progress.style.width = ((progresData.steps / (progresData.max_steps - 1)) * 100) + '%'
+      GenerationProgress.current((progresData.steps / (progresData.max_steps - 1)) * 100)
     }
-
   });
 
   socket.addEventListener("close", function(event) {
     SwitchModelButton.Undo()
     GenerateButton.Undo()
-    progress.classList.remove("progress-bar-striped")
-    progress.classList.remove("progress-bar-animated")
+    GenerationProgress.animated(false)
   });
 }
 
