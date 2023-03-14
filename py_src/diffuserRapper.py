@@ -5,6 +5,7 @@ import torch
 from diffusers import StableDiffusionPipeline
 from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
+from py_src.loadModelsConfig import ModelType
 from py_src.osPath import get_models_path
 
 global pipe
@@ -45,10 +46,14 @@ def load(modelId, torch_dtype, vaeId = None):
     loadedVaeModelId = vaeId
     print(f"Models loaded in {time_load:.2f}s")
 
-def TestLoad(path):
+def TestLoad(path: str, importType: ModelType):
     try:
-        pipe = loadPipeline(path, torch.float16)
-        pipe = None
+        if (importType == ModelType.Model):
+            pipe = StableDiffusionPipeline.from_pretrained(pretrained_model_name_or_path = path)
+            pipe = None
+        elif (importType == ModelType.Vae):
+            vae = AutoencoderKL.from_pretrained(pretrained_model_name_or_path = path)
+            vae = None
         return True
     except:
         return False

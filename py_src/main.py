@@ -94,8 +94,11 @@ async def switchModel(mcc: ModelChangeContainer):
 @app.post('/loadnewmodel')
 async def loadNewModel(lnmi: LoadNewModelInfo):
     global config
-    if not TestLoad(lnmi.path):
-        return ServerStatus(status=1, status_str='The specified directory is not a Diffusers model.')
+
+    importType = get_model_type(lnmi.type)
+
+    if not TestLoad(lnmi.path, importType):
+        return ServerStatus(status=1, status_str='The specified directory is not a Diffusers model or Vae.')
     try:
         importName = os.path.basename(lnmi.path)
         importPath = os.path.join(get_models_path(), importName)
@@ -108,7 +111,7 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
         return ServerStatus(status=1, status_str='Othe Error.\n' + e)
     
     addNewModelToConfig(
-        get_model_type(lnmi.type),
+        importType,
         importName,
         lnmi.name,
         lnmi.description)
