@@ -9,16 +9,44 @@ const startupHeartBeat = setInterval(() => {
   })
 }, 100);
 
+class LoadingButton {
+  constructor(element, processingText) {
+    this.processingText = processingText,
+    this.before_text = element.innerText,
+    this.button_element = element,
+    this.loading_element = element.querySelectorAll('.loadingStatus')[0],
+    this.text_element = element.querySelectorAll('.loadingText')[0]
+  }
+
+  Loading() {
+    this.text_element.innerText = this.processingText
+    this.button_element.disabled = true
+    this.loading_element.className = 'spinner-border spinner-border-sm'
+  }
+  
+  Disable() {
+    this.button_element.disabled = true
+  }
+
+  Undo() {
+    this.text_element.innerText = this.before_text
+    this.button_element.disabled = false
+    this.loading_element.className = ''
+  }
+}
+
+let SwitchModelButton
+let GenerateButton 
+
+window.onload = () => {
+  SwitchModelButton = new LoadingButton(document.getElementById('switchmodelbutton'), 'Loading...')
+  GenerateButton = new LoadingButton(document.getElementById('generatebutton'), 'Generating...')
+};
+
 const generateImage = () => {
-  const smb = document.getElementById('switchmodelbutton')
-  const genb = document.getElementById('generatebutton')
-  const genl = document.getElementById('generateloading')
-  const gent = document.getElementById('generatetext')
-  const gent_txt = gent.innerText
-  smb.disabled = true
-  gent.innerText = 'Generating...'
-  genb.disabled = true
-  genl.className = 'spinner-border spinner-border-sm'
+  SwitchModelButton.Disable()
+  GenerateButton.Loading()
+
   let progress = document.getElementById('generate-progressbar')
   progress.style.width = '0%'
 
@@ -83,10 +111,8 @@ const generateImage = () => {
   });
 
   socket.addEventListener("close", function(event) {
-    gent.innerText = gent_txt
-    smb.disabled = false
-    genb.disabled = false
-    genl.className = ''
+    SwitchModelButton.Undo()
+    GenerateButton.Undo()
     progress.classList.remove("progress-bar-striped")
     progress.classList.remove("progress-bar-animated")
   });
@@ -100,7 +126,7 @@ const getModelsList = () => {
     
     ml.innerHTML = ''
     vl.innerHTML = ''
-    
+
     let e = document.createElement("option");
     e.value = 'null';
     e.textContent = "None";
@@ -133,25 +159,16 @@ const getLoadedModel = () => {
 }
 
 const switchModel = () => {
-  const genb = document.getElementById('generatebutton')
-  const smb = document.getElementById('switchmodelbutton')
-  const sml = document.getElementById('switchmodelloading')
-  const smt = document.getElementById('switchmodeltext')
-  const smt_txt = smt.innerText
-  genb.disabled = true
-  smt.innerText = 'Loading...'
-  smb.disabled = true
-  sml.className = 'spinner-border spinner-border-sm'
+  SwitchModelButton.Loading()
+  GenerateButton.Disable()
 
   const modelElm = document.getElementById('model-list')
   const vaeElm = document.getElementById('vae-list')
 
   if (modelElm.options.length == 0 || vaeElm.options.length == 0) {
     getLoadedModel()
-    smt.innerText = smt_txt
-    genb.disabled = false
-    smb.disabled = false
-    sml.className = ''
+    SwitchModelButton.Undo()
+    GenerateButton.Undo()
     return
   }
   
@@ -162,10 +179,8 @@ const switchModel = () => {
   )
   postRequest('/switchModel', g_data.convertToLiteral(), (data) => {
     getLoadedModel()
-    smt.innerText = smt_txt
-    genb.disabled = false
-    smb.disabled = false
-    sml.className = ''
+    SwitchModelButton.Undo()
+    GenerateButton.Undo()
   })
 }
 
