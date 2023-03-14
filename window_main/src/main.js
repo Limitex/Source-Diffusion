@@ -11,6 +11,7 @@ const startupHeartBeat = setInterval(() => {
 
 let GenerationProgress;
 let SwitchModelButton;
+let LoadNewModelButton;
 let GenerateButton;
 
 window.onload = () => {
@@ -21,6 +22,10 @@ window.onload = () => {
     document.getElementById("switchmodelbutton"),
     "Loading..."
   );
+  LoadNewModelButton = new LoadingButton(
+    document.getElementById("loadnewmodelbutton"),
+    "Loading..."
+  );
   GenerateButton = new LoadingButton(
     document.getElementById("generatebutton"),
     "Generating..."
@@ -29,6 +34,7 @@ window.onload = () => {
 
 const generateImage = () => {
   SwitchModelButton.Disable();
+  LoadNewModelButton.Disable();
   GenerateButton.Loading();
   GenerationProgress.current(0);
 
@@ -63,6 +69,7 @@ const generateImage = () => {
     (event, socket) => {
       SwitchModelButton.Undo();
       GenerateButton.Undo();
+      LoadNewModelButton.Undo();
       GenerationProgress.animated(false);
     },
     (event, socket) => {
@@ -143,6 +150,7 @@ const getLoadedModel = () => {
 const switchModel = () => {
   SwitchModelButton.Loading();
   GenerateButton.Disable();
+  LoadNewModelButton.Disable();
 
   const modelElm = document.getElementById("model-list");
   const vaeElm = document.getElementById("vae-list");
@@ -151,6 +159,7 @@ const switchModel = () => {
     getLoadedModel();
     SwitchModelButton.Undo();
     GenerateButton.Undo();
+    LoadNewModelButton.Undo();
     return;
   }
 
@@ -163,6 +172,7 @@ const switchModel = () => {
     getLoadedModel();
     SwitchModelButton.Undo();
     GenerateButton.Undo();
+    LoadNewModelButton.Undo();
   });
 };
 
