@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *; img-src 'self' blob:;"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *; img-src 'self' blob:;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Source Diffusion</title>
-    <link rel="stylesheet" type="text/css" href="../window_src/destyle.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="src/main.css" />
+    <link rel="stylesheet" type="text/css" href="../window_src/destyle.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="src/main.css">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="src/elementsClass.js"></script>
     <script src="src/main.js"></script>
@@ -23,33 +16,15 @@
   <body>
     <h1>Source Diffusion</h1>
     <div class="progress progress-container">
-      <div
-        id="generate-progressbar"
-        class="progress-bar"
-        role="progressbar"
-        aria-valuenow="0"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        style="width: 100%"
-      ></div>
+      <div id="generate-progressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
     </div>
     <div class="form-group">
       <div id="prompts-text-area">
         <div class="input-container">
-          <textarea
-            class="form-control"
-            id="positive-prompts"
-            rows="3"
-            placeholder="Positive Prompts"
-          ></textarea>
+          <textarea class="form-control" id="positive-prompts" rows="3" placeholder="Positive Prompts"></textarea>
         </div>
         <div class="input-container">
-          <textarea
-            class="form-control"
-            id="negative-prompts"
-            rows="3"
-            placeholder="Negative Prompts"
-          ></textarea>
+          <textarea class="form-control" id="negative-prompts" rows="3" placeholder="Negative Prompts"></textarea>
         </div>
       </div>
       <div id="model-selector">
@@ -65,12 +40,7 @@
           <div id="loadedModelText"></div>
         </div>
         <div class="input-container">
-          <button
-            id="switchmodelbutton"
-            class="btn btn-primary"
-            type="button"
-            onclick="switchModel()"
-          >
+          <button id="switchmodelbutton" class="btn btn-primary" type="button" onclick="switchModel()">
             <span class="loadingStatus" role="status" aria-hidden="true"></span>
             <span class="loadingText sr-only">Load</span>
           </button>
@@ -84,127 +54,43 @@
           </select>
         </div>
         <div class="input-container">
-          <input
-            class="form-control"
-            id="input-model-path"
-            placeholder="Model Path"
-          />
+          <input class="form-control" id="input-model-path" placeholder="Model Path">
         </div>
         <div class="input-container">
-          <input
-            class="form-control"
-            id="input-model-name"
-            placeholder="Model Name"
-          />
+          <input class="form-control" id="input-model-name" placeholder="Model Name">
         </div>
         <div class="input-container">
-          <input
-            class="form-control"
-            id="input-model-description"
-            placeholder="Model description"
-          />
+          <input class="form-control" id="input-model-description" placeholder="Model description">
         </div>
-        <button
-          id="loadnewmodelbutton"
-          class="btn btn-primary"
-          type="button"
-          onclick="loadNewModel()"
-        >
+        <button id="loadnewmodelbutton" class="btn btn-primary" type="button" onclick="loadNewModel()">
           <span class="loadingStatus" role="status" aria-hidden="true"></span>
           <span class="loadingText sr-only">Load</span>
         </button>
       </div>
       <div id="generate-property">
         <div class="input-container">
-          <input
-            min="1"
-            max="1024"
-            step="8"
-            value="768"
-            type="number"
-            id="input-height"
-            placeholder="height"
-            class="form-control"
-          />
+          <input min="1" max="1024" step="8" value="768" type="number" id="input-height" placeholder="height" class="form-control"/>
         </div>
         <div class="input-container">
-          <input
-            min="1"
-            max="1025"
-            step="8"
-            value="512"
-            type="number"
-            id="input-width"
-            placeholder="widht"
-            class="form-control"
-          />
+          <input min="1" max="1025" step="8" value="512" type="number" id="input-width" placeholder="widht" class="form-control"/>
         </div>
         <div class="input-container">
-          <input
-            min="1"
-            max="50"
-            step="1"
-            value="28"
-            type="number"
-            id="input-steps"
-            class="form-control"
-            placeholder="Steps"
-          />
+          <input min="1" max="50" step="1" value="28" type="number" id="input-steps" class="form-control" placeholder="Steps"/>
         </div>
         <div class="input-container">
-          <input
-            min="0.1"
-            max="100"
-            step="0.1"
-            value="12.0"
-            type="number"
-            id="input-scale"
-            class="form-control"
-            placeholder="Scale"
-          />
+          <input min="0.1" max="100" step="0.1" value="12.0" type="number" id="input-scale" class="form-control" placeholder="Scale"/>
         </div>
         <div class="input-container">
-          <input
-            min="1"
-            max="100"
-            step="1"
-            value="1"
-            type="number"
-            id="input-generate-num"
-            class="form-control"
-            placeholder="Number of Images"
-          />
+          <input min="1" max="100" step="1" value="1" type="number" id="input-generate-num" class="form-control" placeholder="Number of Images"/>
         </div>
         <div class="input-container">
-          <input
-            min="0.0"
-            max="1.0"
-            step="0.1"
-            value="0.0"
-            type="number"
-            id="input-eta"
-            class="form-control"
-            placeholder="eta"
-          />
+          <input min="0.0" max="1.0" step="0.1" value="0.0" type="number" id="input-eta" class="form-control" placeholder="eta"/>
         </div>
         <div class="input-container">
-          <input
-            step="1"
-            value="-1"
-            type="number"
-            id="input-seed"
-            class="form-control"
-            placeholder="Seed"
-          />
+          <input step="1" value="-1" type="number" id="input-seed" class="form-control" placeholder="Seed"/>
         </div>
         <div class="input-container">
-          <button
-            id="generatebutton"
-            class="btn btn-primary"
-            type="button"
-            onclick="generateImage()"
-            disabled
-          >
+          <button id="generatebutton" class="btn btn-primary" type="button" onclick="generateImage()" disabled>
             <span class="loadingStatus" role="status" aria-hidden="true"></span>
             <span class="loadingText sr-only">Generate</span>
           </button>
