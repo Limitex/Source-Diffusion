@@ -33,11 +33,11 @@ const httpDownload = (uri, out_path, success_callback, failed_callback) => {
 };
 
 const unzip = (zipPath, outDirPath, success_callback, failed_callback) => {
-  const file = 
-    fs.createReadStream(zipPath)
-      .pipe(unzipper.Extract({ path: outDirPath }))
-      .on("finish", success_callback)
-      .on("error", failed_callback);
+  const file = fs
+    .createReadStream(zipPath)
+    .pipe(unzipper.Extract({ path: outDirPath }))
+    .on("finish", success_callback)
+    .on("error", failed_callback);
 };
 
 const createDirectoryByOverwrite = (directoryPath) => {

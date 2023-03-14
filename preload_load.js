@@ -1,7 +1,7 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld('background', {
-  stdout: () => ipcRenderer.invoke('stdout'),
-  stdstatus: () => ipcRenderer.invoke('stdstatus'),
-  exitAll: () => ipcRenderer.invoke('exitAll'),
-})
+contextBridge.exposeInMainWorld("background", {
+  stdout: () => ipcRenderer.invoke("stdout"),
+  stdstatus: () => ipcRenderer.invoke("stdstatus"),
+  exitAll: () => ipcRenderer.invoke("exitAll"),
+});

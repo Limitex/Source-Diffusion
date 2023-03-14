@@ -11,20 +11,21 @@ const PythonPath = path.join(SavePath, "python", "python.exe");
 const PythonDirPath = path.join(SavePath, "python");
 const PipPath = path.join(PythonDirPath, "Scripts", "pip.exe");
 
-const PythonURI = "https://www.python.org/ftp/python/3.10.8/python-3.10.8-embed-amd64.zip";
+const PythonURI =
+  "https://www.python.org/ftp/python/3.10.8/python-3.10.8-embed-amd64.zip";
 const PythonPIPURI = "https://bootstrap.pypa.io/get-pip.py";
 
 module.exports = {
-    PORT: PORT,
-    HOST: HOST,
-    WORK: WORK,
+  PORT: PORT,
+  HOST: HOST,
+  WORK: WORK,
 
-    SavePath: SavePath,
-    TmpPath: TmpPath,
-    PythonPath: PythonPath,
-    PythonDirPath: PythonDirPath,
-    PipPath: PipPath,
+  SavePath: SavePath,
+  TmpPath: TmpPath,
+  PythonPath: PythonPath,
+  PythonDirPath: PythonDirPath,
+  PipPath: PipPath,
 
-    PythonURI: PythonURI,
-    PythonPIPURI: PythonPIPURI
+  PythonURI: PythonURI,
+  PythonPIPURI: PythonPIPURI,
 };

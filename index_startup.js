@@ -44,7 +44,10 @@ const installPython = (callback, stdDataRef) => {
             () => {
               stdDataRef.push("Installing pip...");
               const installPipProcess = Process.exec(
-                config.PythonPath + " " + pipTmpPath + " --no-warn-script-location",
+                config.PythonPath +
+                  " " +
+                  pipTmpPath +
+                  " --no-warn-script-location",
                 (error, stdout, stderr) => {
                   const pthPath = path.join(
                     config.PythonDirPath,
@@ -91,7 +94,8 @@ const installPython = (callback, stdDataRef) => {
 const installModules = (callback, stdDataRef) => {
   stdDataRef.push("Installing module...");
   const pipprocess = Process.exec(
-    config.PipPath + " install -r py_src/requirements.txt --no-warn-script-location"
+    config.PipPath +
+      " install -r py_src/requirements.txt --no-warn-script-location"
   );
   pipprocess.stdout.on("data", (data) => {
     stdDataRef.push(data.trimEnd());

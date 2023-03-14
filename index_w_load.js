@@ -14,7 +14,7 @@ const loadWindow = () => {
   });
   // loadWindowObj.setAlwaysOnTop(true);
   loadWindowObj.loadFile("window_load/index.html");
-  return loadWindowObj
+  return loadWindowObj;
 };
 
 module.exports = {
