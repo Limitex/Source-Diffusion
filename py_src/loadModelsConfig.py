@@ -8,11 +8,11 @@ class ModelType(Enum):
     Vae = 'vae'
 
 class DiffusersModel:
-    def __init__(self, type: ModelType, path: str, name: str, discription: str) -> None:
+    def __init__(self, type: ModelType, path: str, name: str, description: str) -> None:
         self.type = type
         self.path = path
         self.name = name
-        self.discription = discription
+        self.description = description
 
 def loadConfig():
     configPath = get_models_config_path()
@@ -33,7 +33,7 @@ def loadConfig():
                 type=modelType,
                 path=json_data['path'],
                 name=json_data['name'],
-                discription=json_data['discription']
+                description=json_data['description']
             ))
         return data
     else:

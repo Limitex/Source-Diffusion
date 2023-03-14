@@ -161,8 +161,15 @@ const switchModel = () => {
 }
 
 const loadNewModel = () => {
-  const value = document.getElementById('input-model-path').value
-  const data = new LoadNewModelInfo(path = value)
+  const typeData = document.getElementById('input-model-type')
+  const pathData = document.getElementById('input-model-path').value
+  const nameData = document.getElementById('input-model-name').value
+  const descriptionData = document.getElementById('input-model-description').value
+  const data = new LoadNewModelInfo(
+    type = typeData.options[typeData.selectedIndex].value, 
+    path = pathData, 
+    name = nameData, 
+    description = descriptionData)
   postRequest('/loadnewmodel', data.convertToLiteral(), (data) => {
     console.log(data)
   })

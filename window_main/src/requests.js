@@ -44,13 +44,19 @@ const ModelChangeContainer = class {
 }
 
 const LoadNewModelInfo = class {
-  constructor(path) {
+  constructor(type, path, name, description) {
+    this.type = type
     this.path = path
+    this.name = name
+    this.description = description
   }
 
   convertToLiteral() {
     return {
+      type: this.type,
       path: this.path,
+      name: this.name,
+      description: this.description
     }
   }
 }

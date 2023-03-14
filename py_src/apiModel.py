@@ -1,5 +1,6 @@
 from typing import List, Optional, Union
 from pydantic import BaseModel
+from py_src.loadModelsConfig import ModelType
 
 class GenerateContainer(BaseModel):
     positive: str
@@ -33,4 +34,7 @@ class ServerStatus(BaseModel):
     status_str: str
 
 class LoadNewModelInfo(BaseModel):
+    type: str
     path: str
+    name: str
+    description: str
