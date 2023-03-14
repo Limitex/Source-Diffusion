@@ -25,22 +25,21 @@ class LoadingButton {
 }
 
 class ProgressBar {
-  constructor (element) {
-    this.progressBar_element = element
+  constructor(element) {
+    this.progressBar_element = element;
   }
 
   current(percent) {
-    this.progressBar_element.style.width = percent + '%'
+    this.progressBar_element.style.width = percent + "%";
   }
 
   animated(boolean) {
     if (boolean) {
-      this.progressBar_element.classList.add("progress-bar-striped")
-      this.progressBar_element.classList.add("progress-bar-animated")
+      this.progressBar_element.classList.add("progress-bar-striped");
+      this.progressBar_element.classList.add("progress-bar-animated");
     } else {
-      this.progressBar_element.classList.remove("progress-bar-striped")
-      this.progressBar_element.classList.remove("progress-bar-animated")
+      this.progressBar_element.classList.remove("progress-bar-striped");
+      this.progressBar_element.classList.remove("progress-bar-animated");
     }
   }
 }
-
