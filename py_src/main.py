@@ -2,6 +2,7 @@ import asyncio
 import io
 import json
 import os
+import shutil
 import traceback
 import torch
 import base64
@@ -10,9 +11,9 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
-from py_src.diffuserRapper import diffusionGenerate_async, load
+from py_src.diffuserRapper import TestLoad, diffusionGenerate_async, load
 from py_src.osPath import get_models_path
-from py_src.loadModelsConfig import ModelType, idToName, loadConfig
+from py_src.loadModelsConfig import ModelType, addNewModelToConfig, get_model_type, idToName, loadConfig
 
 app = FastAPI()
 
@@ -92,5 +93,24 @@ async def switchModel(mcc: ModelChangeContainer):
 
 @app.post('/loadnewmodel')
 async def loadNewModel(lnmi: LoadNewModelInfo):
-    print(lnmi)
+    global config
+    if not TestLoad(lnmi.path):
+        return ServerStatus(status=1, status_str='The specified directory is not a Diffusers model.')
+    try:
+        importName = os.path.basename(lnmi.path)
+        importPath = os.path.join(get_models_path(), importName)
+        shutil.copytree(lnmi.path, importPath)
+    except FileNotFoundError:
+        return ServerStatus(status=1, status_str='Directory was not found.')
+    except FileExistsError:
+        return ServerStatus(status=1, status_str='That directory exists.')
+    except Exception as e:
+        return ServerStatus(status=1, status_str='Othe Error.\n' + e)
+    
+    addNewModelToConfig(
+        get_model_type(lnmi.type),
+        importName,
+        lnmi.name,
+        lnmi.description)
+    config = loadConfig()
     return ServerStatus(status=0, status_str='server is ready')
