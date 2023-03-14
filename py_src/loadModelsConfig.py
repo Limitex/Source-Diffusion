@@ -14,6 +14,12 @@ class DiffusersModel:
         self.name = name
         self.description = description
 
+def get_model_type(string):
+    for model_type in ModelType:
+        if string == model_type.value:
+            return model_type
+    raise ValueError("Invalid model type")
+
 def loadConfig():
     configPath = get_models_config_path()
     if os.path.exists(configPath):
@@ -37,10 +43,27 @@ def loadConfig():
             ))
         return data
     else:
-        os.mkdir(get_models_path())
+        if not os.path.isdir(get_models_path()):
+            os.mkdir(get_models_path())
         with open(configPath, "w") as f:
             f.write('[]')
         return []
 
 def idToName(config, id):
     return next((c.name for c in config if c.path == id), None)
+
+def addNewModelToConfig(type: ModelType, path: str, name: str, description: str):
+    json_open = open(get_models_config_path(), 'r')
+    json_load = json.load(json_open)
+    new_data = {
+        "type": type.value,
+        "path": path,
+        "name": name,
+        "description": description
+    }
+    if any(d['path'] == new_data['path'] for d in json_load):
+        print('Data with path {} already exists. Skipping addition.'.format(new_data['path']))
+    else:
+        json_load.append(new_data)
+        with open(get_models_config_path(), 'w') as f:
+            json.dump(json_load, f)

@@ -97,6 +97,15 @@ const getModelsList = () => {
     const modelList = JSON.parse(data.models_json);
     const ml = document.getElementById('model-list')
     const vl = document.getElementById('vae-list')
+    
+    ml.innerHTML = ''
+    vl.innerHTML = ''
+    
+    let e = document.createElement("option");
+    e.value = 'null';
+    e.textContent = "None";
+    vl.appendChild(e)
+
     modelList.forEach(model => {
       if (model.type == 'model') {
         const i = document.createElement('option')
@@ -171,6 +180,7 @@ const loadNewModel = () => {
     name = nameData, 
     description = descriptionData)
   postRequest('/loadnewmodel', data.convertToLiteral(), (data) => {
+    getModelsList()
     console.log(data)
   })
 }

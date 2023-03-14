@@ -45,6 +45,14 @@ def load(modelId, torch_dtype, vaeId = None):
     loadedVaeModelId = vaeId
     print(f"Models loaded in {time_load:.2f}s")
 
+def TestLoad(path):
+    try:
+        pipe = loadPipeline(path, torch.float16)
+        pipe = None
+        return True
+    except:
+        return False
+
 def diffusionGenerate_progress_callback(step :int, timestep :int, latents :torch.FloatTensor):
     if generate_progress_callback is not None:
         generate_progress_callback(step, timestep, latents)
