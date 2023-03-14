@@ -3,9 +3,11 @@ import os
 from py_src.osPath import get_models_config_path, get_models_path
 from enum import Enum
 
+
 class ModelType(Enum):
     Model = 'model'
     Vae = 'vae'
+
 
 class DiffusersModel:
     def __init__(self, type: ModelType, path: str, name: str, description: str) -> None:
@@ -14,11 +16,13 @@ class DiffusersModel:
         self.name = name
         self.description = description
 
+
 def get_model_type(string):
     for model_type in ModelType:
         if string == model_type.value:
             return model_type
     raise ValueError("Invalid model type")
+
 
 def loadConfig():
     configPath = get_models_config_path()
@@ -34,7 +38,7 @@ def loadConfig():
             else:
                 raise ValueError('An unsupported model type was found.'
                                  'Please correct the contents of the file or delete it and try again.')
-            
+
             data.append(DiffusersModel(
                 type=modelType,
                 path=json_data['path'],
@@ -49,8 +53,10 @@ def loadConfig():
             f.write('[]')
         return []
 
+
 def idToName(config, id):
     return next((c.name for c in config if c.path == id), None)
+
 
 def addNewModelToConfig(type: ModelType, path: str, name: str, description: str):
     json_open = open(get_models_config_path(), 'r')
@@ -62,7 +68,8 @@ def addNewModelToConfig(type: ModelType, path: str, name: str, description: str)
         "description": description
     }
     if any(d['path'] == new_data['path'] for d in json_load):
-        print('Data with path {} already exists. Skipping addition.'.format(new_data['path']))
+        print('Data with path {} already exists. Skipping addition.'.format(
+            new_data['path']))
     else:
         json_load.append(new_data)
         with open(get_models_config_path(), 'w') as f:

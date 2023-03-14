@@ -33,19 +33,22 @@ except:
     raise FileNotFoundError('It could not be read because the structure of the models.json file is different.'
                             'Please correct the contents of the file or delete it and try again.')
 
+
 @app.post('/')
 async def ready():
     return ServerStatus(status=0, status_str='server is ready')
+
 
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
     def progress(step: int, timestep: int, latents: torch.FloatTensor):
         out = {
-            "steps":int(step),
-            "max_steps":int(gc.steps),
-            "timetep":int(timestep)
+            "steps": int(step),
+            "max_steps": int(gc.steps),
+            "timetep": int(timestep)
         }
-        data = GenerationOutput(type="progress", json_output=json.dumps(out)).json()
+        data = GenerationOutput(
+            type="progress", json_output=json.dumps(out)).json()
         executor.submit(asyncio.run, websocket.send_bytes(data))
 
     await websocket.accept()
@@ -64,6 +67,7 @@ async def generate(websocket: WebSocket):
     data = GenerationOutput(type="generate", output=images_encoded).json()
     await websocket.send_bytes(data)
 
+
 @app.post('/getmodelslist')
 async def getModelsList():
     sendData = []
@@ -71,11 +75,12 @@ async def getModelsList():
         sendData.append(
             {
                 "type": data.type.value,
-                "id": data.path,                
-                "name": data.name,   
+                "id": data.path,
+                "name": data.name,
             }
         )
     return ModelListOutput(models_json=json.dumps(sendData))
+
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
@@ -83,13 +88,15 @@ async def getloadedmodel():
     vaeName = idToName(config, py_src.diffuserRapper.loadedVaeModelId)
     return ModelOutput(model=modelName, vae_model=vaeName)
 
+
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):
     try:
         load(mcc.model_id, torch.float16, mcc.vae_id)
         return ServerStatus(status=0, status_str='server is ready')
-    except :
+    except:
         return ServerStatus(status=1, status_str=traceback.format_exc())
+
 
 @app.post('/loadnewmodel')
 async def loadNewModel(lnmi: LoadNewModelInfo):
@@ -109,7 +116,7 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
         return ServerStatus(status=1, status_str='That directory exists.')
     except Exception as e:
         return ServerStatus(status=1, status_str='Othe Error.\n' + e)
-    
+
     addNewModelToConfig(
         importType,
         importName,
