@@ -20,5 +20,9 @@ def get_models_path():
     return os.path.join(get_user_data(), 'models')
 
 
+def get_cache_path():
+    return os.path.join(get_models_path(), 'cache')
+
+
 def get_models_config_path():
     return os.path.join(get_models_path(), 'models.json')

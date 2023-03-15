@@ -6,7 +6,7 @@ from diffusers import StableDiffusionPipeline
 from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
 from py_src.loadModelsConfig import ModelType
-from py_src.osPath import get_models_path
+from py_src.osPath import get_models_path, get_cache_path
 
 global pipe
 generate_progress_callback = None
@@ -18,15 +18,18 @@ def loadPipeline(modelName, torch_dtype, vaeName=None):
     if vaeName is None:
         pipeline = StableDiffusionPipeline.from_pretrained(
             pretrained_model_name_or_path=modelName,
-            torch_dtype=torch_dtype
+            torch_dtype=torch_dtype,
+            cache_dir=get_cache_path()
         )
     else:
         pipeline = StableDiffusionPipeline.from_pretrained(
             pretrained_model_name_or_path=modelName,
             torch_dtype=torch_dtype,
+            cache_dir=get_cache_path(),
             vae=AutoencoderKL.from_pretrained(
                 pretrained_model_name_or_path=vaeName,
-                torch_dtype=torch_dtype
+                torch_dtype=torch_dtype,
+                cache_dir=get_cache_path(),
             )
         )
     return pipeline.to("cuda")
@@ -53,11 +56,13 @@ def TestLoad(path: str, importType: ModelType):
     try:
         if (importType == ModelType.Model):
             pipe = StableDiffusionPipeline.from_pretrained(
-                pretrained_model_name_or_path=path)
+                pretrained_model_name_or_path=path,
+                cache_dir=get_cache_path())
             pipe = None
         elif (importType == ModelType.Vae):
             vae = AutoencoderKL.from_pretrained(
-                pretrained_model_name_or_path=path)
+                pretrained_model_name_or_path=path,
+                cache_dir=get_cache_path())
             vae = None
         return True
     except:
