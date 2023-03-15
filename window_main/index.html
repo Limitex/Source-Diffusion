@@ -17,10 +17,16 @@
     <div class="form-group">
       <div id="prompts-text-area">
         <div class="input-container">
-          <textarea class="form-control" id="positive-prompts" rows="3" placeholder="Positive Prompts"></textarea>
+          <div class="form-outline">
+            <textarea class="form-control" id="positive-prompts" rows="3"></textarea>
+            <label class="form-label" for="positive-prompts">Positive Prompts</label>
+          </div>
         </div>
         <div class="input-container">
-          <textarea class="form-control" id="negative-prompts" rows="3" placeholder="Negative Prompts"></textarea>
+          <div class="form-outline">
+            <textarea class="form-control" id="negative-prompts" rows="2"></textarea>
+            <label class="form-label" for="negative-prompts">Negative Prompts</label>
+          </div>
         </div>
       </div>
       <div id="model-selector">
@@ -50,13 +56,22 @@
           </select>
         </div>
         <div class="input-container">
-          <input class="form-control" id="input-model-path" placeholder="Model Path">
+          <div class="form-outline">
+            <input type="text" id="input-model-path" class="form-control" />
+            <label class="form-label" for="input-model-path">Model Path</label>
+          </div>
         </div>
         <div class="input-container">
-          <input class="form-control" id="input-model-name" placeholder="Model Name">
+          <div class="form-outline">
+            <input type="text" id="input-model-name" class="form-control" />
+            <label class="form-label" for="input-model-name">Model Name</label>
+          </div>
         </div>
         <div class="input-container">
-          <input class="form-control" id="input-model-description" placeholder="Model description">
+          <div class="form-outline">
+            <input type="text" id="input-model-description" class="form-control" />
+            <label class="form-label" for="input-model-description">Model description</label>
+          </div>
         </div>
         <button id="loadnewmodelbutton" class="btn btn-primary" type="button" onclick="loadNewModel()">
           <span class="loadingStatus" role="status" aria-hidden="true"></span>
@@ -65,25 +80,46 @@
       </div>
       <div id="generate-property">
         <div class="input-container">
-          <input min="1" max="1024" step="8" value="768" type="number" id="input-height" placeholder="height" class="form-control"/>
+          <div class="form-outline">
+            <input min="1" max="1024" step="1" value="768" type="number" id="input-height" class="form-control" />
+            <label class="form-label" for="input-height">Height</label>
+          </div>
         </div>
         <div class="input-container">
-          <input min="1" max="1025" step="8" value="512" type="number" id="input-width" placeholder="widht" class="form-control"/>
+          <div class="form-outline">
+            <input min="1" max="1025" step="1" value="512" type="number" id="input-width" class="form-control" />
+            <label class="form-label" for="input-width">Widht</label>
+          </div>
         </div>
         <div class="input-container">
-          <input min="1" max="50" step="1" value="28" type="number" id="input-steps" class="form-control" placeholder="Steps"/>
+          <div class="form-outline">
+            <input min="1" max="50" step="1" value="28" type="number" id="input-steps" class="form-control" />
+            <label class="form-label" for="input-steps">Steps</label>
+          </div>
         </div>
         <div class="input-container">
-          <input min="0.1" max="100" step="0.1" value="12.0" type="number" id="input-scale" class="form-control" placeholder="Scale"/>
+          <div class="form-outline">
+            <input min="0.1" max="100" step="0.1" value="12.0" type="number" id="input-scale" class="form-control" />
+            <label class="form-label" for="input-scale">Scale</label>
+          </div>
         </div>
         <div class="input-container">
-          <input min="1" max="100" step="1" value="1" type="number" id="input-generate-num" class="form-control" placeholder="Number of Images"/>
+          <div class="form-outline">
+            <input min="1" max="100" step="1" value="1" type="number" id="input-generate-num" class="form-control" />
+            <label class="form-label" for="input-generate-num">Number of Images</label>
+          </div>
         </div>
         <div class="input-container">
-          <input min="0.0" max="1.0" step="0.1" value="0.0" type="number" id="input-eta" class="form-control" placeholder="eta"/>
+          <div class="form-outline">
+            <input min="0.0" max="1.0" step="0.1" value="0.0" type="number" id="input-eta" class="form-control" />
+            <label class="form-label" for="input-eta">eta</label>
+          </div>
         </div>
         <div class="input-container">
-          <input step="1" value="-1" type="number" id="input-seed" class="form-control" placeholder="Seed"/>
+          <div class="form-outline">
+            <input min="-1" step="1" value="-1" type="number" id="input-seed" class="form-control" />
+            <label class="form-label" for="input-seed">Seed</label>
+          </div>
         </div>
         <div class="input-container">
           <button id="generatebutton" class="btn btn-primary" type="button" onclick="generateImage()" disabled>
