@@ -107,16 +107,21 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
 
     if not TestLoad(lnmi.path, importType):
         return ServerStatus(status=1, status_str='The specified directory is not a Diffusers model or Vae.')
-    try:
-        importName = os.path.basename(lnmi.path)
-        importPath = os.path.join(get_models_path(), importName)
-        shutil.copytree(lnmi.path, importPath)
-    except FileNotFoundError:
-        return ServerStatus(status=1, status_str='Directory was not found.')
-    except FileExistsError:
-        return ServerStatus(status=1, status_str='That directory exists.')
-    except Exception as e:
-        return ServerStatus(status=1, status_str='Othe Error.\n' + e)
+    if importType == ModelType.Model or importType == ModelType.Vae:
+        try:
+            importName = os.path.basename(lnmi.path)
+            importPath = os.path.join(get_models_path(), importName)
+            shutil.copytree(lnmi.path, importPath)
+        except FileNotFoundError:
+            return ServerStatus(status=1, status_str='Directory was not found.')
+        except FileExistsError:
+            return ServerStatus(status=1, status_str='That directory exists.')
+        except Exception as e:
+            return ServerStatus(status=1, status_str='Othe Error.\n' + e)
+    elif importType == ModelType.HuggingFace:
+        importName = lnmi.path
+    else:
+        return ServerStatus(status=1, status_str='Othe Error.')
 
     addNewModelToConfig(
         importType,
