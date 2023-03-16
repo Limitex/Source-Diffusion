@@ -140,7 +140,8 @@ const getModelsList = () => {
 const getLoadedModel = () => {
   postRequest("/getloadedmodel", "", (data) => {
     const c = document.getElementById("loadedModelText");
-    document.getElementById("generatebutton").disabled = data.model == null;
+    if (data.model == null) GenerateButton.Disable()
+    else GenerateButton.Undo()
     if (data.model == null) data.model = "None";
     if (data.vae_model == null) data.vae_model = "None";
     c.innerText = data.model + " / " + data.vae_model;
@@ -193,12 +194,13 @@ const loadNewModel = () => {
     (name = nameData),
     (description = descriptionData)
   );
-  postRequest("/loadnewmodel", data.convertToLiteral(), (data) => {
-    getModelsList();
-    console.log(data);
-
+  postRequest("/loadnewmodel", data.convertToLiteral(), (data) => { 
     SwitchModelButton.Undo();
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
+
+    getModelsList();
+    getLoadedModel();
+    console.log(data);
   });
 };
