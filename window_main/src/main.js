@@ -181,14 +181,12 @@ const loadNewModel = () => {
   GenerateButton.Disable();
   LoadNewModelButton.Loading();
 
-  const typeData = document.getElementById("input-model-type");
   const pathData = document.getElementById("input-model-path").value;
   const nameData = document.getElementById("input-model-name").value;
   const descriptionData = document.getElementById(
     "input-model-description"
   ).value;
   const data = new LoadNewModelInfo(
-    (type = typeData.options[typeData.selectedIndex].value),
     (path = pathData),
     (name = nameData),
     (description = descriptionData)

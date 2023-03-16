@@ -41,7 +41,6 @@ class ServerStatus(BaseModel):
 
 
 class LoadNewModelInfo(BaseModel):
-    type: str
     path: str
     name: str
     description: str

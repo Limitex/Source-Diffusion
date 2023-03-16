@@ -44,8 +44,7 @@ const ModelChangeContainer = class {
 };
 
 const LoadNewModelInfo = class {
-  constructor(type, path, name, description) {
-    this.type = type;
+  constructor(path, name, description) {
     this.path = path;
     this.name = name;
     this.description = description;
@@ -53,7 +52,6 @@ const LoadNewModelInfo = class {
 
   convertToLiteral() {
     return {
-      type: this.type,
       path: this.path,
       name: this.name,
       description: this.description,
