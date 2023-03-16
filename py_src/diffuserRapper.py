@@ -44,7 +44,8 @@ def load(modelId, torch_dtype, vaeId=None):
         torch_dtype,
         None if vaeId == None else os.path.join(get_models_path(), vaeId)
     )
-    pipe.safety_checker = lambda images, **kwargs: (images, False)
+    if pipe.safety_checker is not None:
+        pipe.safety_checker = lambda images, **kwargs: (images, False)
     pipe.enable_attention_slicing()
     time_load = time.time() - load_time
     loadedModelId = modelId
