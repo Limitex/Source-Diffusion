@@ -4,6 +4,8 @@ const iwl = require("./index_w_load.js");
 const server = require("./index_server.js");
 const startup = require("./index_startup.js");
 
+// app.disableHardwareAcceleration()
+
 let loadWindowObj = null;
 app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
