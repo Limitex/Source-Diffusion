@@ -31,6 +31,7 @@ class ModelOutput(BaseModel):
 
 
 class ModelChangeContainer(BaseModel):
+    mtype: Union[str, None]
     model_id: Union[str, None]
     vae_id: Union[str, None]
 

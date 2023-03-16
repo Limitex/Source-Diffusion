@@ -122,16 +122,16 @@ const getModelsList = () => {
     vl.appendChild(e);
 
     modelList.forEach((model) => {
+      const i = document.createElement("option");
+      i.textContent = model.name;
+      i.value = model.id;
+      i.dataset.type = model.type
       if (model.type == "model") {
-        const i = document.createElement("option");
-        i.textContent = model.name;
-        i.value = model.id;
         ml.appendChild(i);
       } else if (model.type == "vae") {
-        const i = document.createElement("option");
-        i.textContent = model.name;
-        i.value = model.id;
         vl.appendChild(i);
+      } else if (model.type == "huggingface") {
+        ml.appendChild(i);
       }
     });
   });
@@ -164,8 +164,10 @@ const switchModel = () => {
   }
 
   vaeid = vaeElm.options[vaeElm.selectedIndex].value;
+  modelid = modelElm.options[modelElm.selectedIndex]
   const g_data = new ModelChangeContainer(
-    (model_id = modelElm.options[modelElm.selectedIndex].value),
+    (mtype = modelid.dataset.type),
+    (model_id = modelid.value),
     (vae_id = vaeid != "null" ? vaeid : null)
   );
   postRequest("/switchModel", g_data.convertToLiteral(), (data) => {

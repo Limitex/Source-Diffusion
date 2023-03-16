@@ -35,12 +35,16 @@ def loadPipeline(modelName, torch_dtype, vaeName=None):
     return pipeline.to("cuda")
 
 
-def load(modelId, torch_dtype, vaeId=None):
+def load(mtype, modelId, torch_dtype, vaeId=None):
     global pipe, loadedModelId, loadedVaeModelId
     print('start model load.')
     load_time = time.time()
+    if mtype == ModelType.HuggingFace:
+        ppath = modelId
+    else:
+        ppath = os.path.join(get_models_path(), modelId)
     pipe = loadPipeline(
-        os.path.join(get_models_path(), modelId),
+        ppath,
         torch_dtype,
         None if vaeId == None else os.path.join(get_models_path(), vaeId)
     )
