@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
 from py_src.diffuserRapper import TestLoad, diffusionGenerate_async, load
+from py_src.dirsChecker import determine_model_type
 from py_src.osPath import get_models_path
 from py_src.loadModelsConfig import ModelType, addNewModelToConfig, get_model_type, idToName, loadConfig
 
@@ -102,7 +103,7 @@ async def switchModel(mcc: ModelChangeContainer):
 async def loadNewModel(lnmi: LoadNewModelInfo):
     global config
 
-    importType = get_model_type(lnmi.type)
+    importType = determine_model_type(lnmi.path)
 
     if not TestLoad(lnmi.path, importType):
         return ServerStatus(status=1, status_str='The specified directory is not a Diffusers model or Vae.')

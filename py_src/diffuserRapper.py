@@ -54,7 +54,7 @@ def load(modelId, torch_dtype, vaeId=None):
 
 def TestLoad(path: str, importType: ModelType):
     try:
-        if (importType == ModelType.Model):
+        if (importType == ModelType.Model or importType == ModelType.HuggingFace):
             pipe = StableDiffusionPipeline.from_pretrained(
                 pretrained_model_name_or_path=path,
                 cache_dir=get_cache_path())
