@@ -1,0 +1,41 @@
+#top-bar {
+  height: var(--top-bar-height);
+  width: 100%;
+  background-color: var(--root-color-2);
+  color: var(--root-color-0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#generate-top-bar {
+  top: var(--top-bar-height);
+  width: calc(100% - var(--side-bar-width) - var(--gen-side-bar-width));
+  background-color: var(--root-color-3);
+  color: var(--root-color-0);
+}
+
+#sidebar {
+  position: absolute;
+  top: var(--top-bar-height);
+  right: 0;
+  height: calc(100% - var(--top-bar-height));
+  width: var(--side-bar-width);
+  background-color: var(--root-color-3);
+  color: var(--root-color-0);
+}
+
+#generate-sidebar {
+  position: absolute;
+  top: var(--top-bar-height);
+  right: var(--side-bar-width);
+  height: calc(100% - var(--top-bar-height));
+  width: var(--gen-side-bar-width);
+  background-color: var(--root-color-4);
+  color: var(--root-color-0);
+}
+
+#main-content {
+  width: calc(100% - var(--side-bar-width) - var(--gen-side-bar-width));
+  color: var(--root-color-0);
+}

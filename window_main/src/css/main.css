@@ -1,0 +1,16 @@
+#positive-prompts {
+  color: var(--root-color-0);
+}
+
+#negative-prompts {
+  color: var(--root-color-0);
+}
+
+#generate-top-bar .form-group {
+  width: 100%;
+  overflow: hidden;
+}
+
+.input-container {
+  margin: 10px;
+}

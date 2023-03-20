@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Source Diffusion</title>
     <link rel="stylesheet" type="text/css" href="../window_src/destyle.css">
-    <link rel="stylesheet" type="text/css" href="../node_modules/mdb-ui-kit/css/mdb.min.css"/>
-    <link rel="stylesheet" type="text/css" href="src/main.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/mdb-ui-kit/css/mdb.dark.min.css"/>
+    <link rel="stylesheet" type="text/css" href="src/css/root.css">
+    <link rel="stylesheet" type="text/css" href="src/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="src/css/main.css">
   </head>
   <body>
-    <h1>Source Diffusion</h1>
-    <div class="progress progress-container">
-      <div id="generate-progressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-    </div>
-    <div class="form-group">
-      <div id="prompts-text-area">
+    <div id="top-bar">TopBar</div>
+    <div id="generate-top-bar">
+      <div class="form-group">
         <div class="input-container">
           <div class="form-outline">
             <textarea class="form-control" id="positive-prompts" rows="3"></textarea>
@@ -24,106 +23,18 @@
         </div>
         <div class="input-container">
           <div class="form-outline">
-            <textarea class="form-control" id="negative-prompts" rows="2"></textarea>
+            <textarea class="form-control" id="negative-prompts" rows="3"></textarea>
             <label class="form-label" for="negative-prompts">Negative Prompts</label>
           </div>
         </div>
       </div>
-      <div id="model-selector">
-        <div class="input-container">
-          <select class="form-control" id="model-list"></select>
-        </div>
-        <div class="input-container">
-          <select class="form-control" id="vae-list">
-            <option value="null">None</option>
-          </select>
-        </div>
-        <div class="input-container">
-          <div id="loadedModelText"></div>
-        </div>
-        <div class="input-container">
-          <button id="switchmodelbutton" class="btn btn-primary" type="button" onclick="switchModel()">
-            <span class="loadingStatus" role="status" aria-hidden="true"></span>
-            <span class="loadingText sr-only">Load</span>
-          </button>
-        </div>
-      </div>
-      <div id="model-loader">
-        <div class="input-container">
-          <div class="form-outline">
-            <input type="text" id="input-model-path" class="form-control" />
-            <label class="form-label" for="input-model-path">Model Path</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input type="text" id="input-model-name" class="form-control" />
-            <label class="form-label" for="input-model-name">Model Name</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input type="text" id="input-model-description" class="form-control" />
-            <label class="form-label" for="input-model-description">Model description</label>
-          </div>
-        </div>
-        <button id="loadnewmodelbutton" class="btn btn-primary" type="button" onclick="loadNewModel()">
-          <span class="loadingStatus" role="status" aria-hidden="true"></span>
-          <span class="loadingText sr-only">Load</span>
-        </button>
-      </div>
-      <div id="generate-property">
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="1" max="1024" step="1" value="768" type="number" id="input-height" class="form-control" />
-            <label class="form-label" for="input-height">Height</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="1" max="1025" step="1" value="512" type="number" id="input-width" class="form-control" />
-            <label class="form-label" for="input-width">Widht</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="1" max="50" step="1" value="28" type="number" id="input-steps" class="form-control" />
-            <label class="form-label" for="input-steps">Steps</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="0.1" max="100" step="0.1" value="12.0" type="number" id="input-scale" class="form-control" />
-            <label class="form-label" for="input-scale">Scale</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="1" max="100" step="1" value="1" type="number" id="input-generate-num" class="form-control" />
-            <label class="form-label" for="input-generate-num">Number of Images</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="0.0" max="1.0" step="0.1" value="0.0" type="number" id="input-eta" class="form-control" />
-            <label class="form-label" for="input-eta">eta</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <div class="form-outline">
-            <input min="-1" step="1" value="-1" type="number" id="input-seed" class="form-control" />
-            <label class="form-label" for="input-seed">Seed</label>
-          </div>
-        </div>
-        <div class="input-container">
-          <button id="generatebutton" class="btn btn-primary" type="button" onclick="generateImage()" disabled>
-            <span class="loadingStatus" role="status" aria-hidden="true"></span>
-            <span class="loadingText sr-only">Generate</span>
-          </button>
-        </div>
+      <div class="progress">
+        <div id="generate-progressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
       </div>
     </div>
-    <div id="generate-images"></div>
+    <div id="sidebar">History</div>
+    <div id="generate-sidebar">GenerateValues</div>
+    <div id="main-content">MeinContetns</div>
   </body>
   <script src="../node_modules/mdb-ui-kit/js/mdb.min.js"></script>
   <script src="src/elementsClass.js"></script>

@@ -1,0 +1,28 @@
+:root {
+  --root-color-0: #fff7f7;
+  --root-color-1: #241147;
+  --root-color-2: #2d1757;
+  --root-color-3: #361d66;
+  --root-color-4: #432679;
+  --root-color-5: #4a2d80;
+  --root-color-6: #57388f;
+
+  --top-bar-height: 50px;
+  --gen-top-bar-height: 120px;
+  --side-bar-width: 120px;
+  --gen-side-bar-width: 200px;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--root-color-1);
+}
