@@ -86,7 +86,7 @@ const generateImage = () => {
 
           const container = document.createElement("div");
           container.className = "history-thumbnail";
-          image_bod.appendChild(container);
+          image_bod.prepend(container);
 
           const img = document.createElement("img");
           img.src = url;
