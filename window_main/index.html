@@ -7,6 +7,7 @@
     <title>Source Diffusion</title>
     <link rel="stylesheet" type="text/css" href="../window_src/destyle.css">
     <link rel="stylesheet" type="text/css" href="../node_modules/mdb-ui-kit/css/mdb.dark.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css"/>
     <link rel="stylesheet" type="text/css" href="src/css/root.css">
     <link rel="stylesheet" type="text/css" href="src/css/layout.css">
     <link rel="stylesheet" type="text/css" href="src/css/prompts.css">
@@ -151,7 +152,14 @@
     <div id="main-content">
       <img src="" id="main-generated-image">
     </div>
-    <div id="control-side-bar"></div>
+    <div id="control-side-bar">
+      <div class="side-btns">
+        <button type="button" onclick="">
+          <i class="bi bi-download"></i>
+        </button>
+      </div>
+      
+    </div>
   </body>
   <script src="../node_modules/mdb-ui-kit/js/mdb.min.js"></script>
   <script src="src/elementsClass.js"></script>
