@@ -85,17 +85,13 @@ const generateImage = () => {
           const url = URL.createObjectURL(blob);
 
           const container = document.createElement("div");
+          container.className = "history-thumbnail";
           image_bod.appendChild(container);
 
           const img = document.createElement("img");
           img.src = url;
           img.className = "img-thumbnail";
           container.appendChild(img);
-
-          const a = document.createElement("a");
-          a.href = url;
-          a.textContent = "Download";
-          container.appendChild(a);
         });
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);

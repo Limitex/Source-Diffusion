@@ -18,3 +18,25 @@
 .no-resize {
   resize: none;
 }
+
+#history-label {
+  width: 100%;
+  height: var(--history-label-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#generate-images {
+  width: 100%;
+  height: calc(100% - var(--history-label-height));
+  overflow-y: auto;
+}
+
+.history-thumbnail {
+  margin: 10px;
+}
+
+.img-thumbnail {
+  padding: 0;
+}
