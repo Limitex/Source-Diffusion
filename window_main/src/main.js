@@ -95,6 +95,8 @@ const generateImage = () => {
 
           const mainImg = document.getElementById("main-generated-image");
           mainImg.src = url;
+
+          document.getElementById('download-button-link').href = url
         });
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);
@@ -105,6 +107,10 @@ const generateImage = () => {
     }
   );
 };
+
+const downloadImage = () => {
+  document.getElementById('download-button-link').click();
+}
 
 const getModelsList = () => {
   postRequest("/getmodelslist", "", (data) => {
