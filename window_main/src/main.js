@@ -92,6 +92,9 @@ const generateImage = () => {
           img.src = url;
           img.className = "img-thumbnail";
           container.appendChild(img);
+
+          const mainImg = document.getElementById("main-generated-image");
+          mainImg.src = url;
         });
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);

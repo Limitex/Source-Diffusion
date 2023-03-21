@@ -11,8 +11,9 @@
   --gen-top-bar-height: 200px;
   --side-bar-width: 120px;
   --gen-side-bar-width: 300px;
+  --bottom-bar-height: 50px;
   
-  --history-label-height: 50px
+  --history-label-height: 50px;
 }
 
 html {
