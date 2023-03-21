@@ -34,6 +34,7 @@
   width: var(--gen-side-bar-width);
   background-color: var(--root-color-4);
   color: var(--root-color-0);
+  overflow-y: auto;
 }
 
 #main-content {
