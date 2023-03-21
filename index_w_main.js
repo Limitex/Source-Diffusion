@@ -4,6 +4,8 @@ const mainWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
+    minWidth: 600,
+    minHeight: 600,
     title: "Source-Diffusion",
     webPreferences: {
       nodeIntegration: false,
