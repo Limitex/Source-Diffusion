@@ -10,6 +10,7 @@
 
 #generate-top-bar {
   top: var(--top-bar-height);
+  height: var(--gen-top-bar-height);
   width: calc(100% - var(--side-bar-width) - var(--gen-side-bar-width));
   background-color: var(--root-color-3);
   color: var(--root-color-0);
@@ -37,5 +38,9 @@
 
 #main-content {
   width: calc(100% - var(--side-bar-width) - var(--gen-side-bar-width));
+  height: calc(100% - var(--top-bar-height) - var(--gen-top-bar-height));
   color: var(--root-color-0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,14 +1,34 @@
 #positive-prompts {
   color: var(--root-color-0);
+  height: 100%;
 }
 
 #negative-prompts {
   color: var(--root-color-0);
+  height: 100%;
 }
 
-#generate-top-bar .form-group {
-  width: 100%;
-  overflow: hidden;
+#pronpts-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+#pronpts-container .input-container {
+  flex: 1;
+}
+
+#pronpts-container .form-outline {
+  height: 100%;
+}
+
+#pic-positive {
+  margin-bottom: 5px;
+}
+
+#pic-negative{
+  margin-top: 5px;
 }
 
 .input-container {
