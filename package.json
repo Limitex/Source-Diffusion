@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.3",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.6.3",
     "mdb-ui-kit": "^6.2.0",
