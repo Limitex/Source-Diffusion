@@ -14,3 +14,16 @@
 .input-container {
   margin: 10px;
 }
+
+.generate-values-container {
+  margin: 10px;
+  border: solid 1px var(--root-color-6);
+}
+
+.generate-values-container .gvc-label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
