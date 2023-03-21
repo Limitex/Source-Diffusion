@@ -1,0 +1,48 @@
+.input-container {
+  margin: 10px;
+}
+
+.generate-values-container {
+  margin: 10px;
+  border: solid 1px var(--root-color-6);
+}
+
+.generate-values-container .gvc-label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.no-resize {
+  resize: none;
+}
+
+#history-label {
+  width: 100%;
+  height: var(--history-label-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#generate-images {
+  width: 100%;
+  height: calc(100% - var(--history-label-height));
+  overflow-y: auto;
+}
+
+.history-thumbnail {
+  margin: 10px;
+}
+
+.img-thumbnail {
+  padding: 0;
+}
+
+#main-generated-image {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 10px;
+}
