@@ -15,7 +15,7 @@ const startupHeartBeat = setInterval(() => {
       getModelsList();
       getLoadedModel();
 
-      window.startup.pid().then(pid => {
+      window.background.pid().then(pid => {
         postRequest("/postpid", new PostPid(pid).convertToLiteral(), (data) => {});
       });
     }
@@ -226,7 +226,7 @@ const loadNewModel = () => {
 };
 
 const callOpenBrowser = (arg) => {
-  window.startup.openBrowser(arg)
+  window.background.openBrowser(arg)
 }
 
 const openLink = (element) => {
