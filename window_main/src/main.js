@@ -7,6 +7,14 @@ class ImageObject {
 
 }
 
+const setMainImage = (url) => {
+  const mainImg = document.getElementById("main-generated-image");
+  mainImg.src = url;
+  const dbl = document.getElementById('download-button-link');
+  dbl.href = url
+  dbl.download = 'image.png'
+}
+
 const startupHeartBeat = setInterval(() => {
   postRequest("/", "", (data) => {
     if (data.status == 0) {
@@ -105,12 +113,7 @@ const generateImage = () => {
 
           GenerateImages.push(new ImageObject(url, container));
 
-          const mainImg = document.getElementById("main-generated-image");
-          mainImg.src = url;
-
-          let dbl = document.getElementById('download-button-link');
-          dbl.href = url
-          dbl.download = 'image.png'
+          setMainImage(url);
         });
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);
