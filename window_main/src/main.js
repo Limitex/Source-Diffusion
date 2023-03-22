@@ -1,12 +1,3 @@
-class ImageObject {
-  constructor(imageUri, historyElement) {
-    this.imageUri = imageUri;
-    this.historyElement = historyElement;
-  }
-
-
-}
-
 const setMainImage = (imageElement) => {
   const url = imageElement.src
   const mainImg = document.getElementById("main-generated-image");
@@ -31,7 +22,6 @@ let GenerationProgress;
 let SwitchModelButton;
 let LoadNewModelButton;
 let GenerateButton;
-let GenerateImages = [];
 
 window.onload = () => {
   GenerationProgress = new ProgressBar(
@@ -116,8 +106,6 @@ const generateImage = () => {
           img.src = url;
           img.className = "img-thumbnail";
           button.appendChild(img);
-
-          GenerateImages.push(new ImageObject(url, container));
 
           setMainImage(img);
         });
