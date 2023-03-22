@@ -13,6 +13,7 @@ std_data = [];
 std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
 ipcMain.handle("stdout", () => std_data);
 ipcMain.handle("stdstatus", () => std_status);
+ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("exitAll", () => {
   loadWindowObj.close();
   app.once("window-all-closed", app.quit);

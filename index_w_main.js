@@ -1,4 +1,5 @@
 const { BrowserWindow } = require("electron");
+const path = require("path");
 
 const mainWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -10,6 +11,7 @@ const mainWindow = () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      preload: path.join(__dirname, "preload_main.js"),
     },
   });
   mainWindow.loadFile("window_main/index.html");
