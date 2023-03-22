@@ -96,7 +96,9 @@ const generateImage = () => {
           const mainImg = document.getElementById("main-generated-image");
           mainImg.src = url;
 
-          document.getElementById('download-button-link').href = url
+          let dbl = document.getElementById('download-button-link');
+          dbl.href = url
+          dbl.download = 'image.png'
         });
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);
