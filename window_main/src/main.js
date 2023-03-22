@@ -224,3 +224,9 @@ const loadNewModel = () => {
     console.log(data);
   });
 };
+
+
+const openLink = (element) => {
+  const link = element.getElementsByTagName('a')[0].href;
+  console.log(link)
+}
