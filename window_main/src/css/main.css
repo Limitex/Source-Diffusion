@@ -50,6 +50,7 @@
 .side-btns {
   width: var(--control-side-bar-width);
   height: var(--control-side-bar-width);
+  font-size: 20px;
 }
 
 .top-bar-container {
