@@ -61,6 +61,18 @@ const LoadNewModelInfo = class {
   }
 };
 
+const PostPid = class {
+  constructor(pid) {
+    this.pid = pid;
+  }
+
+  convertToLiteral() {
+    return {
+      pid: this.pid
+    };
+  }
+};
+
 const postRequest = (path, body, result) => {
   fetch("http://" + HOST + ":" + PORT + path, {
     method: "POST",

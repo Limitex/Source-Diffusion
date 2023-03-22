@@ -14,6 +14,10 @@ const startupHeartBeat = setInterval(() => {
 
       getModelsList();
       getLoadedModel();
+
+      window.startup.pid().then(pid => {
+        postRequest("/postpid", new PostPid(pid).convertToLiteral(), (data) => {});
+      });
     }
   });
 }, 100);

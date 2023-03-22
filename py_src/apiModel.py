@@ -45,3 +45,7 @@ class LoadNewModelInfo(BaseModel):
     path: str
     name: str
     description: str
+
+
+class PostPid(BaseModel):
+    pid: int

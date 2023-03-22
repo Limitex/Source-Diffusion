@@ -40,6 +40,11 @@ async def ready():
     return ServerStatus(status=0, status_str='server is ready')
 
 
+@app.post('/postpid')
+async def postpid(pd: PostPid):
+    print(pd)
+
+
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
     def progress(step: int, timestep: int, latents: torch.FloatTensor):
