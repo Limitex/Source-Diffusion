@@ -1,7 +1,7 @@
 const { app } = require("electron");
 const Process = require("child_process");
 const psTree = require("ps-tree");
-const config = require("./config.js");
+const config = require("../config.js");
 
 const StartServer = (stdout, stderr, exited) => {
   const ServerProcess = Process.exec(

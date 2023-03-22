@@ -11,7 +11,7 @@ const mainWindow = () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, "preload_main.js"),
+      preload: path.join(__dirname, "..", "preload", "main_window.js"),
     },
   });
   mainWindow.loadFile("window_main/index.html");

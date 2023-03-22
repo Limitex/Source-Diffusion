@@ -5,8 +5,8 @@ const {
   createDirectoryByOverwrite,
   httpDownload,
   unzip,
-} = require("./index_file.js");
-const config = require("./config.js");
+} = require("./file.js");
+const config = require("../config.js");
 
 const checkPython = (callback) => {
   Process.exec(config.PythonPath + " --version", (error, stdout, stderr) => {

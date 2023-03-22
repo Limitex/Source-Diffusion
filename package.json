@@ -2,7 +2,7 @@
   "name": "source-diffusion",
   "version": "1.0.0",
   "description": "This is an image generation GUI that uses diffusers",
-  "main": "index.js",
+  "main": "system_host/index.js",
   "scripts": {
     "setup": "npm install --save-dev electron",
     "start": "electron-forge start",

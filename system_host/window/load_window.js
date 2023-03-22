@@ -9,7 +9,7 @@ const loadWindow = () => {
     skipTaskbar: true,
     resizable: false,
     webPreferences: {
-      preload: path.join(__dirname, "preload_load.js"),
+      preload: path.join(__dirname, "..", "preload", "load_window.js"),
     },
   });
   // loadWindowObj.setAlwaysOnTop(true);

@@ -1,8 +1,8 @@
 const { app, ipcMain } = require("electron");
-const iwm = require("./index_w_main.js");
-const iwl = require("./index_w_load.js");
-const server = require("./index_server.js");
-const startup = require("./index_startup.js");
+const iwm = require("./window/main_window.js");
+const iwl = require("./window/load_window.js");
+const server = require("./src/server.js");
+const startup = require("./src/startup.js");
 
 // app.disableHardwareAcceleration()
 
