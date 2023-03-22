@@ -1,0 +1,19 @@
+.icon-button {
+  padding: 4px;
+}
+
+.icon-button button {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-button button:hover {
+  transition: 200ms;
+  background-color: var(--root-color-6);
+}
+
+.icon-button i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
