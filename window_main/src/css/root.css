@@ -29,3 +29,7 @@ body {
   overflow: hidden;
   background-color: var(--root-color-1);
 }
+
+option {
+  color: #000;
+}
