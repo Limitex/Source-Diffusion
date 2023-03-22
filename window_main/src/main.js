@@ -225,8 +225,11 @@ const loadNewModel = () => {
   });
 };
 
+const callOpenBrowser = (arg) => {
+  window.startup.openBrowser(arg)
+}
 
 const openLink = (element) => {
   const link = element.getElementsByTagName('a')[0].href;
-  console.log(link)
+  callOpenBrowser(link)
 }

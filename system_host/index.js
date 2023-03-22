@@ -1,4 +1,4 @@
-const { app, ipcMain } = require("electron");
+const { app, ipcMain, shell } = require("electron");
 const iwm = require("./window/main_window.js");
 const iwl = require("./window/load_window.js");
 const server = require("./src/server.js");
@@ -14,6 +14,7 @@ std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
 ipcMain.handle("stdout", () => std_data);
 ipcMain.handle("stdstatus", () => std_status);
 ipcMain.handle("pid", () => process.pid);
+ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
 ipcMain.handle("exitAll", () => {
   loadWindowObj.close();
   app.once("window-all-closed", app.quit);
