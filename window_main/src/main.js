@@ -7,7 +7,8 @@ class ImageObject {
 
 }
 
-const setMainImage = (url) => {
+const setMainImage = (imageElement) => {
+  const url = imageElement.src
   const mainImg = document.getElementById("main-generated-image");
   mainImg.src = url;
   const dbl = document.getElementById('download-button-link');
@@ -106,14 +107,19 @@ const generateImage = () => {
           container.className = "history-thumbnail";
           image_bod.prepend(container);
 
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.onclick = (event) => {setMainImage(event.target)};
+          container.appendChild(button);
+
           const img = document.createElement("img");
           img.src = url;
           img.className = "img-thumbnail";
-          container.appendChild(img);
+          button.appendChild(img);
 
           GenerateImages.push(new ImageObject(url, container));
 
-          setMainImage(url);
+          setMainImage(img);
         });
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);
