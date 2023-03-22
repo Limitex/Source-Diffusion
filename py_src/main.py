@@ -3,9 +3,12 @@ import io
 import json
 import os
 import shutil
+import sys
+import time
 import traceback
 import torch
 import base64
+import psutil
 import py_src.diffuserRapper
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
@@ -42,7 +45,14 @@ async def ready():
 
 @app.post('/postpid')
 async def postpid(pd: PostPid):
-    print(pd)
+    def checkParentRoop(pid):
+        while True:
+            process_exists = psutil.pid_exists(pid)
+            if not process_exists:
+                os.kill(os.getpid(), 15) # SIGTERM 
+                # os.kill(os.getpid(), 9)  # SIGKILL
+            time.sleep(2.0)
+    executor.submit(checkParentRoop, pd.pid)
 
 
 @app.websocket("/generate")
