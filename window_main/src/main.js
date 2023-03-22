@@ -1,3 +1,12 @@
+class ImageObject {
+  constructor(imageUri, historyElement) {
+    this.imageUri = imageUri;
+    this.historyElement = historyElement;
+  }
+
+
+}
+
 const startupHeartBeat = setInterval(() => {
   postRequest("/", "", (data) => {
     if (data.status == 0) {
@@ -13,6 +22,7 @@ let GenerationProgress;
 let SwitchModelButton;
 let LoadNewModelButton;
 let GenerateButton;
+let GenerateImages = [];
 
 window.onload = () => {
   GenerationProgress = new ProgressBar(
@@ -92,6 +102,8 @@ const generateImage = () => {
           img.src = url;
           img.className = "img-thumbnail";
           container.appendChild(img);
+
+          GenerateImages.push(new ImageObject(url, container));
 
           const mainImg = document.getElementById("main-generated-image");
           mainImg.src = url;
