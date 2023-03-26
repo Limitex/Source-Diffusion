@@ -42,15 +42,19 @@ npm run setup
 ```
 
 ### 4. Execution
-There are two types of execution: one with electron-forge and the other without. 
+
+There are two types of execution: one with electron-forge and the other without.
+
 You can execute with either.
 
 * default
+
 ```sh
 npm run debug 
 ```
 
 * electron-forge
+
 ```sh
 npm run start
 ```
