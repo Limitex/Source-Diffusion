@@ -64,12 +64,14 @@ def TestLoad(path: str, importType: ModelType):
                 pretrained_model_name_or_path=path,
                 cache_dir=get_cache_path())
             pipe = None
+            return True
         elif (importType == ModelType.Vae):
             vae = AutoencoderKL.from_pretrained(
                 pretrained_model_name_or_path=path,
                 cache_dir=get_cache_path())
             vae = None
-        return True
+            return True
+        raise
     except:
         return False
 

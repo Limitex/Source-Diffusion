@@ -120,28 +120,36 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
 
     importType = determine_model_type(lnmi.path)
 
+    if importType == ModelType.Model or importType == ModelType.Vae:
+        importPath = os.path.basename(lnmi.path)
+    elif importType == ModelType.HuggingFace:
+        importPath = lnmi.path
+    else:
+        return ServerStatus(status=1, status_str='The model type could not be determined from the input model path.')
+    
+    importName = lnmi.name
+    importDisc = lnmi.description
+
+    if any(data.path == importPath or data.name == importName for data in config):
+        return ServerStatus(status=1, status_str='The specified directory name or name has already been added.')
+    
     if not TestLoad(lnmi.path, importType):
-        return ServerStatus(status=1, status_str='The specified directory is not a Diffusers model or Vae.')
+        return ServerStatus(status=1, status_str='The specified directory is not a \"Diffusers model\" or \"Vae\".')
+    
     if importType == ModelType.Model or importType == ModelType.Vae:
         try:
-            importName = os.path.basename(lnmi.path)
-            importPath = os.path.join(get_models_path(), importName)
-            shutil.copytree(lnmi.path, importPath)
+            shutil.copytree(lnmi.path, os.path.join(get_models_path(), importPath))
         except FileNotFoundError:
             return ServerStatus(status=1, status_str='Directory was not found.')
         except FileExistsError:
             return ServerStatus(status=1, status_str='That directory exists.')
         except Exception as e:
             return ServerStatus(status=1, status_str='Othe Error.\n' + e)
-    elif importType == ModelType.HuggingFace:
-        importName = lnmi.path
-    else:
-        return ServerStatus(status=1, status_str='Othe Error.')
-
+    
     addNewModelToConfig(
         importType,
+        importPath,
         importName,
-        lnmi.name,
-        lnmi.description)
+        importDisc)
     config = loadConfig()
-    return ServerStatus(status=0, status_str='server is ready')
+    return ServerStatus(status=0, status_str='Successfully loaded!')
