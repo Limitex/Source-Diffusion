@@ -204,15 +204,19 @@ const switchModel = () => {
 };
 
 const loadNewModel = () => {
+  const pathData = document.getElementById("input-model-path").value;
+  const nameData = document.getElementById("input-model-name").value;
+  const descriptionData = document.getElementById("input-model-description").value;
+
+  if (pathData == "" || nameData == "" || descriptionData == "") {
+    Notice.append("Please enter all values");
+    return;
+  }
+
   SwitchModelButton.Disable();
   GenerateButton.Disable();
   LoadNewModelButton.Loading();
 
-  const pathData = document.getElementById("input-model-path").value;
-  const nameData = document.getElementById("input-model-name").value;
-  const descriptionData = document.getElementById(
-    "input-model-description"
-  ).value;
   const data = new LoadNewModelInfo(
     (path = pathData),
     (name = nameData),
@@ -225,7 +229,7 @@ const loadNewModel = () => {
 
     getModelsList();
     getLoadedModel();
-    console.log(data);
+    Notice.append(data.status_str);
   });
 };
 
