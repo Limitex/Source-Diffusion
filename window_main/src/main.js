@@ -200,6 +200,7 @@ const switchModel = () => {
     SwitchModelButton.Undo();
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
+    console.log(data)
   });
 };
 
