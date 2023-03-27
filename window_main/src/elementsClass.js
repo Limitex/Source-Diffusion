@@ -43,3 +43,31 @@ class ProgressBar {
     }
   }
 }
+
+
+class NotificationElements {
+  constructor(element) {
+    this.notification_container = element;
+    this.notification_list = []
+  }
+
+  append(text) {
+    const newNotification = document.createElement('div');
+    newNotification.classList.add('notification');
+
+    const closeButton = document.createElement('button');
+    closeButton.setAttribute('type', 'button');
+    closeButton.onclick = (event) => newNotification.remove();
+    newNotification.appendChild(closeButton);
+
+    const closeButtonIcon = document.createElement('i');
+    closeButtonIcon.classList.add('bi', 'bi-x');
+    closeButton.appendChild(closeButtonIcon);
+
+    const notificationText = document.createTextNode(text);
+    newNotification.appendChild(notificationText);
+
+    this.notification_container.appendChild(newNotification);
+    this.notification_list.push(newNotification);
+  }
+}

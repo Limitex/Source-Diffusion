@@ -26,6 +26,7 @@ let GenerationProgress;
 let SwitchModelButton;
 let LoadNewModelButton;
 let GenerateButton;
+let Notice;
 
 window.onload = () => {
   GenerationProgress = new ProgressBar(
@@ -43,6 +44,9 @@ window.onload = () => {
     document.getElementById("generatebutton"),
     "Generating..."
   );
+  Notice = new NotificationElements(
+    document.getElementById("notification-container")
+  )
 };
 
 const generateImage = () => {
