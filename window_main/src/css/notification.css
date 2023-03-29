@@ -1,0 +1,44 @@
+#notification-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  overflow: visible;
+  z-index: 1000;
+  margin: 10px 20px;
+}
+
+.notification {
+  background-color: var(--root-color-5);
+  padding: var(--notification-padding);
+  margin: var(--notification-space-between) 0;
+  width: var(--notification-width);
+  border: 1px solid var(--root-color-1);
+  border-radius: 10px;
+  position: relative;
+}
+
+.notification button {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification button i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification:hover {
+  background-color: var(--root-color-6);
+}
+
+.notification:active {
+  background-color: var(--root-color-4);
+}
