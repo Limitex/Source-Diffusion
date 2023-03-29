@@ -22,6 +22,7 @@
   max-height: var(--float-window-height);
   height: 100%;
   background-color: var(--root-color-3);
+  border: solid 1px var(--root-color-6);
 }
 
 #float-window-top-bar {
