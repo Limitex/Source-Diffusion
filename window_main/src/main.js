@@ -238,3 +238,7 @@ const openLink = (element) => {
   const link = element.getElementsByTagName('a')[0].href;
   callOpenBrowser(link)
 }
+
+const showAddModelWindow = () => {
+  showFloatWindow('Add New Model', 'addNewModel.html')
+}

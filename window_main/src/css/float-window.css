@@ -1,3 +1,7 @@
+#float-window {
+  margin-top: var(--float-window-top-bar-height);
+}
+
 #float-window-container {
   position: fixed;
   top: 0;
@@ -13,9 +17,9 @@
 }
 
 #float-window-center {
-  max-width: 1000px;
+  max-width: var(--float-window-width);
   width: 100%;
-  max-height: 900px;
+  max-height: var(--float-window-height);
   height: 100%;
   background-color: var(--root-color-3);
 }
@@ -25,7 +29,11 @@
   justify-content: space-between;
   align-items: center;
   font-size: 30px;
-  margin: 20px 30px;
+  padding: 20px 30px;
+  width: var(--float-window-width);
+  height: var(--float-window-top-bar-height);
+  position: fixed;
+  z-index: 500;
 }
 
 #float-window-contents {
