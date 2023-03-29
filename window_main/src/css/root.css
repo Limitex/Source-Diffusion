@@ -37,3 +37,9 @@ body {
 option {
   color: #000;
 }
+
+button i {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
