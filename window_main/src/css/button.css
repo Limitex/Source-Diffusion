@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.icon-button button:hover {
+.icon-button button:not([disabled]):hover {
   transition: 200ms;
   background-color: var(--root-color-6);
 }

@@ -75,11 +75,19 @@
           <div class="input-container">
             <div id="loadedModelText"></div>
           </div>
-          <div class="input-container">
-            <button id="switchmodelbutton" class="btn btn-primary" type="button" onclick="switchModel()">
-              <span class="loadingStatus" role="status" aria-hidden="true"></span>
-              <span class="loadingText sr-only">Load</span>
-            </button>
+          <div class="between-buttons">
+            <div class="input-container">
+              <button id="switchmodelbutton" class="btn btn-primary" type="button" onclick="switchModel()">
+                <span class="loadingStatus" role="status" aria-hidden="true"></span>
+                <span class="loadingText sr-only">Load</span>
+              </button>
+            </div>
+            <div class="icon-button main-side-btns">
+              <button type="button" onclick="">
+                <i class="bi bi-plus-lg"></i>
+                <a id="download-button-link"></a>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -53,6 +53,13 @@
   font-size: 20px;
 }
 
+.main-side-btns {
+  width: 70px;
+  height: 50px;
+  margin: 5px;
+  font-size: 20px;
+}
+
 .top-bar-button {
   width: 80px;
   height: 100%;
@@ -75,4 +82,10 @@
 #control-side-bar-container-bottom {
   position: absolute;
   bottom: 0;
+}
+
+.between-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
