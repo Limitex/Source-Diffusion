@@ -66,3 +66,13 @@
   justify-content: center;
   align-items: center;
 }
+
+#control-side-bar-container-top {
+  position: absolute;
+  top: 0;
+}
+
+#control-side-bar-container-bottom {
+  position: absolute;
+  bottom: 0;
+}
