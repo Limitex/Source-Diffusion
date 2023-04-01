@@ -140,11 +140,17 @@ const getModelsList = () => {
 
     ml.innerHTML = "";
     vl.innerHTML = "";
+    ll.innerHTML = "";
 
     let e = document.createElement("option");
     e.value = "null";
     e.textContent = "None";
     vl.appendChild(e);
+
+    let f = document.createElement("option");
+    f.value = "null";
+    f.textContent = "None";
+    ll.appendChild(f);
 
     modelList.forEach((model) => {
       const i = document.createElement("option");
