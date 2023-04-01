@@ -101,3 +101,14 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.loaded-name-label {
+  font-size: 12px;
+  margin-left: 5px;
+  color: hsla(0,0%,100%,.7);
+}
+
+.loaded-name-txt {
+  height: 25px;
+  overflow: hidden;
+}

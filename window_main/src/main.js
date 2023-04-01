@@ -172,13 +172,19 @@ const getModelsList = () => {
 
 const getLoadedModel = () => {
   postRequest("/getloadedmodel", "", (data) => {
-    const c = document.getElementById("loadedModelText");
+    const lm = document.getElementById("loaded-model-name")
+    const lv = document.getElementById("loaded-vae-name")
+    const ll = document.getElementById("loaded-lora-name")
+
     if (data.model == null) GenerateButton.Disable()
     else GenerateButton.Undo()
     if (data.model == null) data.model = "None";
     if (data.vae_model == null) data.vae_model = "None";
     if (data.lora_model == null) data.lora_model = "None"
-    c.innerText = data.model + " / " + data.vae_model + " / " + data.lora_model;
+
+    lm.innerText = data.model;
+    lv.innerText = data.vae_model;
+    ll.innerText = data.lora_model
   });
 };
 
