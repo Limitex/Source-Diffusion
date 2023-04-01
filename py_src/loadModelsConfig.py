@@ -8,6 +8,7 @@ class ModelType(Enum):
     Model = 'model'
     Vae = 'vae'
     HuggingFace = 'huggingface'
+    Lora = 'lora'
 
 
 class DiffusersModel:
@@ -38,6 +39,8 @@ def loadConfig():
                 modelType = ModelType.Vae
             elif json_data['type'] == 'huggingface':
                 modelType = ModelType.HuggingFace
+            elif json_data['type'] == 'lora':
+                modelType = ModelType.Lora
             else:
                 raise ValueError('An unsupported model type was found.'
                                  'Please correct the contents of the file or delete it and try again.')

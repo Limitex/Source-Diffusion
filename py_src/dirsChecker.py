@@ -23,6 +23,9 @@ def determine_model_type(path):
         if not os.path.isdir(path) and not os.path.isabs(path) and not os.path.isfile(path):
             return ModelType.HuggingFace
 
+    if os.path.splitext(path)[1] == '.safetensors':
+        return ModelType.Lora
+    
     if not os.path.isdir(path):
         return None
 

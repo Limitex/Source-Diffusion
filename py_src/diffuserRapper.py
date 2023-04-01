@@ -5,6 +5,7 @@ import torch
 from diffusers import StableDiffusionPipeline
 from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
+from py_src.loadLora import load_safetensors_lora
 from py_src.loadModelsConfig import ModelType
 from py_src.osPath import get_models_path, get_cache_path
 
@@ -12,9 +13,10 @@ global pipe
 generate_progress_callback = None
 loadedModelId = None
 loadedVaeModelId = None
+loadedLoraModelId = None
 
 
-def loadPipeline(modelName, torch_dtype, vaeName=None):
+def loadPipeline(modelName, torch_dtype, vaeName=None, loraName=None):
     if vaeName is None:
         pipeline = StableDiffusionPipeline.from_pretrained(
             pretrained_model_name_or_path=modelName,
@@ -32,11 +34,13 @@ def loadPipeline(modelName, torch_dtype, vaeName=None):
                 cache_dir=get_cache_path(),
             )
         )
+    if loraName is not None:
+        pipeline = load_safetensors_lora(pipeline, loraName)
     return pipeline.to("cuda")
 
 
-def load(mtype, modelId, torch_dtype, vaeId=None):
-    global pipe, loadedModelId, loadedVaeModelId
+def load(mtype, modelId, torch_dtype, vaeId=None, loraId=None):
+    global pipe, loadedModelId, loadedVaeModelId, loadedLoraModelId
     print('start model load.')
     load_time = time.time()
     if mtype == ModelType.HuggingFace:
@@ -46,7 +50,8 @@ def load(mtype, modelId, torch_dtype, vaeId=None):
     pipe = loadPipeline(
         ppath,
         torch_dtype,
-        None if vaeId == None else os.path.join(get_models_path(), vaeId)
+        None if vaeId == None else os.path.join(get_models_path(), vaeId),
+        None if loraId == None else os.path.join(get_models_path(), loraId)
     )
     if pipe.safety_checker is not None:
         pipe.safety_checker = lambda images, **kwargs: (images, False)
@@ -54,6 +59,7 @@ def load(mtype, modelId, torch_dtype, vaeId=None):
     time_load = time.time() - load_time
     loadedModelId = modelId
     loadedVaeModelId = vaeId
+    loadedLoraModelId = loraId
     print(f"Models loaded in {time_load:.2f}s")
 
 
@@ -70,6 +76,9 @@ def TestLoad(path: str, importType: ModelType):
                 pretrained_model_name_or_path=path,
                 cache_dir=get_cache_path())
             vae = None
+            return True
+        elif (importType == ModelType.Lora):
+            # TODO : Check if lora can be loaded
             return True
         raise
     except:

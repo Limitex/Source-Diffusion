@@ -28,12 +28,14 @@ class ModelListOutput(BaseModel):
 class ModelOutput(BaseModel):
     model: Union[str, None]
     vae_model: Union[str, None]
+    lora_model: Union[str, None]
 
 
 class ModelChangeContainer(BaseModel):
     mtype: Union[str, None]
     model_id: Union[str, None]
     vae_id: Union[str, None]
+    lora_id: Union[str, None]
 
 
 class ServerStatus(BaseModel):

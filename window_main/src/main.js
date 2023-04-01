@@ -136,6 +136,7 @@ const getModelsList = () => {
     const modelList = JSON.parse(data.models_json);
     const ml = document.getElementById("model-list");
     const vl = document.getElementById("vae-list");
+    const ll = document.getElementById("lora-list");
 
     ml.innerHTML = "";
     vl.innerHTML = "";
@@ -156,6 +157,8 @@ const getModelsList = () => {
         vl.appendChild(i);
       } else if (model.type == "huggingface") {
         ml.appendChild(i);
+      } else if (model.type == "lora") {
+        ll.appendChild(i);
       }
     });
   });
@@ -168,7 +171,8 @@ const getLoadedModel = () => {
     else GenerateButton.Undo()
     if (data.model == null) data.model = "None";
     if (data.vae_model == null) data.vae_model = "None";
-    c.innerText = data.model + " / " + data.vae_model;
+    if (data.lora_model == null) data.lora_model = "None"
+    c.innerText = data.model + " / " + data.vae_model + " / " + data.lora_model;
   });
 };
 
@@ -179,6 +183,7 @@ const switchModel = () => {
 
   const modelElm = document.getElementById("model-list");
   const vaeElm = document.getElementById("vae-list");
+  const loraElm = document.getElementById("lora-list");
 
   if (modelElm.options.length == 0 || vaeElm.options.length == 0) {
     getLoadedModel();
@@ -190,10 +195,12 @@ const switchModel = () => {
 
   vaeid = vaeElm.options[vaeElm.selectedIndex].value;
   modelid = modelElm.options[modelElm.selectedIndex]
+  loraId = loraElm.options[loraElm.selectedIndex].value;
   const g_data = new ModelChangeContainer(
     (mtype = modelid.dataset.type),
     (model_id = modelid.value),
-    (vae_id = vaeid != "null" ? vaeid : null)
+    (vae_id = vaeid != "null" ? vaeid : null),
+    (lora_id = loraId != "null" ? loraId : null)
   );
   postRequest("/switchModel", g_data.convertToLiteral(), (data) => {
     getLoadedModel();

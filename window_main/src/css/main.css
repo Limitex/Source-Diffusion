@@ -89,3 +89,15 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.select-label {
+  font-size: 12px;
+  margin-left: 5px;
+  color: hsla(0,0%,100%,.7);
+  float: left;
+}
+
+#model-selector .input-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

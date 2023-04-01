@@ -102,13 +102,14 @@ async def getModelsList():
 async def getloadedmodel():
     modelName = idToName(config, py_src.diffuserRapper.loadedModelId)
     vaeName = idToName(config, py_src.diffuserRapper.loadedVaeModelId)
-    return ModelOutput(model=modelName, vae_model=vaeName)
+    loraName = idToName(config, py_src.diffuserRapper.loadedLoraModelId)
+    return ModelOutput(model=modelName, vae_model=vaeName, lora_model=loraName)
 
 
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeContainer):
     try:
-        load(get_model_type(mcc.mtype), mcc.model_id, torch.float16, mcc.vae_id)
+        load(get_model_type(mcc.mtype), mcc.model_id, torch.float16, mcc.vae_id, mcc.lora_id)
         return ServerStatus(status=0, status_str='server is ready')
     except:
         return ServerStatus(status=1, status_str=traceback.format_exc())
@@ -120,7 +121,7 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
 
     importType = determine_model_type(lnmi.path)
 
-    if importType == ModelType.Model or importType == ModelType.Vae:
+    if importType == ModelType.Model or importType == ModelType.Vae or importType == ModelType.Lora:
         importPath = os.path.basename(lnmi.path)
     elif importType == ModelType.HuggingFace:
         importPath = lnmi.path
@@ -145,6 +146,9 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
             return ServerStatus(status=1, status_str='That directory exists.')
         except Exception as e:
             return ServerStatus(status=1, status_str='Othe Error.\n' + e)
+    
+    if importType == ModelType.Lora:
+        shutil.copyfile(lnmi.path,  os.path.join(get_models_path(), importPath))
     
     addNewModelToConfig(
         importType,
