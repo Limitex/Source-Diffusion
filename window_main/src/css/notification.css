@@ -57,7 +57,7 @@
   left: calc(var(--loading-window-width) / 2 * -1);
   width: var(--loading-window-width);
   height: var(--loading-window-height);
-  background-color: var(--root-color-3);
+  backdrop-filter: blur(6px);
   border: 1px solid var(--root-color-6);
   display: flex;
   justify-content: center;
