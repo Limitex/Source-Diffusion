@@ -60,7 +60,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: top 1s;
+  transition: top 0.5s;
   z-index: 2000;
   padding: var(--loading-window-padding);
 }
