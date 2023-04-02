@@ -32,6 +32,35 @@
           
         </div>
         <div id="float-window-contents-addnewmodel" style="display: none;" data-title="Add New Model">
+          <div class="generate-values-container">
+            <label class="gvc-label">Add New Model</label>
+            <div id="model-loader">
+              <div class="input-container">
+                <div class="form-outline">
+                  <input type="text" id="input-model-path" class="form-control" />
+                  <label class="form-label" for="input-model-path">Model Path</label>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="form-outline">
+                  <input type="text" id="input-model-name" class="form-control" />
+                  <label class="form-label" for="input-model-name">Model Name</label>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="form-outline">
+                  <input type="text" id="input-model-description" class="form-control" />
+                  <label class="form-label" for="input-model-description">Model description</label>
+                </div>
+              </div>
+              <div class="input-container">
+                <button id="loadnewmodelbutton" class="btn btn-primary" type="button" onclick="loadNewModel()">
+                  <span class="loadingStatus" role="status" aria-hidden="true"></span>
+                  <span class="loadingText sr-only">Load</span>
+                </button>
+              </div>
+            </div> 
+          </div>
           
         </div>
       </div>
@@ -181,36 +210,6 @@
             </button>
           </div>
         </div>
-      </div>
-
-      <div class="generate-values-container">
-        <label class="gvc-label">Add New Model</label>
-        <div id="model-loader">
-          <div class="input-container">
-            <div class="form-outline">
-              <input type="text" id="input-model-path" class="form-control" />
-              <label class="form-label" for="input-model-path">Model Path</label>
-            </div>
-          </div>
-          <div class="input-container">
-            <div class="form-outline">
-              <input type="text" id="input-model-name" class="form-control" />
-              <label class="form-label" for="input-model-name">Model Name</label>
-            </div>
-          </div>
-          <div class="input-container">
-            <div class="form-outline">
-              <input type="text" id="input-model-description" class="form-control" />
-              <label class="form-label" for="input-model-description">Model description</label>
-            </div>
-          </div>
-          <div class="input-container">
-            <button id="loadnewmodelbutton" class="btn btn-primary" type="button" onclick="loadNewModel()">
-              <span class="loadingStatus" role="status" aria-hidden="true"></span>
-              <span class="loadingText sr-only">Load</span>
-            </button>
-          </div>
-        </div> 
       </div>
     </div>
     <div id="main-content">
