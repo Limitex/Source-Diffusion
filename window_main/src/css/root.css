@@ -24,8 +24,10 @@
   --float-window-top-bar-height: 100px;
 
   --loading-window-width: 200px;
-  --loading-window-height: 100px;
-  --loading-animation-box-size: 60px;
+  --loading-window-height: 150px;
+  --loading-window-padding: 10px;
+  --loading-animation-box-size: 70px;
+
 }
 
 html {
