@@ -31,6 +31,7 @@ const fw = new FloatWindowSwitch([
   'float-window-contents-addnewmodel'
 ])
 
+const lw = new LoadingWindow(document.getElementById('loading-window'))
 
 const showFloatWindow = (idName) => {
   fw.show(idName)
@@ -39,3 +40,11 @@ const showFloatWindow = (idName) => {
 const closeFloatWindow = () => {
   fw.hide()
 };
+
+const showLoadingWindow = () => {
+  lw.show()
+}
+
+const closeLoadingWindow = () => {
+  lw.close()
+}

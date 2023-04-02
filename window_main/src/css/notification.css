@@ -42,3 +42,26 @@
 .notification:active {
   background-color: var(--root-color-4);
 }
+
+#loading-window-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(var(--loading-window-width) / 2);
+  height: 0;
+}
+
+#loading-window {
+  position: relative;
+  top: calc(var(--loading-window-height) * -1);
+  left: calc(var(--loading-window-width) / 2 * -1);
+  width: var(--loading-window-width);
+  height: var(--loading-window-height);
+  background-color: var(--root-color-3);
+  border: 1px solid var(--root-color-6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: top 1s;
+  z-index: 2000;
+}

@@ -71,3 +71,18 @@ class NotificationElements {
     this.notification_list.push(newNotification);
   }
 }
+
+class LoadingWindow {
+  constructor(element) {
+    this.element = element;
+    this.style = element.style.top
+  }
+
+  show() {
+    this.element.style.top = 0;
+  }
+
+  close() {
+    this.element.style.top = this. style;
+  }
+}
