@@ -3,24 +3,33 @@ class LoadingButton {
     (this.processingText = processingText),
       (this.before_text = element.innerText),
       (this.button_element = element),
-      (this.loading_element = element.querySelectorAll(".loadingStatus")[0]),
       (this.text_element = element.querySelectorAll(".loadingText")[0]);
+      (this.loading = false)
   }
 
   Loading() {
     this.text_element.innerText = this.processingText;
     this.button_element.disabled = true;
-    this.loading_element.className = "spinner-border spinner-border-sm";
+    this.loading = true;
+    showLoadingWindow();
   }
 
   Disable() {
     this.button_element.disabled = true;
+    this.loading = false;
   }
 
-  Undo() {
+  Undo(boolean = true, text = null) {
     this.text_element.innerText = this.before_text;
     this.button_element.disabled = false;
-    this.loading_element.className = "";
+    if (this.loading) {
+      this.loading = false;
+      if (boolean) {
+        success_closeLoadingWindow(text)
+      } else {
+        failed_closeLoadingWindow(text)
+      }
+    }
   }
 }
 

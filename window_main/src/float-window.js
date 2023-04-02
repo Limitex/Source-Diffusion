@@ -47,12 +47,12 @@ const showLoadingWindow = () => {
 
 const success_closeLoadingWindow = (text) => {
   lw.s_close(() => {
-    Notice.append(text);
+    if (text != null) Notice.append(text);
   })
 }
 
 const failed_closeLoadingWindow = (text) => {
   lw.close(() => {
-    Notice.append(text);
+    if (text != null) Notice.append(text);
   })
 }
