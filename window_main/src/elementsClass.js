@@ -73,16 +73,35 @@ class NotificationElements {
 }
 
 class LoadingWindow {
-  constructor(element) {
-    this.element = element;
-    this.style = element.style.top
+  constructor() {
+    this.container = document.getElementById('loading-window');
+    this.loadingId = document.getElementById("loading-window-id");
+    this.successId = document.getElementById("success-window-id");
+
+    this.transitionTime = window.getComputedStyle(this.container).getPropertyValue("transition").split(" ")[1].replace("s", "") * 1000;
+    this.style = this.container.style.top
+    this.displayTime = 3000
   }
 
   show() {
-    this.element.style.top = 0;
+    this.loadingId.style.display = '';
+    this.container.style.top = 0;
   }
 
   close() {
-    this.element.style.top = this. style;
+    if (this.loadingId.style.display != '') return
+    this.container.style.top = this.style;
+    setTimeout(() => {
+      this.loadingId.style.display = 'none';
+      this.successId.style.display = '';
+      this.container.style.top = 0;
+      setTimeout(() => {
+        this.container.style.top = this.style;
+        setTimeout(() => {
+          document.getElementById("success-window-id").style.display = 'none';
+        }, this.transitionTime);
+      }, this.displayTime + this.transitionTime);
+
+    }, this.transitionTime);
   }
 }
