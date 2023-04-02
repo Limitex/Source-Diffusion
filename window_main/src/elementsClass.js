@@ -1,7 +1,7 @@
 class LoadingButton {
   constructor(element, processingText) {
     (this.processingText = processingText),
-      (this.before_text = element.innerText),
+      (this.before_text = element.innerText.trim()),
       (this.button_element = element),
       (this.text_element = element.querySelectorAll(".loadingText")[0]);
       (this.loading = false)
