@@ -27,6 +27,6 @@
   align-items: center;
   font-size: 30px;
   padding: 20px 30px;
-  width: var(--float-window-width);
+  width: 100%;
   height: var(--float-window-top-bar-height);
 }
