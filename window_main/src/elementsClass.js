@@ -88,9 +88,26 @@ class LoadingWindow {
     this.container.style.top = 0;
   }
 
-  close() {
-    if (this.loadingId.style.display != '') return
+  close(callback) {
+    if (this.loadingId.style.display != '') {
+      callback();
+      return;
+    }
     this.container.style.top = this.style;
+    setTimeout(() => {
+      this.loadingId.style.display = 'none';
+      this.successId.style.display = 'none';
+      callback();
+    }, this.transitionTime);
+  }
+
+  s_close(callback, text = 'Success') {
+    if (this.loadingId.style.display != '') {
+      callback();
+      return;
+    }
+    this.container.style.top = this.style;
+    this.successId.innerText = text;
     setTimeout(() => {
       this.loadingId.style.display = 'none';
       this.successId.style.display = '';
@@ -98,7 +115,8 @@ class LoadingWindow {
       setTimeout(() => {
         this.container.style.top = this.style;
         setTimeout(() => {
-          document.getElementById("success-window-id").style.display = 'none';
+          this.successId.style.display = 'none';
+          callback()
         }, this.transitionTime);
       }, this.displayTime + this.transitionTime);
 

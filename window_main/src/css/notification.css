@@ -73,5 +73,5 @@
   align-items: center;
   backdrop-filter: blur(6px);
   border: 1px solid var(--root-color-6);
-  font-size: 30px;
+  font-size: 25px;
 }

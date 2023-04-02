@@ -45,6 +45,14 @@ const showLoadingWindow = () => {
   lw.show()
 }
 
-const closeLoadingWindow = () => {
-  lw.close()
+const success_closeLoadingWindow = (text) => {
+  lw.s_close(() => {
+    Notice.append(text);
+  })
+}
+
+const failed_closeLoadingWindow = (text) => {
+  lw.close(() => {
+    Notice.append(text);
+  })
 }
