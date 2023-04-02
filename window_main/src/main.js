@@ -197,9 +197,9 @@ const switchModel = () => {
   const vaeElm = document.getElementById("vae-list");
   const loraElm = document.getElementById("lora-list");
 
-  if (modelElm.options.length == 0 || vaeElm.options.length == 0) {
+  if (modelElm.options.length == 0) {
     getLoadedModel();
-    SwitchModelButton.Undo();
+    SwitchModelButton.Undo(false, 'The Model was not exist.');
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
     return;
@@ -216,10 +216,14 @@ const switchModel = () => {
   );
   postRequest("/switchModel", g_data.convertToLiteral(), (data) => {
     getLoadedModel();
-    SwitchModelButton.Undo();
+    console.log(data)
+    if (data.status == 0) {
+      SwitchModelButton.Undo();
+    } else {
+      SwitchModelButton.Undo(false, 'Failed to load.');
+    }
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
-    console.log(data)
   });
 };
 
@@ -243,13 +247,16 @@ const loadNewModel = () => {
     (description = descriptionData)
   );
   postRequest("/loadnewmodel", data.convertToLiteral(), (data) => { 
+    if (data.status == 0) {
+      LoadNewModelButton.Undo(true, data.status_str);
+    } else {
+      LoadNewModelButton.Undo(false, data.status_str);
+    }
     SwitchModelButton.Undo();
     GenerateButton.Undo();
-    LoadNewModelButton.Undo();
-
+    
     getModelsList();
     getLoadedModel();
-    Notice.append(data.status_str);
   });
 };
 
