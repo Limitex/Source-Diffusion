@@ -28,7 +28,12 @@
             </button>
           </div>
         </div>
-        <iframe src="" id="float-window-contents"></iframe>
+        <div id="float-window-contents-setting" style="display: none;" data-title="Settings">
+          
+        </div>
+        <div id="float-window-contents-addnewmodel" style="display: none;" data-title="Add New Model">
+          
+        </div>
       </div>
     </div>
     <div id="notification-container"></div>
@@ -222,7 +227,7 @@
       </div>
       <div id="control-side-bar-container-bottom">
         <div class="icon-button side-btns">
-          <button type="button" onclick="">
+          <button type="button" onclick="showSettingWindow()">
             <i class="bi bi-gear"></i>
           </button>
         </div>

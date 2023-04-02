@@ -259,5 +259,9 @@ const openLink = (element) => {
 }
 
 const showAddModelWindow = () => {
-  showFloatWindow('Add New Model', 'addNewModel.html')
+  showFloatWindow('float-window-contents-addnewmodel')
+}
+
+const showSettingWindow = () => {
+  showFloatWindow('float-window-contents-setting')
 }

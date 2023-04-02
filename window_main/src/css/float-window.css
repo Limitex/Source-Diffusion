@@ -1,7 +1,3 @@
-#float-window {
-  margin-top: var(--float-window-top-bar-height);
-}
-
 #float-window-container {
   position: fixed;
   top: 0;
@@ -33,11 +29,4 @@
   padding: 20px 30px;
   width: var(--float-window-width);
   height: var(--float-window-top-bar-height);
-  position: fixed;
-  z-index: 500;
-}
-
-#float-window-contents {
-  height: 100%;
-  width: 100%;
 }
