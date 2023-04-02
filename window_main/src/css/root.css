@@ -25,6 +25,7 @@
 
   --loading-window-width: 200px;
   --loading-window-height: 100px;
+  --loading-animation-box-size: 60px;
 }
 
 html {
