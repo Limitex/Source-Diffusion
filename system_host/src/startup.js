@@ -37,7 +37,26 @@ const checkPython = (callback) => {
 };
 
 const checkPythonModules = (callback) => {
-  callback(true);
+  const pipprocess = Process.exec(config.PipPath + " freeze");
+  pipprocess.stdout.on("data", (data) => {
+    const packageNames = data.trimEnd().split('\r\n');
+    fs.readFile('py_src/requirements.txt', 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        callback(false);
+        return;
+      }
+      const requirementsPackageNames = data.split('\r\n')
+        .filter((item) => !item.includes("--extra-index-url"))
+        .map(rpn => rpn.includes('[') && rpn.includes(']') ? rpn.replace(/\[.*?\]/g, "") : rpn)
+      const result = requirementsPackageNames.every(requirement => packageNames.some(package => package.includes(requirement)))
+      callback(result);
+    });
+  });
+  pipprocess.stderr.on("data", (data) => console.log(data.trimEnd()));
+  pipprocess.on("close", (data) => {
+    if (data != 0) callback(false);
+  });
 };
 
 const installPython = (callback, stdDataRef) => {
