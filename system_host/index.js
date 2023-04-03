@@ -47,34 +47,40 @@ const StartBackground = () => {
 };
 
 std_data.push("Checking required directories...");
-startup.checkPython((pythonExist) => {
-  if (pythonExist) {
-    startup.checkPythonModules((moduleExist) => {
-      if (moduleExist) {
-        StartBackground();
-      } else { // moduleExist
-        startup.installModules((installSuccess) => {
-          if (installSuccess) {
-            std_data.push("Installation complete.");
-            StartBackground();
-          } else { // installSuccess
-            std_data.push("Installation failed.");
-            std_status = 1;
-          } // installSuccess
-        }, std_data);
-      } // moduleExist
-    });
-  } else { // pythonExist
-    std_data.push("This is the first boot.");
-    std_data.push("Python installing... Please wait.");
-    startup.installPython((installSuccess) => {
-      if (installSuccess) {
-        std_data.push("Installation is complete.");
-        StartBackground();
-      } else { // installSuccess
-        std_data.push("Installation failed.");
-        std_status = 1;
-      } // installSuccess
-    }, std_data);
-  } // pythonExist
+startup.checkRuntime((runtimeExist) => {
+  if (!runtimeExist) {
+    std_data.push("Microsoft Visual C++ Runtime is not found.");
+    shell.openExternal('https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170')
+  }
+  startup.checkPython((pythonExist) => {
+    if (pythonExist) {
+      startup.checkPythonModules((moduleExist) => {
+        if (moduleExist) {
+          StartBackground();
+        } else { // moduleExist
+          startup.installModules((installSuccess) => {
+            if (installSuccess) {
+              std_data.push("Installation complete.");
+              StartBackground();
+            } else { // installSuccess
+              std_data.push("Installation failed.");
+              std_status = 1;
+            } // installSuccess
+          }, std_data);
+        } // moduleExist
+      });
+    } else { // pythonExist
+      std_data.push("This is the first boot.");
+      std_data.push("Python installing... Please wait.");
+      startup.installPython((installSuccess) => {
+        if (installSuccess) {
+          std_data.push("Installation is complete.");
+          StartBackground();
+        } else { // installSuccess
+          std_data.push("Installation failed.");
+          std_status = 1;
+        } // installSuccess
+      }, std_data);
+    } // pythonExist
+  });
 });
