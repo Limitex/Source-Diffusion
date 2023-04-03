@@ -2,6 +2,7 @@ let lastResult = 0;
 const id = setInterval(async function () {
   const result = await window.background.stdout();
   const status = await window.background.stdstatus();
+  const topstatus = await window.background.topstatus();
   if (result.length !== lastResult) {
     console.log(result.length + result[result.length - 1]);
     const logTextConteiner = document.getElementById("log-text-container");

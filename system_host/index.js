@@ -11,8 +11,10 @@ app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
 std_data = [];
 std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
+top_status = ''
 ipcMain.handle("stdout", () => std_data);
 ipcMain.handle("stdstatus", () => std_status);
+ipcMain.handle("topstatus", () => top_status);
 ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
 ipcMain.handle("exitAll", () => {
