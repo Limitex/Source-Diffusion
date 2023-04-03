@@ -21,6 +21,8 @@ const id = setInterval(async function () {
     exitButton.setAttribute("onclick", "exit_func()");
     exitButton.innerHTML = "Exit";
 
+    document.getElementById('animation-container').classList = ''
+
     exitButtonContainer.appendChild(exitButton);
 
     document.body.append(exitButtonContainer);
