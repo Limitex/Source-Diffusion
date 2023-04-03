@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="src/css/main.css">
     <link rel="stylesheet" type="text/css" href="src/css/notification.css">
     <link rel="stylesheet" type="text/css" href="src/css/float-window.css">
+    <link rel="stylesheet" type="text/css" href="src/css/loading-animation.css">
   </head>
   <body>
     <div id="float-window-container" style="display: none;">
@@ -67,7 +68,12 @@
     </div>
     <div id="notification-container"></div>
     <div id="top-bar">
-      <div class="top-bar-container">Source Diffusion</div>
+      <div class="top-bar-container">
+        <div>Source Diffusion</div>
+        <div class="loader-container">
+          <div class="loader" style="display: none;"></div> 
+        </div>
+      </div>
       <div class="top-bar-container">
         <div class="icon-button top-bar-button">
           <button type="button" onclick="openLink(this)">

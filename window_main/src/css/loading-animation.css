@@ -1,0 +1,66 @@
+.loader-container {
+    width: calc((var(--loading-animation-size) + var(--loading-animation-space)) * 3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+    width: var(--loading-animation-size);
+    height: var(--loading-animation-size);
+    animation-fill-mode: both;
+    animation: load7 var(--loading-animation-time) infinite ease-in-out;
+}
+
+.loader {
+    color: #ffffff;
+    position: relative;
+    transform: translateZ(0);
+    animation-delay: calc(var(--loading-animation-delay) * -1);
+    top: calc(var(--loading-animation-size) * -1);
+}
+
+.loader:before,
+.loader:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+
+.loader:before {
+    left: calc(var(--loading-animation-space) * -1);
+    animation-delay: calc(var(--loading-animation-delay) * -2);
+}
+
+.loader:after {
+    left: var(--loading-animation-space);
+}
+
+@-webkit-keyframes load7 {
+
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 var(--loading-animation-size) 0 calc(var(--loading-animation-speed) * -1);
+    }
+
+    40% {
+        box-shadow: 0 var(--loading-animation-size) 0 0;
+    }
+}
+
+@keyframes load7 {
+
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 var(--loading-animation-size) 0 calc(var(--loading-animation-speed) * -1);
+    }
+
+    40% {
+        box-shadow: 0 var(--loading-animation-size) 0 0;
+    }
+}

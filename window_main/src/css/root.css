@@ -24,6 +24,12 @@
   --float-window-width: 1000px;
   --float-window-height: 900px;
   --float-window-top-bar-height: 100px;
+
+  --loading-animation-space: 20px;
+  --loading-animation-size: 10px;
+  --loading-animation-speed: 5px;
+  --loading-animation-time: 1.6s;
+  --loading-animation-delay: 0.18s;
 }
 
 html {
