@@ -101,3 +101,24 @@ const socketRequest = (path, open, close, message) => {
   socket.addEventListener("message", (event) => message(event, socket));
   socket.addEventListener("close", (event) => close(event, socket));
 };
+
+const showServerStatus = (data, failedText) => {
+  if (data.status == 0) {
+    Notice.append('Success.');
+  } else if (data.status == 1) { // Normal Error Receive
+    Notice.append(data.status_str);
+  } else if (data.status == 2) { // Python Error Receive
+    Notice.append(extractErrorLine(data.status_str));
+  } else {
+    Notice.append(failedText);
+  }
+  console.log(data);
+}
+
+const extractErrorLine = (err_str) => {
+  const errorLines = err_str.trim().split('\n');
+  const lastLine = errorLines[errorLines.length - 1].trim();
+  const re = /^(\w+Error|Exception):\s+/;
+  const errorText = lastLine.replace(re, '');
+  return errorText;
+}

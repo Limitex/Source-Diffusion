@@ -206,6 +206,7 @@ const switchModel = () => {
     SwitchModelButton.Undo();
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
+    Notice.append('Model was no exist.');
     return;
   }
 
@@ -223,7 +224,8 @@ const switchModel = () => {
     SwitchModelButton.Undo();
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
-    console.log(data)
+
+    showServerStatus(data, 'Failed to load model.')
   });
 };
 
@@ -253,7 +255,8 @@ const loadNewModel = () => {
 
     getModelsList();
     getLoadedModel();
-    Notice.append(data.status_str);
+
+    showServerStatus(data, 'Failed to add model.')
   });
 };
 

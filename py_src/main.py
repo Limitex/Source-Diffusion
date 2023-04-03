@@ -112,7 +112,7 @@ async def switchModel(mcc: ModelChangeContainer):
         load(get_model_type(mcc.mtype), mcc.model_id, torch.float16, mcc.vae_id, mcc.lora_id)
         return ServerStatus(status=0, status_str='server is ready')
     except:
-        return ServerStatus(status=1, status_str=traceback.format_exc())
+        return ServerStatus(status=2, status_str=traceback.format_exc())
 
 
 @app.post('/loadnewmodel')
