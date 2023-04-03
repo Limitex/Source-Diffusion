@@ -1,14 +1,4 @@
 :root {
-  --root-color-0: #fff7f7;
-  --root-color-1: #241147;
-  --root-color-2: #2d1757;
-  --root-color-3: #361d66;
-  --root-color-4: #432679;
-  --root-color-5: #4a2d80;
-  --root-color-6: #57388f;
-  --root-color-7: #6e40c5;
-  --root-color-8: #8f5cee;
-
   --top-bar-height: 50px;
   --gen-top-bar-height: 200px;
   --side-bar-width: 140px;
