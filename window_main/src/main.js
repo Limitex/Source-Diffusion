@@ -199,7 +199,7 @@ const switchModel = () => {
 
   if (modelElm.options.length == 0) {
     getLoadedModel();
-    SwitchModelButton.Undo(false, 'The Model was not exist.');
+    SwitchModelButton.Undo();
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
     return;
@@ -216,14 +216,10 @@ const switchModel = () => {
   );
   postRequest("/switchModel", g_data.convertToLiteral(), (data) => {
     getLoadedModel();
-    console.log(data)
-    if (data.status == 0) {
-      SwitchModelButton.Undo();
-    } else {
-      SwitchModelButton.Undo(false, 'Failed to load.');
-    }
+    SwitchModelButton.Undo();
     GenerateButton.Undo();
     LoadNewModelButton.Undo();
+    console.log(data)
   });
 };
 
@@ -247,16 +243,13 @@ const loadNewModel = () => {
     (description = descriptionData)
   );
   postRequest("/loadnewmodel", data.convertToLiteral(), (data) => { 
-    if (data.status == 0) {
-      LoadNewModelButton.Undo(true, data.status_str);
-    } else {
-      LoadNewModelButton.Undo(false, data.status_str);
-    }
     SwitchModelButton.Undo();
     GenerateButton.Undo();
-    
+    LoadNewModelButton.Undo();
+
     getModelsList();
     getLoadedModel();
+    Notice.append(data.status_str);
   });
 };
 
