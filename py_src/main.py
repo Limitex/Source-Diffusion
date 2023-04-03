@@ -37,9 +37,24 @@ except:
     raise FileNotFoundError('It could not be read because the structure of the models.json file is different.'
                             'Please correct the contents of the file or delete it and try again.')
 
+ClientRunningFlag = False
+
+def serverExit():
+    os.kill(os.getpid(), 15) # SIGTERM 
+    # os.kill(os.getpid(), 9)  # SIGKILL
+
+@app.on_event("startup")
+async def on_startup():
+    def clientRunnigCheckRoop():
+        time.sleep(2.0)
+        if not ClientRunningFlag:
+            serverExit() 
+    executor.submit(clientRunnigCheckRoop)
 
 @app.post('/')
 async def ready():
+    global ClientRunningFlag
+    ClientRunningFlag = True
     return ServerStatus(status=0, status_str='server is ready')
 
 
@@ -49,8 +64,7 @@ async def postpid(pd: PostPid):
         while True:
             process_exists = psutil.pid_exists(pid)
             if not process_exists:
-                os.kill(os.getpid(), 15) # SIGTERM 
-                # os.kill(os.getpid(), 9)  # SIGKILL
+                serverExit()
             time.sleep(2.0)
     executor.submit(checkParentRoop, pd.pid)
 
