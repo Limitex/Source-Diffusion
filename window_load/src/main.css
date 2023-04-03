@@ -49,3 +49,9 @@ pre {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+#top-status-text {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}

@@ -10,6 +10,7 @@ const id = setInterval(async function () {
     logText.innerHTML = result.join("<br>");
     lastResult = result.length;
     logTextConteiner.scrollTop = logText.scrollHeight;
+    document.getElementById('top-status-text').innerText = topstatus;
   }
   if (status == 0 || status == 1) {
     const exitButtonContainer = document.createElement("div");
