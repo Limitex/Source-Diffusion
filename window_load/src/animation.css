@@ -26,8 +26,9 @@
   height: var(--animation-circle-size);
   position: absolute;
   border-radius: 50%;
-  background-color: #000;
+  background-color: var(--root-color-7);
   top: 0;
+  z-index: 1;
   animation: circle var(--animation-circle-time) alternate infinite ease;
 }
 
