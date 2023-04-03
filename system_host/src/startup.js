@@ -150,6 +150,5 @@ module.exports = {
   checkPython: checkPython,
   checkPythonModules: checkPythonModules,
   installPython: installPython,
-  installModules: installModules,
   checkRuntime: checkRuntime
 };

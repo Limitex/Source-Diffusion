@@ -60,8 +60,8 @@ startup.checkRuntime((runtimeExist) => {
         if (moduleExist) {
           StartBackground();
         } else { // moduleExist
-          top_status = 'Module setup is in progress.'
-          startup.installModules((installSuccess) => {
+          top_status = 'Python setup is in progress.'
+          startup.installPython((installSuccess) => {
             if (installSuccess) {
               std_data.push("Installation complete.");
               StartBackground();
