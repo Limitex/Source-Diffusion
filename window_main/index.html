@@ -31,9 +31,7 @@
           </div>
         </div>
         <div id="float-window-contents-container">
-          <div id="float-window-contents-setting" style="display: none;" data-title="Settings">
-            
-          </div>
+          <div id="float-window-contents-setting" style="display: none;" data-title="Settings"></div>
           <div id="float-window-contents-addnewmodel" style="display: none;" data-title="Add New Model">
             <div class="generate-values-container">
               <label class="gvc-label">Add New Model</label>
@@ -63,6 +61,32 @@
                   </button>
                 </div>
               </div> 
+            </div>
+            <div class="generate-values-container" id="model-explanation">
+              <label class="gvc-label">Types of models that can be loaded</label>
+              <pre style="margin: 0; margin-top: 20px;">
+Model : Diffusers Model
+  Example :
+    DIR
+    |-feature_extractor
+    |-safety_checker
+    |-scheduler
+    |-text_encoder
+    |-tokenizer
+    |-unet
+    |-vae
+    |-model_index.json
+
+Vae Model : Diffusers Model
+  Example :
+    DIR
+    |-config.json
+    |-diffusion_pytorch_model.bin
+
+Lora Model : Safetensors Model
+  Example :
+    FileName.safetensors
+              </pre>
             </div>
 
           </div>
