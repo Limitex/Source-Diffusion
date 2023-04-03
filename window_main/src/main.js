@@ -27,6 +27,7 @@ let SwitchModelButton;
 let LoadNewModelButton;
 let GenerateButton;
 let Notice;
+let Loading;
 
 window.onload = () => {
   GenerationProgress = new ProgressBar(
@@ -46,6 +47,9 @@ window.onload = () => {
   );
   Notice = new NotificationElements(
     document.getElementById("notification-container")
+  )
+  Loading = new LoadingElement(
+    document.getElementById("loader-container")
   )
 };
 

@@ -71,3 +71,17 @@ class NotificationElements {
     this.notification_list.push(newNotification);
   }
 }
+
+class LoadingElement {
+  constructor(element) {
+    this.element = element
+  }
+
+  loading() {
+    this.element.style.display = ''
+  }
+
+  Undo() {
+    this.element.style.display = 'none'
+  }
+}

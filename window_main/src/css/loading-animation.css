@@ -1,4 +1,4 @@
-.loader-container {
+#loader-container {
     width: calc((var(--loading-animation-size) + var(--loading-animation-space)) * 3);
     display: flex;
     justify-content: center;
