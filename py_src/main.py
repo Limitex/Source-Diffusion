@@ -38,6 +38,7 @@ except:
                             'Please correct the contents of the file or delete it and try again.')
 
 ClientRunningFlag = False
+PidHeartbeatFlug = False
 
 def serverExit():
     os.kill(os.getpid(), 15) # SIGTERM 
@@ -60,13 +61,17 @@ async def ready():
 
 @app.post('/postpid')
 async def postpid(pd: PostPid):
+    global PidHeartbeatFlug
     def checkParentRoop(pid):
         while True:
             process_exists = psutil.pid_exists(pid)
             if not process_exists:
                 serverExit()
             time.sleep(2.0)
-    executor.submit(checkParentRoop, pd.pid)
+    
+    if not PidHeartbeatFlug:
+        PidHeartbeatFlug = True
+        executor.submit(checkParentRoop, pd.pid)
 
 
 @app.websocket("/generate")
