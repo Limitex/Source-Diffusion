@@ -1,16 +1,17 @@
 class LoadingButton {
-  constructor(element, processingText) {
+  constructor(element, processingText, loadingElement) {
     (this.processingText = processingText),
       (this.before_text = element.innerText.trim()),
       (this.button_element = element),
       (this.loading_element = element.querySelectorAll(".loadingStatus")[0]),
-      (this.text_element = element.querySelectorAll(".loadingText")[0]);
+      (this.text_element = element.querySelectorAll(".loadingText")[0]),
+      (this.loadingElement = loadingElement)
   }
 
   Loading() {
     this.text_element.innerText = this.processingText;
     this.button_element.disabled = true;
-    this.loading_element.className = "spinner-border spinner-border-sm";
+    this.loadingElement.Loading()
   }
 
   Disable() {
@@ -20,7 +21,7 @@ class LoadingButton {
   Undo() {
     this.text_element.innerText = this.before_text;
     this.button_element.disabled = false;
-    this.loading_element.className = "";
+    this.loadingElement.Undo();
   }
 }
 
@@ -77,7 +78,7 @@ class LoadingElement {
     this.element = element
   }
 
-  loading() {
+  Loading() {
     this.element.style.display = ''
   }
 

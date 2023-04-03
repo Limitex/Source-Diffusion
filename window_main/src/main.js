@@ -33,23 +33,23 @@ window.onload = () => {
   GenerationProgress = new ProgressBar(
     document.getElementById("generate-progressbar")
   );
+  Loading = new LoadingElement(
+    document.getElementById("loader-container")
+  );
   SwitchModelButton = new LoadingButton(
     document.getElementById("switchmodelbutton"),
-    "Loading..."
+    "Loading...", Loading
   );
   LoadNewModelButton = new LoadingButton(
     document.getElementById("loadnewmodelbutton"),
-    "Loading..."
+    "Loading...", Loading
   );
   GenerateButton = new LoadingButton(
     document.getElementById("generatebutton"),
-    "Generating..."
+    "Generating...", Loading
   );
   Notice = new NotificationElements(
     document.getElementById("notification-container")
-  )
-  Loading = new LoadingElement(
-    document.getElementById("loader-container")
   )
 };
 
