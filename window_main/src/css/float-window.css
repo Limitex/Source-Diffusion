@@ -1,3 +1,9 @@
+#float-window-contents-container {
+  overflow-y: auto;
+  height: calc(100% - var(--float-window-top-bar-height));
+  max-height: calc(var(--float-window-height) - var(--float-window-top-bar-height));
+}
+
 #float-window-container {
   position: fixed;
   top: 0;

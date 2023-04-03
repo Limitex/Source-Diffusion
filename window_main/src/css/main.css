@@ -114,3 +114,7 @@
   text-overflow: ellipsis;
   height: 25px;
 }
+
+#model-explanation {
+  padding: 10px;
+}
