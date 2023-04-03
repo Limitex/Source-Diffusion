@@ -1,0 +1,112 @@
+:root {
+  --animation-circle-size: 20px;
+  --animation-circle-width: 200px;
+  --animation-circle-height: 60px;
+  --animation-circle-soft-scale: 1.7;
+  --animation-circle-time: 0.5s;
+  --animation-circle-count: 5;
+  --animation-circle-delay: 0.1s;
+}
+
+#center {
+  width: var(--animation-circle-width);
+  height: var(--animation-circle-height);
+}
+
+.wrapper {
+  top: 0;
+  left: 0;
+  width: var(--animation-circle-width);
+  height: var(--animation-circle-height);
+  position: relative;
+}
+
+.wrapper .circle {
+  width: var(--animation-circle-size);
+  height: var(--animation-circle-size);
+  position: absolute;
+  border-radius: 50%;
+  background-color: #000;
+  top: 0;
+  animation: circle var(--animation-circle-time) alternate infinite ease;
+}
+
+.wrapper .shadow {
+  width: var(--animation-circle-size);
+  height: 4px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, .5);
+  top: calc(var(--animation-circle-height) + 2px);
+  filter: blur(1px);
+  animation: shadow .5s alternate infinite ease;
+}
+
+:root {
+  --animation-circle-mag: calc(100% / (var(--animation-circle-count) - 1))
+}
+
+.wrapper .circle:nth-child(1),
+.wrapper .shadow:nth-child(6) {
+  left: calc((var(--animation-circle-mag) * 0) - var(--animation-circle-size) / 2);
+  animation-delay: calc(var(--animation-circle-delay) * 1);
+}
+
+.wrapper .circle:nth-child(2),
+.wrapper .shadow:nth-child(7) {
+  left: calc((var(--animation-circle-mag) * 1) - var(--animation-circle-size) / 2);
+  animation-delay: calc(var(--animation-circle-delay) * 2);
+}
+
+.wrapper .circle:nth-child(3),
+.wrapper .shadow:nth-child(8) {
+  left: calc((var(--animation-circle-mag) * 2) - var(--animation-circle-size) / 2);
+  animation-delay: calc(var(--animation-circle-delay) * 3);
+}
+
+.wrapper .circle:nth-child(4),
+.wrapper .shadow:nth-child(9) {
+  left: calc((var(--animation-circle-mag) * 3) - var(--animation-circle-size) / 2);
+  animation-delay: calc(var(--animation-circle-delay) * 4);
+}
+
+.wrapper .circle:nth-child(5),
+.wrapper .shadow:nth-child(10) {
+  left: calc((var(--animation-circle-mag) * 4) - var(--animation-circle-size) / 2);
+  animation-delay: calc(var(--animation-circle-delay) * 5);
+}
+
+@keyframes circle {
+  0% {
+    top: var(--animation-circle-height);
+    height: calc(var(--animation-circle-size) / 4);
+    border-radius: 50px 50px 25px 25px;
+    transform: scaleX(var(--animation-circle-soft-scale));
+  }
+
+  40% {
+    height: var(--animation-circle-size);
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+
+  100% {
+    top: 0%;
+  }
+}
+
+@keyframes shadow {
+  0% {
+    transform: scaleX(1.5);
+  }
+
+  40% {
+    transform: scaleX(1);
+    opacity: .7;
+  }
+
+  100% {
+    transform: scaleX(.2);
+    opacity: .4;
+  }
+}

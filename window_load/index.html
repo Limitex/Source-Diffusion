@@ -15,6 +15,7 @@
       href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
     />
     <link rel="stylesheet" type="text/css" href="src/main.css" />
+    <link rel="stylesheet" type="text/css" href="src/animation.css" />
     <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="src/main.js"></script>
   </head>
@@ -24,11 +25,18 @@
         <h1>Source Diffusion</h1>
       </div>
       <div class="row" id="loading-animation">
-        <div class="d-flex justify-content-center align-items-center">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
+        <div class="wrapper">
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+          <div class="shadow"></div>
+      </div>
       </div>
       <div class="row" id="log-text-container">
         <pre id="log-text"></pre>
