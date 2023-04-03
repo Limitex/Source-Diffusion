@@ -1,12 +1,34 @@
 const path = require("path");
 const Process = require("child_process");
 const fs = require("fs");
+const { exec } = require('child_process');
 const {
   createDirectoryByOverwrite,
   httpDownload,
   unzip,
 } = require("./file.js");
 const config = require("../config.js");
+
+const MVR_HKLM86='HKLM:SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
+const MVR_HKLM64='HKLM:SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
+const MVR_HKCU='HKCU:SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
+
+const checkRuntime = (callback) => {
+  exec(`powershell -Command \"Get-ChildItem -Path( \'${MVR_HKLM86}\', \'${MVR_HKLM64}\', \'${MVR_HKCU}\') | % { Get-ItemProperty $_.PsPath | Select-Object DisplayName | findstr \"Microsoft\" }`, (err, stdout, stderr) => {
+    if (err) {
+      console.error(`\"exec\" ERROR: ${err}`);
+      callback(false)
+      return;
+    }
+    const list = ['Additional', 'Minimum', 'Redistributable']
+    const applist = stdout.split('\r\n').filter(item => item.includes('Microsoft Visual C++'));
+    if (applist.length > 0 && applist.every(appname => list.some(substring => appname.includes(substring)))) {
+      callback(true)
+    } else {
+      callback(false)
+    }
+  });
+}
 
 const checkPython = (callback) => {
   Process.exec(config.PythonPath + " --version", (error, stdout, stderr) => {
