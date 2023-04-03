@@ -8,7 +8,8 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "debug": "electron ."
+    "debug": "electron .",
+    "build-win": "electron-builder --win --x64 --dir"
   },
   "author": "Limitex",
   "license": "MIT",
@@ -29,5 +30,36 @@
     "mdb-ui-kit": "^6.2.0",
     "ps-tree": "^1.2.0",
     "unzipper": "^0.10.11"
+  },
+  "build": {
+    "appId": "net.limitex.app.sourcediffusion",
+    "directories": {
+      "output": "out"
+    },
+    "files": [
+      "system_host",
+      "window_load",
+      "window_main",
+      "window_src",
+      "package.json",
+      "package-lock.json"
+    ],
+    "extraFiles": [
+      "py_src/**/*"
+    ],
+    "mac": {
+      "icon": "",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "icon": "",
+      "target": "nsis"
+    },
+    "nsis":{
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
