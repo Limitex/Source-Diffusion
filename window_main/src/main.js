@@ -275,15 +275,20 @@ const setEditModelListContetns = () => {
       acc[key].push(obj);
       return acc;
     }, {});
-    groups['model'].forEach(element => {
-      console.log(element);
-    });
-    groups['vae'].forEach(element => {
-      console.log(element);
-    });
-    groups['lora'].forEach(element => {
-      console.log(element);
-    });
+    const addEditModelColumn = (type, id, name, description) => {
+      
+    }
+    const extract = (element) => {
+      addEditModelColumn(
+        element['type'],
+        element['id'],
+        element['name'],
+        element['description']
+      )
+    }
+    groups['model'].forEach(element => extract(element));
+    groups['vae'].forEach(element => extract(element));
+    groups['lora'].forEach(element => extract(element));
   });
 }
 
