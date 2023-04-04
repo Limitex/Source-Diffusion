@@ -9,12 +9,12 @@ const {
 } = require("./file.js");
 const config = require("../config.js");
 
-const MVR_HKLM86='HKLM:SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
-const MVR_HKLM64='HKLM:SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
-const MVR_HKCU='HKCU:SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
+const MVR_HKLM86='HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*'
+const MVR_HKLM64='HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*'
+const MVR_HKCU='HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*'
 
 const checkRuntime = (callback) => {
-  exec(`powershell -Command \"Get-ChildItem -Path('${MVR_HKLM86}', '${MVR_HKLM64}', '${MVR_HKCU}') | ForEach-Object { Get-ItemProperty $_.PsPath } | Select-Object DisplayName | Where-Object { $_.DisplayName -ne $null } | Where-Object { $_.DisplayName.Contains('Microsoft Visual C++') }\"`, (err, stdout, stderr) => {
+  exec(`powershell -Command \"Get-ItemProperty '${MVR_HKLM86}', '${MVR_HKLM64}', '${MVR_HKCU}' | Select-Object DisplayName | Where-Object { $_.DisplayName -like 'Microsoft Visual C++*' }\"`, (err, stdout, stderr) => {
     if (err) {
       console.error(`\"exec\" ERROR: ${err}`);
       callback(false)
