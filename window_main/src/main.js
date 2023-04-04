@@ -265,6 +265,14 @@ const openLink = (element) => {
   callOpenBrowser(link)
 }
 
+const setEditModelListContetns = () => {
+  const listElement = document.getElementById('model-list-container');
+  postRequest("/getmodelslist", "", (data) => {
+    const modelList = JSON.parse(data.models_json);
+    console.log(modelList)
+  });
+}
+
 const showAddModelWindow = () => {
   showFloatWindow('float-window-contents-addnewmodel')
 }
@@ -274,5 +282,6 @@ const showSettingWindow = () => {
 }
 
 const showEditModelsWindow = () => {
+  setEditModelListContetns();
   showFloatWindow('float-window-contents-editmodels')
 }
