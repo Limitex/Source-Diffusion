@@ -265,6 +265,8 @@ const openLink = (element) => {
   callOpenBrowser(link)
 }
 
+const template = document.getElementById('model-edit-contents-template');
+
 const setEditModelListContetns = () => {
   const listElement = document.getElementById('model-list-container');
   postRequest("/getmodelslist", "", (data) => {
@@ -275,8 +277,16 @@ const setEditModelListContetns = () => {
       acc[key].push(obj);
       return acc;
     }, {});
+
+    const e_parent = document.getElementById('model-list-container')
+    e_parent.innerHTML = ''
+
     const addEditModelColumn = (type, id, name, description) => {
+      const newTemp = template.cloneNode(true);
+
       
+      e_parent.appendChild(newTemp)
+      newTemp.style.display = '';
     }
     const extract = (element) => {
       addEditModelColumn(
