@@ -283,8 +283,12 @@ const setEditModelListContetns = () => {
 
     const addEditModelColumn = (type, id, name, description) => {
       const newTemp = template.cloneNode(true);
+      const e_type = newTemp.getElementsByClassName('model-edit-text-type')[0]
+      const e_id = newTemp.getElementsByClassName('model-edit-text-id')[0]
 
-      
+      e_type.innerText = type;
+      e_id.innerText = id;
+
       e_parent.appendChild(newTemp)
       newTemp.style.display = '';
     }
