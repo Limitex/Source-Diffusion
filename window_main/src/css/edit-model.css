@@ -1,0 +1,72 @@
+#model-list-container {
+  padding: 5px;
+}
+
+.model-edit-contents-box {
+  width: 100%;
+  height: var(--model-edit-list-height);
+  padding: 5px;
+}
+.model-edit-contents {
+  background-color: var(--root-color-3);
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--root-color-5);
+  padding: 5px 10px;
+}
+
+:root {
+  --model-edit-list-height: 80px;
+  --model-edit-list-buttons-width: 180px;
+  --model-edit-list-ids-width: 150px;
+}
+.model-edit-column-box {
+  float: left;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.model-edit-ids {
+  width: var(--model-edit-list-ids-width);
+}
+.model-edit-datas {
+  width: calc(100% - var(--model-edit-list-ids-width) - var(--model-edit-list-buttons-width))
+}
+.model-edit-buttons {
+  width: var(--model-edit-list-buttons-width);
+  padding: 0 10px;
+  justify-content: space-between;
+}
+
+
+.model-edit-column {
+  overflow-wrap: break-word;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.model-edit-text-type {
+  float: left;
+  width: 30%;
+}
+.model-edit-text-id {
+  float: right;
+  width: 70%;
+}
+
+.model-edit-text-name {
+  float: left;
+  width: 40%;
+}
+.model-edit-text-description {
+  float: right;
+  width: 60%;
+}
+
+.model-edit-icon-btns {
+  width: 90px;
+  height: 50px;
+  margin: 0;
+  font-size: 20px;
+}

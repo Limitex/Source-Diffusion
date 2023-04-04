@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="src/css/notification.css">
     <link rel="stylesheet" type="text/css" href="src/css/float-window.css">
     <link rel="stylesheet" type="text/css" href="src/css/loading-animation.css">
+    <link rel="stylesheet" type="text/css" href="src/css/edit-model.css">
   </head>
   <body>
     <div id="float-window-container" style="display: none;">
@@ -36,6 +37,46 @@
             <div class="generate-values-container">
               <label class="gvc-label">Model List</label>
               <div id="model-list-container">
+                <div class="model-edit-contents-box" id="model-edit-contents-template" style="display: none;">
+                  <div class="model-edit-contents">
+                    <div class="model-edit-ids model-edit-column-box">
+                      <div class="model-edit-text-type model-edit-column">
+                        Model
+                      </div>
+                      <div class="model-edit-text-id model-edit-column">
+                        ID
+                      </div>
+                    </div>
+                    <div class="model-edit-datas model-edit-column-box">
+                      <div class="model-edit-text-name model-edit-column">
+                        <div class="input-container">
+                          <div class="form-outline">
+                            <input type="text" id="edit-input-model-name" class="form-control" />
+                            <label class="form-label" for="edit-input-model-name">Name</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="model-edit-text-description model-edit-column">
+                        <div class="form-outline">
+                          <input type="text" id="edit-input-model-description" class="form-control" />
+                          <label class="form-label" for="edit-input-model-description">Description</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="model-edit-buttons model-edit-column-box">
+                      <div class="icon-button model-edit-icon-btns">
+                        <button type="button" onclick="">
+                          <i class="bi bi-pencil-square"></i>
+                        </button>
+                      </div>
+                      <div class="icon-button model-edit-icon-btns">
+                        <button type="button" onclick="">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
