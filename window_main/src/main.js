@@ -266,7 +266,7 @@ const openLink = (element) => {
 }
 
 const template = document.getElementById('model-edit-contents-template');
-
+let editLists = []
 const setEditModelListContetns = () => {
   const listElement = document.getElementById('model-list-container');
   postRequest("/getmodelslist", "", (data) => {
@@ -282,15 +282,11 @@ const setEditModelListContetns = () => {
     e_parent.innerHTML = ''
 
     const addEditModelColumn = (type, id, name, description) => {
-      const newTemp = template.cloneNode(true);
-      const e_type = newTemp.getElementsByClassName('model-edit-text-type')[0]
-      const e_id = newTemp.getElementsByClassName('model-edit-text-id')[0]
-
-      e_type.innerText = type;
-      e_id.innerText = id;
-
-      e_parent.appendChild(newTemp)
-      newTemp.style.display = '';
+      const newTemp = new EditElement(template.cloneNode(true), type, id, name, description)
+      editLists.push(newTemp);
+      const e = newTemp.getElement()
+      e_parent.appendChild(e)
+      e.style.display = '';
     }
     const extract = (element) => {
       addEditModelColumn(

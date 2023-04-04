@@ -86,3 +86,17 @@ class LoadingElement {
     this.element.style.display = 'none'
   }
 }
+
+class EditElement {
+  constructor(element, type, id, name, description) {
+    this.element = element;
+    this.element.getElementsByClassName('model-edit-text-type')[0].innerText = type;
+    this.element.getElementsByClassName('model-edit-text-id')[0].innerText = id;
+    this.element.getElementsByClassName('edit-input-model-name')[0].value = name;
+    this.element.getElementsByClassName('edit-input-model-description')[0].value = description;
+  }
+
+  getElement() {
+    return this.element;
+  }
+}
