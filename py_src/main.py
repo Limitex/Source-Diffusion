@@ -112,6 +112,7 @@ async def getModelsList():
                 "type": data.type.value,
                 "id": data.path,
                 "name": data.name,
+                "description": data.description
             }
         )
     return ModelListOutput(models_json=json.dumps(sendData))
