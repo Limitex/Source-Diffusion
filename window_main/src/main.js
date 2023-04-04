@@ -269,7 +269,21 @@ const setEditModelListContetns = () => {
   const listElement = document.getElementById('model-list-container');
   postRequest("/getmodelslist", "", (data) => {
     const modelList = JSON.parse(data.models_json);
-    console.log(modelList)
+    const groups = modelList.reduce((acc, obj) => {
+      const key = obj.type;
+      acc[key] = acc[key] || [];
+      acc[key].push(obj);
+      return acc;
+    }, {});
+    groups['model'].forEach(element => {
+      console.log(element);
+    });
+    groups['vae'].forEach(element => {
+      console.log(element);
+    });
+    groups['lora'].forEach(element => {
+      console.log(element);
+    });
   });
 }
 
