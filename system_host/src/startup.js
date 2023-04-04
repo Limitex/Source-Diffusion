@@ -22,7 +22,7 @@ const checkRuntime = (callback) => {
     }
     const list = ['Additional', 'Minimum', 'Redistributable']
     const applist = stdout.split('\r\n').filter(item => item.includes('Microsoft Visual C++'));
-    if (applist.length > 0 && applist.every(appname => list.some(substring => appname.includes(substring)))) {
+    if (applist.length > 0 && list.every(listStr => applist.some(appName => appName.includes(listStr)))) {
       callback(true)
     } else {
       callback(false)
