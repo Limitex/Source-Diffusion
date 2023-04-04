@@ -28,7 +28,8 @@ class FloatWindowSwitch {
 
 const fw = new FloatWindowSwitch([
   'float-window-contents-setting',
-  'float-window-contents-addnewmodel'
+  'float-window-contents-addnewmodel',
+  'float-window-contents-editmodels'
 ])
 
 

@@ -272,3 +272,7 @@ const showAddModelWindow = () => {
 const showSettingWindow = () => {
   showFloatWindow('float-window-contents-setting')
 }
+
+const showEditModelsWindow = () => {
+  showFloatWindow('float-window-contents-editmodels')
+}
