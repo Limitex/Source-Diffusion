@@ -3,6 +3,7 @@ const iwm = require("./window/main_window.js");
 const iwl = require("./window/load_window.js");
 const server = require("./src/server.js");
 const startup = require("./src/startup.js");
+const config = require("./config.js");
 
 // app.disableHardwareAcceleration()
 
@@ -10,9 +11,11 @@ let loadWindowObj = null;
 app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
 std_data = [];
+dev_data = JSON.stringify(config);
 std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
 top_status = ''
 ipcMain.handle("stdout", () => std_data);
+ipcMain.handle("devout", () => dev_data);
 ipcMain.handle("stdstatus", () => std_status);
 ipcMain.handle("topstatus", () => top_status);
 ipcMain.handle("pid", () => process.pid);

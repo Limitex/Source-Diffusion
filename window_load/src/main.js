@@ -35,3 +35,8 @@ const id = setInterval(async function () {
 const exit_func = () => {
   window.background.exitAll();
 };
+
+window.onload = async () => {
+  const result = await window.background.devout();
+  console.log(result)
+}
