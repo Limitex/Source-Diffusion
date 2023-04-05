@@ -16,10 +16,12 @@ const mainWindow = () => {
       preload: path.join(__dirname, "..", "preload", "main_window.js"),
     },
   });
-  mainWindow.loadFile("window_main/index.html");
 
-  // DEBUG
-  mainWindow.webContents.openDevTools(/*{ mode: 'detach' }*/);
+  if (config.isDev) { 
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
+  }
+
+  mainWindow.loadFile("window_main/index.html");
 };
 
 module.exports = {

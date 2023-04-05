@@ -1,6 +1,8 @@
 const { app } = require("electron");
 const path = require("path");
 
+const isDev = process.argv.some(arg => arg === '--dev');
+
 const IconPath = path.join(__dirname, '..', 'system_src', 'icon', 'cat_tail.ico');
 
 const PORT = 8000;
@@ -18,6 +20,8 @@ const PythonURI =
 const PythonPIPURI = "https://bootstrap.pypa.io/get-pip.py";
 
 module.exports = {
+  isDev: isDev,
+
   IconPath: IconPath,
 
   PORT: PORT,

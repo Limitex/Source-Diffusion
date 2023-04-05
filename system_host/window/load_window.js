@@ -14,6 +14,11 @@ const loadWindow = () => {
       preload: path.join(__dirname, "..", "preload", "load_window.js"),
     },
   });
+
+  if (config.isDev) {
+    loadWindowObj.webContents.openDevTools({ mode: 'detach' });
+  }
+
   // loadWindowObj.setAlwaysOnTop(true);
   loadWindowObj.loadFile("window_load/index.html");
   return loadWindowObj;
