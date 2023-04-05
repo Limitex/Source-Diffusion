@@ -188,11 +188,20 @@ async def updateModelInfo(cmi: ChangeModelInput):
     else:
         return ServerStatus(status=1, status_str='The inputs name is the same.')
 
+
 @app.post('/deletemodelinfo')
 async def deleteModelInfo(dmi: DeleteModelInput):
     global config
-    if deleteModelConfig(dmi.path):
-        config = loadConfig()
+    try:
+        result = deleteModelConfig(dmi.path)
+    except:
+        result = -1
+
+    config = loadConfig()
+
+    if result == 0:
         return ServerStatus(status=0, status_str='Successfully deleted!')
+    elif result == 1:
+        return ServerStatus(status=1, status_str='The inputs name is not found.')
     else:
-        return ServerStatus(status=1, status_str='Failed.')
+        return ServerStatus(status=1, status_str='Failed to delete file, but will remove from list.')
