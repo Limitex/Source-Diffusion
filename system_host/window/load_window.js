@@ -1,5 +1,6 @@
 const { BrowserWindow } = require("electron");
 const path = require("path");
+const config = require("../config.js")
 
 const loadWindow = () => {
   const loadWindowObj = new BrowserWindow({
@@ -8,6 +9,7 @@ const loadWindow = () => {
     frame: false,
     skipTaskbar: true,
     resizable: false,
+    icon: config.IconPath,
     webPreferences: {
       preload: path.join(__dirname, "..", "preload", "load_window.js"),
     },

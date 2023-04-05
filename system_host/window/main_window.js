@@ -1,5 +1,6 @@
 const { BrowserWindow } = require("electron");
 const path = require("path");
+const config = require("../config.js")
 
 const mainWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -8,6 +9,7 @@ const mainWindow = () => {
     minWidth: 700,
     minHeight: 600,
     title: "Source-Diffusion",
+    icon: config.IconPath,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

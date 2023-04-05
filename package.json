@@ -32,6 +32,7 @@
     },
     "files": [
       "system_host",
+      "system_src",
       "window_load",
       "window_main",
       "window_src",
