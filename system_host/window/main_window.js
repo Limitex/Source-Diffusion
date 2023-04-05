@@ -19,6 +19,8 @@ const mainWindow = () => {
 
   if (config.isDev) { 
     mainWindow.webContents.openDevTools({ mode: 'detach' });
+  } else {
+    mainWindow.setMenuBarVisibility(false);
   }
 
   mainWindow.loadFile("window_main/index.html");
