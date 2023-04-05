@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 from py_src.osPath import get_models_config_path, get_models_path
 from enum import Enum
 
@@ -80,6 +81,27 @@ def addNewModelToConfig(type: ModelType, path: str, name: str, description: str)
         json_load.append(new_data)
         with open(get_models_config_path(), 'w') as f:
             json.dump(json_load, f)
+
+def deleteModelConfig(path: str):
+    json_open = open(get_models_config_path(), 'r')
+    json_load = json.load(json_open)
+    target =  [model for model in json_load if model['path'] == path]
+    if len(target) == 0:
+        return False
+    
+    targetPath = os.path.join(get_models_path(), target[0]['path'])
+    modelType = get_model_type(target[0]['type'])
+    if modelType == ModelType.HuggingFace:
+        pass
+    elif modelType == ModelType.Model or modelType == ModelType.Vae:
+        shutil.rmtree(targetPath)
+    elif modelType == ModelType.Lora:
+        os.remove(targetPath)
+
+    deleted = [model for model in json_load if model['path'] != path]
+    with open(get_models_config_path(), 'w') as f:
+        json.dump(deleted, f)
+    return True
 
 def updateModelConfig(path: str, name: str, description: str):
     json_open = open(get_models_config_path(), 'r')

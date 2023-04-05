@@ -79,6 +79,17 @@ const ChangeModelInput = class {
   }
 };
 
+class DeleteModelInput {
+  constructor(path) {
+    this.path = path
+  }
+  convertToLiteral() {
+    return {
+      path: this.path,
+    };
+  }
+}
+
 const PostPid = class {
   constructor(pid) {
     this.pid = pid;

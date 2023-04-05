@@ -17,7 +17,7 @@ from py_src.apiModel import *
 from py_src.diffuserRapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
 from py_src.osPath import get_models_path
-from py_src.loadModelsConfig import ModelType, addNewModelToConfig, get_model_type, idToName, loadConfig, updateModelConfig
+from py_src.loadModelsConfig import ModelType, addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
 
 app = FastAPI()
 
@@ -187,3 +187,12 @@ async def updateModelInfo(cmi: ChangeModelInput):
         return ServerStatus(status=0, status_str='Successfully updated!')
     else:
         return ServerStatus(status=1, status_str='The inputs name is the same.')
+
+@app.post('/deletemodelinfo')
+async def deleteModelInfo(dmi: DeleteModelInput):
+    global config
+    if deleteModelConfig(dmi.path):
+        config = loadConfig()
+        return ServerStatus(status=0, status_str='Successfully deleted!')
+    else:
+        return ServerStatus(status=1, status_str='Failed.')

@@ -368,5 +368,21 @@ const editModelListEdit = (event) => {
 const editModelListTrash = (event) => {
   const element = findParent(event, 'model-edit-contents-box')
   const targetIdName = element.getElementsByClassName('model-edit-text-id')[0]
-  console.log(targetIdName)
+  const targetName = element.getElementsByClassName('edit-input-model-name')[0]
+  const targetDescriptionName = element.getElementsByClassName('edit-input-model-description')[0]
+
+  showMessageWindow(
+    'Do you really want to delete it?',
+    'ID : ' + targetIdName.innerText + '\n' +
+    'Name : ' + targetName.dataset.default + '\n' +
+    'Description : ' + targetDescriptionName.dataset.default,
+    () => {
+      const dmi = new DeleteModelInput(targetIdName.innerText);
+      postRequest("/deletemodelinfo", dmi.convertToLiteral(), (data) => {
+        Notice.append(data.status_str)
+        getModelsList()
+        closeMessageWindow()
+      });
+    }, closeMessageWindow);
+
 }

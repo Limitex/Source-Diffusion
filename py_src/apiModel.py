@@ -54,6 +54,8 @@ class ChangeModelInput(BaseModel):
     name: str
     description: str
 
+class DeleteModelInput(BaseModel):
+    path: str
 
 class PostPid(BaseModel):
     pid: int
