@@ -314,9 +314,11 @@ const setEditModelListContetns = () => {
         element['description']
       )
     }
-    groups['model'].forEach(element => extract(element));
-    groups['vae'].forEach(element => extract(element));
-    groups['lora'].forEach(element => extract(element));
+    if (groups['model'] != undefined && groups['vae'] != undefined && groups['lora'] != undefined) {
+      groups['model'].forEach(element => extract(element));
+      groups['vae'].forEach(element => extract(element));
+      groups['lora'].forEach(element => extract(element));
+    }
   });
 }
 
