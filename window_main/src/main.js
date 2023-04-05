@@ -158,6 +158,13 @@ let editLists = []
 const getModelsList = () => {
   postRequest("/getmodelslist", "", (data) => {
     const modelList = JSON.parse(data.models_json);
+    const groups = modelList.reduce((acc, obj) => {
+      const key = obj.type;
+      acc[key] = acc[key] || [];
+      acc[key].push(obj);
+      return acc;
+    }, {});
+
     const ml = document.getElementById("model-list");
     const vl = document.getElementById("vae-list");
     const ll = document.getElementById("lora-list");
@@ -176,29 +183,6 @@ const getModelsList = () => {
     f.textContent = "None";
     ll.appendChild(f);
 
-    modelList.forEach((model) => {
-      const i = document.createElement("option");
-      i.textContent = model.name;
-      i.value = model.id;
-      i.dataset.type = model.type
-      if (model.type == "model") {
-        ml.appendChild(i);
-      } else if (model.type == "vae") {
-        vl.appendChild(i);
-      } else if (model.type == "huggingface") {
-        ml.appendChild(i);
-      } else if (model.type == "lora") {
-        ll.appendChild(i);
-      }
-    });
-
-    const groups = modelList.reduce((acc, obj) => {
-      const key = obj.type;
-      acc[key] = acc[key] || [];
-      acc[key].push(obj);
-      return acc;
-    }, {});
-
     const e_parent = document.getElementById('model-list-container')
     e_parent.innerHTML = ''
 
@@ -209,18 +193,43 @@ const getModelsList = () => {
       e_parent.appendChild(e)
       e.style.display = '';
     }
-    const extract = (element) => {
+
+    const createElements = (d) => {
+      const modelType = d['type'];
+      const modelId = d['id']
+      const modelName = d['name'];
+      const i = document.createElement("option");
+      i.textContent = modelName;
+      i.value = modelId;
+      i.dataset.type = modelType
+      if (modelType == "model") {
+        ml.appendChild(i);
+      } else if (modelType == "vae") {
+        vl.appendChild(i);
+      } else if (modelType == "huggingface") {
+        ml.appendChild(i);
+      } else if (modelType == "lora") {
+        ll.appendChild(i);
+      }
       addEditModelColumn(
-        element['type'],
-        element['id'],
-        element['name'],
-        element['description']
+        modelType,
+        modelId,
+        modelName,
+        d['description']
       )
     }
-    if (groups['model'] != undefined && groups['vae'] != undefined && groups['lora'] != undefined) {
-      groups['model'].forEach(element => extract(element));
-      groups['vae'].forEach(element => extract(element));
-      groups['lora'].forEach(element => extract(element));
+
+    if (groups['huggingface'] != undefined) {
+      groups['huggingface'].forEach(d => createElements(d));
+    }
+    if (groups['model'] != undefined) {
+      groups['model'].forEach(d => createElements(d));
+    }
+    if (groups['vae'] != undefined) {
+      groups['vae'].forEach(d => createElements(d));
+    }
+    if (groups['lora'] != undefined) {
+      groups['lora'].forEach(d => createElements(d));
     }
   });
 };
