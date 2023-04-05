@@ -1,0 +1,11 @@
+#message-window {
+  z-index: 3000;
+}
+
+#message-window-top-bar {
+  height: var(--message-window-height);
+}
+
+#message-window-contents-container {
+  height: calc(100% - var(--message-window-height));
+}

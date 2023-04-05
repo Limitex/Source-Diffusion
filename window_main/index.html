@@ -16,22 +16,39 @@
     <link rel="stylesheet" type="text/css" href="src/css/button.css">
     <link rel="stylesheet" type="text/css" href="src/css/main.css">
     <link rel="stylesheet" type="text/css" href="src/css/notification.css">
+    <link rel="stylesheet" type="text/css" href="src/css/window.css">
     <link rel="stylesheet" type="text/css" href="src/css/float-window.css">
     <link rel="stylesheet" type="text/css" href="src/css/loading-animation.css">
     <link rel="stylesheet" type="text/css" href="src/css/edit-model.css">
+    <link rel="stylesheet" type="text/css" href="src/css/message-window.css">
   </head>
   <body>
-    <div id="float-window-container" style="display: none;">
-      <div id="float-window-center">
-        <div id="float-window-top-bar">
-          <div class="float-top-bar-container" id="float-top-bar-title"></div>
-          <div class="float-top-bar-container">
-            <button type="button" onclick="closeFloatWindow()">
+    <div id="message-window" class="window-darkout" style="display: none;">
+      <div id="message-window-container" class="window-center">
+        <div id="message-window-top-bar" class="window-top-bar">
+          <div class="message-window-top-bar-container window-top-bar-title" id="message-window-top-bar-title">Title</div>
+          <div class="message-window-top-bar-container">
+            <button type="button" class="window-top-bar-button" onclick="">
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
         </div>
-        <div id="float-window-contents-container">
+        <div id="message-window-contents-container" class="window-contents-container">
+          
+        </div>
+      </div>
+    </div>
+    <div id="float-window-container" class="window-darkout" style="display: none;">
+      <div id="float-window-center" class="window-center">
+        <div id="float-window-top-bar" class="window-top-bar">
+          <div class="float-top-bar-container window-top-bar-title" id="float-top-bar-title"></div>
+          <div class="float-top-bar-container">
+            <button type="button" class="window-top-bar-button" onclick="closeFloatWindow()">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        </div>
+        <div id="float-window-contents-container" class="window-contents-container">
           <div id="float-window-contents-setting" style="display: none;" data-title="Settings"></div>
           <div id="float-window-contents-editmodels" style="display: none;" data-title="Edit Models">
             <div class="generate-values-container">
