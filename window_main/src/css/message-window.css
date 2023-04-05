@@ -3,9 +3,36 @@
 }
 
 #message-window-top-bar {
-  height: var(--message-window-height);
+  height: var(--message-window-top-bar-height);
 }
 
 #message-window-contents-container {
-  height: calc(100% - var(--message-window-height));
+  height: calc(100% - var(--message-window-top-bar-height));
+}
+
+#message-window-contents-text {
+  height: calc(100% - var(--message-window-buttons-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#message-window-contents-buttons {
+  height: var(--message-window-buttons-height);
+  display: flex;
+  float: right;
+  align-items: center;
+  padding: 0 10px;
+}
+
+#message-window-button {
+  padding: 10px;
+}
+
+.mwb-btn {
+  width: var(--message-window-buttons-width);
+}
+
+.message-window-button-container {
+  padding: 10px;
 }

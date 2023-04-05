@@ -28,13 +28,33 @@
         <div id="message-window-top-bar" class="window-top-bar">
           <div class="message-window-top-bar-container window-top-bar-title" id="message-window-top-bar-title">Title</div>
           <div class="message-window-top-bar-container">
-            <button type="button" class="window-top-bar-button" onclick="">
+            <button type="button" class="window-top-bar-button" onclick="closeMessageWindow()">
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
         </div>
         <div id="message-window-contents-container" class="window-contents-container">
-          
+          <div id="message-window-contents-text">
+            Text
+          </div>
+          <div id="message-window-contents-buttons">
+            <div class="message-window-button-container">
+              <div class="message-window-button">
+                <button id="message-window-button-ok" class="btn btn-primary mwb-btn" type="button" onclick="">
+                  <span class="" role="status" aria-hidden="true"></span>
+                  <span class="sr-only">OK</span>
+                </button>
+              </div>
+            </div>
+            <div class="message-window-button-container">
+              <div class="message-window-button">
+                <button id="message-window-button-cansel" class="btn btn-primary mwb-btn" type="button" onclick="">
+                  <span class="" role="status" aria-hidden="true"></span>
+                  <span class="sr-only">Cansel</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

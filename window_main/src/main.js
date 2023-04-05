@@ -14,6 +14,17 @@ const findParent = (element, className) => {
   return l == undefined ? findParent(r, className) : r;
 }
 
+const showMessageWindow = (title, message, okCallbacl, canselCallback) => {
+  document.getElementById('message-window').style.display = '';
+  document.getElementById('message-window-top-bar-title').innerText = title;
+  document.getElementById('message-window-contents-text').innerText = message;
+  document.getElementById('message-window-button-cansel').onclick = canselCallback()
+  document.getElementById('message-window-button-ok').onclick = okCallbacl()
+}
+const closeMessageWindow = (event) => {
+  document.getElementById('message-window').style.display = 'none';
+}
+
 const startupHeartBeat = setInterval(() => {
   postRequest("/", "", (data) => {
     if (data.status == 0) {
