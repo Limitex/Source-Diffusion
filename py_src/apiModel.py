@@ -49,5 +49,11 @@ class LoadNewModelInfo(BaseModel):
     description: str
 
 
+class ChangeModelInput(BaseModel):
+    path: str
+    name: str
+    description: str
+
+
 class PostPid(BaseModel):
     pid: int

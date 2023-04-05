@@ -177,3 +177,9 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
         importDisc)
     config = loadConfig()
     return ServerStatus(status=0, status_str='Successfully loaded!')
+
+
+@app.post('/updatemodelinfo')
+async def updateModelInfo(cmi: ChangeModelInput):
+    print(cmi)
+    return ServerStatus(status=0, status_str='Successfully updated!')

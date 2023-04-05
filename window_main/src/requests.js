@@ -63,6 +63,22 @@ const LoadNewModelInfo = class {
   }
 };
 
+const ChangeModelInput = class {
+  constructor(path, name, description) {
+    this.path = path;
+    this.name = name;
+    this.description = description;
+  }
+
+  convertToLiteral() {
+    return {
+      path: this.path,
+      name: this.name,
+      description: this.description,
+    };
+  }
+};
+
 const PostPid = class {
   constructor(pid) {
     this.pid = pid;

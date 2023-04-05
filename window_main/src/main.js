@@ -353,6 +353,11 @@ const editModelListEdit = (event) => {
       console.log(targetIdName.innerText)
       console.log(targetName.value)
       console.log(targetDescriptionName.value)
+      const cmi = new ChangeModelInput(targetIdName.innerText, targetName.value, targetDescriptionName.value)
+      postRequest("/updatemodelinfo", cmi.convertToLiteral(), (data) => {
+        Notice.append(data.status_str)
+        closeMessageWindow()
+      });
     },
     () => {
       closeMessageWindow()
