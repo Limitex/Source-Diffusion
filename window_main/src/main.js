@@ -7,6 +7,13 @@ const setMainImage = (imageElement) => {
   dbl.download = 'image.png'
 }
 
+const findParent = (element, className) => {
+  r = element.parentElement
+  if (r == null) return null
+  l = Array.from(r.classList).find(cls => cls == className);
+  return l == undefined ? findParent(r, className) : r;
+}
+
 const startupHeartBeat = setInterval(() => {
   postRequest("/", "", (data) => {
     if (data.status == 0) {
@@ -313,4 +320,21 @@ const showSettingWindow = () => {
 const showEditModelsWindow = () => {
   setEditModelListContetns();
   showFloatWindow('float-window-contents-editmodels')
+}
+
+const editModelListEdit = (event) => {
+  const element = findParent(event, 'model-edit-contents-box')
+  const targetIdName = element.getElementsByClassName('model-edit-text-id')[0]
+  const targetName = element.getElementsByClassName('edit-input-model-name')[0]
+  const targetDescriptionName = element.getElementsByClassName('edit-input-model-description')[0]
+
+  console.log(targetIdName)
+  console.log(targetName)
+  console.log(targetDescriptionName)
+}
+
+const editModelListTrash = (event) => {
+  const element = findParent(event, 'model-edit-contents-box')
+  const targetIdName = element.getElementsByClassName('model-edit-text-id')[0]
+  console.log(targetIdName)
 }
