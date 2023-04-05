@@ -1,7 +1,7 @@
 import json
 import os
 import shutil
-from py_src.osPath import get_models_config_path, get_models_path
+from py_src.osPath import get_cache_path, get_models_config_path, get_models_path
 from enum import Enum
 
 
@@ -97,7 +97,12 @@ def deleteModelConfig(path: str):
     modelType = get_model_type(target[0]['type'])
     try:
         if modelType == ModelType.HuggingFace:
-            pass
+            cache_path = get_cache_path()
+            dirs = [d for d in os.listdir(cache_path) if os.path.isdir(os.path.join(cache_path, d))]
+            names = target[0]['path'].split('/')
+            targetNames = [d for d in dirs if names[0] in d and names[1] in d]
+            targetPath = os.path.join(cache_path, targetNames[0])
+            shutil.rmtree(targetPath)
         elif modelType == ModelType.Model or modelType == ModelType.Vae:
             shutil.rmtree(targetPath)
         elif modelType == ModelType.Lora:
