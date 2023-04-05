@@ -17,7 +17,7 @@ from py_src.apiModel import *
 from py_src.diffuserRapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
 from py_src.osPath import get_models_path
-from py_src.loadModelsConfig import ModelType, addNewModelToConfig, get_model_type, idToName, loadConfig
+from py_src.loadModelsConfig import ModelType, addNewModelToConfig, get_model_type, idToName, loadConfig, updateModelConfig
 
 app = FastAPI()
 
@@ -181,5 +181,9 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
 
 @app.post('/updatemodelinfo')
 async def updateModelInfo(cmi: ChangeModelInput):
-    print(cmi)
-    return ServerStatus(status=0, status_str='Successfully updated!')
+    global config
+    if updateModelConfig(cmi.path, cmi.name, cmi.description):
+        config = loadConfig()
+        return ServerStatus(status=0, status_str='Successfully updated!')
+    else:
+        return ServerStatus(status=1, status_str='The inputs name is the same.')
