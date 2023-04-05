@@ -98,6 +98,16 @@ class EditElement {
     const d = this.element.getElementsByClassName('edit-input-model-description')[0]
     d.value = description;
     d.dataset.default = description;
+    const c = this.element.getElementsByClassName('model-edit-change-notification')[0]
+    const changeNotice = () => {
+      if (n.dataset.default != n.value || d.dataset.default != d.value) {
+        c.classList.add('model-edit-change-notification-active')
+      } else {
+        c.classList.remove('model-edit-change-notification-active')
+      }
+    }
+    n.oninput = changeNotice
+    d.oninput = changeNotice
   }
 
   getElement() {

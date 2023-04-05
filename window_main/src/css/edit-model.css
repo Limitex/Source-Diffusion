@@ -79,3 +79,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.model-edit-change-notification {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.model-edit-change-notification-active {
+  background-color: var(--root-color-7);
+}
