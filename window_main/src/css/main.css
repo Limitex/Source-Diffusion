@@ -56,7 +56,8 @@
 .main-side-btns {
   width: 70px;
   height: 50px;
-  margin: 5px;
+  margin: 5px 0;
+  padding: 5px 0;
   font-size: 20px;
 }
 
@@ -88,6 +89,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#switchmodelbutton {
+  margin-right: 5px;
 }
 
 .select-label {
