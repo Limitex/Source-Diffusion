@@ -36,13 +36,13 @@ const checkRuntime = (callback) => {
 }
 
 const checkPython = (callback) => {
-  Process.exec(config.PythonPath + " --version", (error, stdout, stderr) => {
+  Process.exec("\"" + config.PythonPath + "\" --version", (error, stdout, stderr) => {
     callback(stdout.includes("Python 3.10"));
   });
 };
 
 const checkPythonModules = (callback) => {
-  const pipprocess = Process.exec(config.PipPath + " freeze");
+  const pipprocess = Process.exec("\"" + config.PipPath + "\" freeze");
   pipprocess.stdout.on("data", (data) => {
     const packageNames = data.trimEnd().split('\r\n');
     fs.readFile('py_src/requirements.txt', 'utf8', (err, data) => {
@@ -90,10 +90,10 @@ const installPython = (callback, stdDataRef) => {
             () => {
               stdDataRef.push("Installing pip...");
               const installPipProcess = Process.exec(
-                config.PythonPath +
-                  " " +
+                "\"" + config.PythonPath +
+                  "\" \"" +
                   pipTmpPath +
-                  " --no-warn-script-location",
+                  "\" --no-warn-script-location",
                 (error, stdout, stderr) => {
                   const pthPath = path.join(
                     config.PythonDirPath,
@@ -140,8 +140,8 @@ const installPython = (callback, stdDataRef) => {
 const installModules = (callback, stdDataRef) => {
   stdDataRef.push("Installing module...");
   const pipprocess = Process.exec(
-    config.PipPath +
-      " install -r py_src/requirements.txt --no-warn-script-location"
+    "\"" + config.PipPath +
+      "\" install -r py_src/requirements.txt --no-warn-script-location"
   );
   pipprocess.stdout.on("data", (data) => {
     stdDataRef.push(data.trimEnd());
