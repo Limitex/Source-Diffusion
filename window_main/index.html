@@ -156,7 +156,9 @@
             <div class="generate-values-container" id="model-explanation">
               <label class="gvc-label">Types of models that can be loaded</label>
               <pre style="margin: 0; margin-top: 20px;">
-Model : Diffusers Model
+Model : Diffusers Model, HuggingFace
+  Input Example : C:\DIR
+  Input Example : RepositoryAuthor/RepositoryName
   Example :
     DIR
     |-feature_extractor
@@ -169,12 +171,14 @@ Model : Diffusers Model
     |-model_index.json
 
 Vae Model : Diffusers Model
+  Input Example : C:\DIR
   Example :
     DIR
     |-config.json
     |-diffusion_pytorch_model.bin
 
 Lora Model : Safetensors Model
+  Input Example : C:\FileName.safetensors
   Example :
     FileName.safetensors
               </pre>
