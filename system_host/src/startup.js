@@ -1,6 +1,7 @@
 const path = require("path");
 const Process = require("child_process");
 const fs = require("fs");
+const os = require('os');
 const { exec } = require('child_process');
 const {
   createDirectoryByOverwrite,
@@ -14,6 +15,10 @@ const MVR_HKLM64='HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersi
 const MVR_HKCU='HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\*'
 
 const checkRuntime = (callback) => {
+  if (os.platform() != 'win32') {
+    callback(true);
+    return;
+  }
   exec(`powershell -Command \"Get-ItemProperty '${MVR_HKLM86}', '${MVR_HKLM64}', '${MVR_HKCU}' | Select-Object DisplayName | Where-Object { $_.DisplayName -like 'Microsoft Visual C++*' }\"`, (err, stdout, stderr) => {
     if (err) {
       console.error(`\"exec\" ERROR: ${err}`);
