@@ -36,6 +36,7 @@ const StartBackground = () => {
       std_data.push(err.trimEnd());
       console.error(err.trimEnd());
       if (err.includes("Uvicorn running")) {
+        if (config.isDevLoad) return;
         std_status = 0;
         loadWindowObj.close();
         iwm.mainWindow();

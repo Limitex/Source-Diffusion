@@ -2,6 +2,7 @@ const { app } = require("electron");
 const path = require("path");
 
 const isDev = process.argv.some(arg => arg === '--dev');
+const isDevLoad = process.argv.some(arg => arg === '--lw-dev');
 
 const IconPath = path.join(__dirname, '..', 'system_src', 'icon', 'cat_tail.ico');
 
@@ -21,6 +22,7 @@ const PythonPIPURI = "https://bootstrap.pypa.io/get-pip.py";
 
 module.exports = {
   isDev: isDev,
+  isDevLoad: isDevLoad,
 
   IconPath: IconPath,
 

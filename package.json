@@ -6,6 +6,7 @@
   "scripts": {
     "setup": "npm install --save-dev electron",
     "debug": "electron . --dev",
+    "debug-lw": "electron . --dev --lw-dev",
     "release": "electron .",
     "fix": "npm audit fix --force",
     "build-win": "electron-builder --win --x64",
