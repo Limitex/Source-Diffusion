@@ -12,6 +12,7 @@
 
 #message-window-contents-text {
   height: calc(100% - var(--message-window-buttons-height));
+  padding: 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;

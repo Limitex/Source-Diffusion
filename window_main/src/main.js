@@ -338,14 +338,21 @@ const editModelListEdit = (event) => {
   const targetIdName = element.getElementsByClassName('model-edit-text-id')[0]
   const targetName = element.getElementsByClassName('edit-input-model-name')[0]
   const targetDescriptionName = element.getElementsByClassName('edit-input-model-description')[0]
-  
+
+  if (targetName.dataset.default == targetName.value && 
+    targetDescriptionName.dataset.default == targetDescriptionName.value) {
+      Notice.append('No changed.')
+      return;
+  }
   showMessageWindow(
-    'Confirmation!',
     'Do you want to confirm the change?',
+    'ID : ' + targetIdName.innerText + '\n' +
+    'Name : ' + targetName.dataset.default + ' -> \n' + targetName.value + '\n' +
+    'Description : ' + targetDescriptionName.dataset.default + ' -> \n' + targetDescriptionName.value,
     ()=>{
-      console.log(targetIdName)
-      console.log(targetName)
-      console.log(targetDescriptionName)
+      console.log(targetIdName.innerText)
+      console.log(targetName.value)
+      console.log(targetDescriptionName.value)
     },
     () => {
       closeMessageWindow()

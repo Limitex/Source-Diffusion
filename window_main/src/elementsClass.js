@@ -92,8 +92,12 @@ class EditElement {
     this.element = element;
     this.element.getElementsByClassName('model-edit-text-type')[0].innerText = type;
     this.element.getElementsByClassName('model-edit-text-id')[0].innerText = id;
-    this.element.getElementsByClassName('edit-input-model-name')[0].value = name;
-    this.element.getElementsByClassName('edit-input-model-description')[0].value = description;
+    const n = this.element.getElementsByClassName('edit-input-model-name')[0];
+    n.value = name;
+    n.dataset.default = name;
+    const d = this.element.getElementsByClassName('edit-input-model-description')[0]
+    d.value = description;
+    d.dataset.default = description;
   }
 
   getElement() {
