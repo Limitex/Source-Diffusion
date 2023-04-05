@@ -153,6 +153,8 @@ const downloadImage = () => {
   document.getElementById('download-button-link').click();
 }
 
+const template = document.getElementById('model-edit-contents-template');
+let editLists = []
 const getModelsList = () => {
   postRequest("/getmodelslist", "", (data) => {
     const modelList = JSON.parse(data.models_json);
@@ -189,6 +191,37 @@ const getModelsList = () => {
         ll.appendChild(i);
       }
     });
+
+    const groups = modelList.reduce((acc, obj) => {
+      const key = obj.type;
+      acc[key] = acc[key] || [];
+      acc[key].push(obj);
+      return acc;
+    }, {});
+
+    const e_parent = document.getElementById('model-list-container')
+    e_parent.innerHTML = ''
+
+    const addEditModelColumn = (type, id, name, description) => {
+      const newTemp = new EditElement(template.cloneNode(true), type, id, name, description)
+      editLists.push(newTemp);
+      const e = newTemp.getElement()
+      e_parent.appendChild(e)
+      e.style.display = '';
+    }
+    const extract = (element) => {
+      addEditModelColumn(
+        element['type'],
+        element['id'],
+        element['name'],
+        element['description']
+      )
+    }
+    if (groups['model'] != undefined && groups['vae'] != undefined && groups['lora'] != undefined) {
+      groups['model'].forEach(element => extract(element));
+      groups['vae'].forEach(element => extract(element));
+      groups['lora'].forEach(element => extract(element));
+    }
   });
 };
 
@@ -283,44 +316,6 @@ const openLink = (element) => {
   callOpenBrowser(link)
 }
 
-const template = document.getElementById('model-edit-contents-template');
-let editLists = []
-const setEditModelListContetns = () => {
-  const listElement = document.getElementById('model-list-container');
-  postRequest("/getmodelslist", "", (data) => {
-    const modelList = JSON.parse(data.models_json);
-    const groups = modelList.reduce((acc, obj) => {
-      const key = obj.type;
-      acc[key] = acc[key] || [];
-      acc[key].push(obj);
-      return acc;
-    }, {});
-
-    const e_parent = document.getElementById('model-list-container')
-    e_parent.innerHTML = ''
-
-    const addEditModelColumn = (type, id, name, description) => {
-      const newTemp = new EditElement(template.cloneNode(true), type, id, name, description)
-      editLists.push(newTemp);
-      const e = newTemp.getElement()
-      e_parent.appendChild(e)
-      e.style.display = '';
-    }
-    const extract = (element) => {
-      addEditModelColumn(
-        element['type'],
-        element['id'],
-        element['name'],
-        element['description']
-      )
-    }
-    if (groups['model'] != undefined && groups['vae'] != undefined && groups['lora'] != undefined) {
-      groups['model'].forEach(element => extract(element));
-      groups['vae'].forEach(element => extract(element));
-      groups['lora'].forEach(element => extract(element));
-    }
-  });
-}
 
 const showAddModelWindow = () => {
   showFloatWindow('float-window-contents-addnewmodel')
@@ -331,7 +326,7 @@ const showSettingWindow = () => {
 }
 
 const showEditModelsWindow = () => {
-  setEditModelListContetns();
+  getModelsList();
   showFloatWindow('float-window-contents-editmodels')
 }
 
@@ -355,7 +350,7 @@ const editModelListEdit = (event) => {
       const cmi = new ChangeModelInput(targetIdName.innerText, targetName.value, targetDescriptionName.value)
       postRequest("/updatemodelinfo", cmi.convertToLiteral(), (data) => {
         Notice.append(data.status_str)
-        setEditModelListContetns()
+        getModelsList()
         closeMessageWindow()
       });
     }, closeMessageWindow);
