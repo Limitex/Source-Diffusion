@@ -2,7 +2,7 @@ import asyncio
 import os
 import time
 import torch
-from diffusers import StableDiffusionPipeline
+from diffusers import DiffusionPipeline
 from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
 from py_src.loadLora import load_safetensors_lora
@@ -18,13 +18,13 @@ loadedLoraModelId = None
 
 def loadPipeline(modelName, torch_dtype, vaeName=None, loraName=None):
     if vaeName is None:
-        pipeline = StableDiffusionPipeline.from_pretrained(
+        pipeline = DiffusionPipeline.from_pretrained(
             pretrained_model_name_or_path=modelName,
             torch_dtype=torch_dtype,
             cache_dir=get_cache_path()
         )
     else:
-        pipeline = StableDiffusionPipeline.from_pretrained(
+        pipeline = DiffusionPipeline.from_pretrained(
             pretrained_model_name_or_path=modelName,
             torch_dtype=torch_dtype,
             cache_dir=get_cache_path(),
@@ -66,7 +66,7 @@ def load(mtype, modelId, torch_dtype, vaeId=None, loraId=None):
 def TestLoad(path: str, importType: ModelType):
     try:
         if (importType == ModelType.Model or importType == ModelType.HuggingFace):
-            pipe = StableDiffusionPipeline.from_pretrained(
+            pipe = DiffusionPipeline.from_pretrained(
                 pretrained_model_name_or_path=path,
                 cache_dir=get_cache_path())
             pipe = None
