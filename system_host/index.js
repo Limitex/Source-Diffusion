@@ -14,6 +14,7 @@ std_data = [];
 dev_data = JSON.stringify(config);
 std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
 top_status = ''
+ipcMain.handle("version", () => app.getVersion());
 ipcMain.handle("stdout", () => std_data);
 ipcMain.handle("devout", () => dev_data);
 ipcMain.handle("stdstatus", () => std_status);
