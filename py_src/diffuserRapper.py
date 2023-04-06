@@ -8,6 +8,7 @@ from py_src.apiModel import GenerateContainer
 from py_src.loadLora import load_safetensors_lora
 from py_src.loadModelsConfig import ModelType
 from py_src.osPath import get_models_path, get_cache_path
+from py_src.token_auto_concat_embeds import token_auto_concat_embeds
 
 global pipe
 generate_progress_callback = None
@@ -92,14 +93,15 @@ def diffusionGenerate_progress_callback(step: int, timestep: int, latents: torch
 
 async def diffusionGenerate_async(gc: GenerateContainer):
     global pipe
+    positive_embeds, negative_embeds = token_auto_concat_embeds(pipe, gc.positive, gc.negative)
     return (await asyncio.to_thread(
         pipe,
-        prompt=gc.positive,
+        prompt_embeds=positive_embeds,
         height=gc.height,
         width=gc.width,
         num_inference_steps=gc.steps,
         guidance_scale=gc.scale,
-        negative_prompt=gc.negative,
+        negative_prompt_embeds=negative_embeds,
         num_images_per_prompt=gc.num,
         eta=gc.eta,
         generator=None if gc.seed == -1 else torch.manual_seed(gc.seed),
