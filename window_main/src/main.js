@@ -69,6 +69,9 @@ window.onload = () => {
   Notice = new NotificationElements(
     document.getElementById("notification-container")
   )
+  callVersion(v => {
+    document.getElementById('version-container').innerText = 'Ver:' + v
+  });
 };
 
 const generateImage = () => {

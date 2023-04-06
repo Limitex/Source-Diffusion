@@ -123,3 +123,12 @@
 #model-explanation {
   padding: 10px;
 }
+
+#version-container {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+  color: var(--root-color-8);
+}
