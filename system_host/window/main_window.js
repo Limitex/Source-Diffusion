@@ -6,7 +6,7 @@ const mainWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
-    minWidth: 700,
+    minWidth: 740,
     minHeight: 600,
     title: "Source-Diffusion",
     icon: config.IconPath,
