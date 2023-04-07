@@ -8,6 +8,12 @@ This software is very easy to generate images from diffusion model.
 
 ## How to use
 
+1. Download and install the installer from Assets.
+2. Once the installation is complete, launch the shortcut. Note that the first launch may take some time due to initial setup.
+3. From the Model category, import the desired model. Check the supported formats in the Model Load Window.
+5. After importing the model, select and load it from the list.
+6. Once loaded, input a prompt to begin generating images.
+
 ## How to start debugging
 
 By following these steps, you can start debugging.
