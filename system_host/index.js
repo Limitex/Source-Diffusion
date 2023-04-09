@@ -5,6 +5,10 @@ const server = require("./src/server.js");
 const startup = require("./src/startup.js");
 const config = require("./config.js");
 
+if (!app.requestSingleInstanceLock()) {
+  app.quit();
+}
+
 // app.disableHardwareAcceleration()
 
 let loadWindowObj = null;
