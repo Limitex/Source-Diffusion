@@ -4,7 +4,7 @@ const path = require("path");
 const isDev = process.argv.some(arg => arg === '--dev');
 const isDevLoad = process.argv.some(arg => arg === '--lw-dev');
 
-const AppDir = path.join(__dirname, '..');
+const AppDir = process.defaultApp ? app.getAppPath() : path.dirname(app.getPath("exe"));
 const AppDataDir = app.getPath("userData");
 
 const IconPath = path.join(AppDir, 'system_src', 'icon', 'cat_tail.ico');
