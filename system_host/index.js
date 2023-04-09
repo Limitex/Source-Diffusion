@@ -58,6 +58,7 @@ startup.checkEnvironment(
   (data) => std_data.push(data),
   () => StartBackground(),
   () => {
+    top_status = 'Initial setup is in progress.'
     startup.installEnvironment(
       (data) => std_data.push(data),
       () => StartBackground(),
