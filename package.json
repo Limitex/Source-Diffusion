@@ -42,7 +42,8 @@
       "package-lock.json"
     ],
     "extraFiles": [
-      "py_src/**/*"
+      "py_src/**/*",
+      "system_dependent/**/*"
     ],
     "mac": {
       "icon": "",
