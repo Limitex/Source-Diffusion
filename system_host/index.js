@@ -54,42 +54,17 @@ const StartBackground = () => {
 };
 
 std_data.push("Checking required directories...");
-startup.checkRuntime((runtimeExist) => {
-  if (!runtimeExist) {
-    std_data.push("Microsoft Visual C++ Runtime is not found.");
-    shell.openExternal('https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170')
+startup.checkEnvironment(
+  (data) => std_data.push(data),
+  () => StartBackground(),
+  () => {
+    startup.installEnvironment(
+      (data) => std_data.push(data),
+      () => StartBackground(),
+      () => {
+        std_data.push("Installation failed.");
+        std_status = 1;
+      }
+    )
   }
-  startup.checkPython((pythonExist) => {
-    if (pythonExist) {
-      startup.checkPythonModules((moduleExist) => {
-        if (moduleExist) {
-          StartBackground();
-        } else { // moduleExist
-          top_status = 'Python setup is in progress.'
-          startup.installPython((installSuccess) => {
-            if (installSuccess) {
-              std_data.push("Installation complete.");
-              StartBackground();
-            } else { // installSuccess
-              std_data.push("Installation failed.");
-              std_status = 1;
-            } // installSuccess
-          }, std_data);
-        } // moduleExist
-      });
-    } else { // pythonExist
-      std_data.push("This is the first boot.");
-      std_data.push("Python installing... Please wait.");
-      top_status = 'Initial setup is in progress.'
-      startup.installPython((installSuccess) => {
-        if (installSuccess) {
-          std_data.push("Installation is complete.");
-          StartBackground();
-        } else { // installSuccess
-          std_data.push("Installation failed.");
-          std_status = 1;
-        } // installSuccess
-      }, std_data);
-    } // pythonExist
-  });
-});
+)
