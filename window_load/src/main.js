@@ -13,7 +13,7 @@ const id = setInterval(async function () {
     document.getElementById('top-status-text').innerText = topstatus;
   }
   if (status == 0 || status == 1) {
-    document.getElementById('exit-button-container').style.display = '';
+    document.getElementById('button-container').style.display = '';
     document.getElementById('animation-container').classList = ''
     clearInterval(id);
   }

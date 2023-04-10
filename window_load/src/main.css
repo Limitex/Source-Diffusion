@@ -21,21 +21,6 @@ body {
   align-items: center;
 }
 
-#exit-button-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 10px;
-  width: 100px;
-  height: 60px;
-  z-index: 9999;
-}
-
-#exit-button {
-  width: 100%;
-  height: 100%;
-}
-
 #loading-animation {
   min-height: 100px;
 }
@@ -64,4 +49,27 @@ pre {
   padding: 1px 15px;
   font-size: 15px;
   color: var(--root-color-8);
+}
+
+#button-container {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  width: 200px;
+  height: 60px;
+  z-index: 9999;
+}
+
+#reset-button-container, #exit-button-container {
+  width: 45%;
+  height: 100%;
+}
+
+#reset-button, #exit-button {
+  width: 100%;
+  height: 100%;
 }
