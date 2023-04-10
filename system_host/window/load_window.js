@@ -7,7 +7,6 @@ const loadWindow = () => {
     width: 600,
     height: 400,
     frame: false,
-    skipTaskbar: true,
     resizable: false,
     icon: config.IconPath,
     webPreferences: {
