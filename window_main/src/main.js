@@ -176,6 +176,11 @@ const getModelsList = () => {
     vl.innerHTML = "";
     ll.innerHTML = "";
 
+    let d = document.createElement("option");
+    d.value = "null";
+    d.textContent = "None";
+    ml.appendChild(d);
+
     let e = document.createElement("option");
     e.value = "null";
     e.textContent = "None";
@@ -264,7 +269,11 @@ const switchModel = () => {
   const vaeElm = document.getElementById("vae-list");
   const loraElm = document.getElementById("lora-list");
 
-  if (modelElm.options.length == 0) {
+  vaeid = vaeElm.options[vaeElm.selectedIndex].value;
+  modelid = modelElm.options[modelElm.selectedIndex]
+  loraId = loraElm.options[loraElm.selectedIndex].value;
+
+  if (modelElm.options.length == 0 || modelid.value == "null") {
     getLoadedModel();
     SwitchModelButton.Undo();
     GenerateButton.Undo();
@@ -272,10 +281,7 @@ const switchModel = () => {
     Notice.append('Model was no exist.');
     return;
   }
-
-  vaeid = vaeElm.options[vaeElm.selectedIndex].value;
-  modelid = modelElm.options[modelElm.selectedIndex]
-  loraId = loraElm.options[loraElm.selectedIndex].value;
+  
   const g_data = new ModelChangeContainer(
     (mtype = modelid.dataset.type),
     (model_id = modelid.value),
