@@ -25,10 +25,15 @@ ipcMain.handle("stdstatus", () => std_status);
 ipcMain.handle("topstatus", () => top_status);
 ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
+ipcMain.handle("envreset", () => EnvReset());
 ipcMain.handle("exitAll", () => {
   loadWindowObj.close();
   app.once("window-all-closed", app.quit);
 });
+
+const EnvReset = () => {
+
+}
 
 const StartBackground = () => {
   std_data.push("Starting background app...");

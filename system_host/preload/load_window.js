@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld("background", {
   stdout: () => ipcRenderer.invoke("stdout"),
   devout: () => ipcRenderer.invoke("devout"),
   stdstatus: () => ipcRenderer.invoke("stdstatus"),
+  envreset: () => ipcRenderer.invoke("envreset"),
   exitAll: () => ipcRenderer.invoke("exitAll"),
 });
