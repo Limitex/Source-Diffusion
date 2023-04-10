@@ -27,6 +27,7 @@ if %count% equ 0 (
     echo Microsoft Visual C++ Runtime is found.
 )
 
+echo Initializing...
 if exist "%APP_DATA_PATH%\python" rd /s /q "%APP_DATA_PATH%\python"
 if exist "%APP_DATA_PATH%\tmp" rd /s /q "%APP_DATA_PATH%\tmp"
 mkdir "%APP_DATA_PATH%\tmp"
