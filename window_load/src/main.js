@@ -13,21 +13,8 @@ const id = setInterval(async function () {
     document.getElementById('top-status-text').innerText = topstatus;
   }
   if (status == 0 || status == 1) {
-    const exitButtonContainer = document.createElement("div");
-    exitButtonContainer.setAttribute("id", "exit-button-container");
-
-    const exitButton = document.createElement("button");
-    exitButton.setAttribute("type", "button");
-    exitButton.setAttribute("class", "btn btn-danger");
-    exitButton.setAttribute("id", "exit-button");
-    exitButton.setAttribute("onclick", "exit_func()");
-    exitButton.innerHTML = "Exit";
-
+    document.getElementById('exit-button-container').style.display = '';
     document.getElementById('animation-container').classList = ''
-
-    exitButtonContainer.appendChild(exitButton);
-
-    document.body.append(exitButtonContainer);
     clearInterval(id);
   }
 }, 1);
