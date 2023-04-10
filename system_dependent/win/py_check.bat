@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
 set APP_PATH=%~1
 set APP_DATA_PATH=%~2
@@ -25,7 +25,13 @@ if %count% equ 0 (
 "%APP_DATA_PATH%\python\python.exe" --version > nul 2>&1
 if errorlevel 1 exit 1
 
-: TODO : Check modlues
+set /a count = 0
+for /f "usebackq delims=" %%A in (`%APP_DATA_PATH%\python\Scripts\pip.exe freeze -r "%APP_PATH%\py_src\requirements.txt" ^2^>^&1 ^| findstr WARNING`) do (
+    set /a count += 1
+)
+if %count% neq 0 (
+    exit 1
+)
 
 endlocal
 exit 0
