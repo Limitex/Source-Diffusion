@@ -25,15 +25,11 @@ ipcMain.handle("stdstatus", () => std_status);
 ipcMain.handle("topstatus", () => top_status);
 ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
-ipcMain.handle("envreset", () => EnvReset());
+ipcMain.handle("envreset", () => installProcess());
 ipcMain.handle("exitAll", () => {
   loadWindowObj.close();
   app.once("window-all-closed", app.quit);
 });
-
-const EnvReset = () => {
-
-}
 
 const StartBackground = () => {
   std_data.push("Starting background app...");
@@ -62,19 +58,22 @@ const StartBackground = () => {
   );
 };
 
+const installProcess = () => {
+  std_status = -1;
+  top_status = 'Initial setup is in progress.'
+  startup.installEnvironment(
+    (data) => std_data.push(data),
+    () => StartBackground(),
+    () => {
+      std_data.push("Installation failed.");
+      std_status = 1;
+    }
+  )
+}
+
 std_data.push("Checking required directories...");
 startup.checkEnvironment(
   (data) => std_data.push(data),
   () => StartBackground(),
-  () => {
-    top_status = 'Initial setup is in progress.'
-    startup.installEnvironment(
-      (data) => std_data.push(data),
-      () => StartBackground(),
-      () => {
-        std_data.push("Installation failed.");
-        std_status = 1;
-      }
-    )
-  }
+  () => installProcess()
 )

@@ -15,7 +15,9 @@ const id = setInterval(async function () {
   if (status == 0 || status == 1) {
     document.getElementById('button-container').style.display = '';
     document.getElementById('animation-container').classList = ''
-    clearInterval(id);
+  }
+  if (status == -1) {
+    document.getElementById('button-container').style.display = 'none';
   }
 }, 1);
 
