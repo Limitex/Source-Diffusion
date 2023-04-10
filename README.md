@@ -1,8 +1,10 @@
 # Source-Diffusion
 
-Under development.
-
 This software is very easy to generate images from diffusion model.
+
+## Official discord
+
+https://discord.gg/38Sd7gcBnu
 
 ## Performance Requirements
 
