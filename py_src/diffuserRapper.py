@@ -5,10 +5,10 @@ import torch
 from diffusers import DiffusionPipeline
 from diffusers.models import AutoencoderKL
 from py_src.apiModel import GenerateContainer
-from py_src.loadLora import load_safetensors_lora
+from py_src.lib.loadLora import load_safetensors_lora
 from py_src.loadModelsConfig import ModelType
 from py_src.osPath import get_models_path, get_cache_path
-from py_src.token_auto_concat_embeds import token_auto_concat_embeds
+from py_src.lib.token_auto_concat_embeds import token_auto_concat_embeds
 
 global pipe
 generate_progress_callback = None
