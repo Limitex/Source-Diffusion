@@ -4,6 +4,7 @@ const psTree = require("ps-tree");
 const config = require("../config.js");
 
 const StartServer = (stdout, stderr, exited) => {
+  process.chdir(config.AppDir);
   const ServerProcess = Process.exec(
     config.PythonPath +
       " -m uvicorn --host " +
