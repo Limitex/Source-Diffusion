@@ -9,12 +9,12 @@ import traceback
 import torch
 import base64
 import psutil
-import py_src.diffuserRapper
+import py_src.diffuserWrapper
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 from py_src.apiModel import *
-from py_src.diffuserRapper import TestLoad, diffusionGenerate_async, load
+from py_src.diffuserWrapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
 from py_src.osPath import get_models_path
 from py_src.loadModelsConfig import ModelType, addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
@@ -88,7 +88,7 @@ async def generate(websocket: WebSocket):
 
     await websocket.accept()
     gc = GenerateContainer.parse_raw(await websocket.receive_text())
-    py_src.diffuserRapper.generate_progress_callback = progress
+    py_src.diffuserWrapper.generate_progress_callback = progress
     images = await diffusionGenerate_async(gc)
     print(gc)
     images_encoded = []
@@ -120,9 +120,9 @@ async def getModelsList():
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
-    modelName = idToName(config, py_src.diffuserRapper.loadedModelId)
-    vaeName = idToName(config, py_src.diffuserRapper.loadedVaeModelId)
-    loraName = idToName(config, py_src.diffuserRapper.loadedLoraModelId)
+    modelName = idToName(config, py_src.diffuserWrapper.loadedModelId)
+    vaeName = idToName(config, py_src.diffuserWrapper.loadedVaeModelId)
+    loraName = idToName(config, py_src.diffuserWrapper.loadedLoraModelId)
     return ModelOutput(model=modelName, vae_model=vaeName, lora_model=loraName)
 
 
