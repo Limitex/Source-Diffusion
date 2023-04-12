@@ -5,6 +5,7 @@ APP_NAME = 'source-diffusion'
 
 
 def get_user_data():
+    # TODO : Support for linux
     if os.name == 'posix':  # macOS or Linux
         if sys.platform == 'darwin':  # macOS
             return os.path.join(os.environ['HOME'], 'Library', 'Application Support', APP_NAME)

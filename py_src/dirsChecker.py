@@ -4,6 +4,7 @@ from py_src.loadModelsConfig import ModelType
 
 
 def determine_model_type(path):
+    # TODO : Fix code that is likely to have bugs
     diffusers_required = [
         'feature_extractor',
         'safety_checker',
