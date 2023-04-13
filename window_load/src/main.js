@@ -1,3 +1,5 @@
+const keepLogLines = 50;
+
 let lastResult = 0;
 const id = setInterval(async function () {
   const result = await window.background.stdout();
@@ -7,6 +9,7 @@ const id = setInterval(async function () {
     console.log(result.length + result[result.length - 1]);
     const logTextConteiner = document.getElementById("log-text-container");
     const logText = document.getElementById("log-text");
+    if (result.length > keepLogLines) result.splice(0, result.length - keepLogLines);
     logText.innerHTML = result.join("<br>");
     lastResult = result.length;
     logTextConteiner.scrollTop = logText.scrollHeight;
