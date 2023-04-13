@@ -54,6 +54,6 @@ export PATH="$PYTHON_PATH/bin:$PATH"
 python3 -m pip install --upgrade pip --no-warn-script-location
 pip3 install -r py_src/requirements.txt --no-warn-script-location
 
-rm -f "$TMP"
+rm -r "$TMP"
 
 exit 0
