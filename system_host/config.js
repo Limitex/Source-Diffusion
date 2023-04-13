@@ -6,30 +6,48 @@ const Process = require("child_process");
 const isDev = process.argv.some(arg => arg === '--dev');
 const isDevLoad = process.argv.some(arg => arg === '--lw-dev');
 
-let AppDir;
-let AppDataDir;
-let CheckScriptPath;
-let InstallScriptPath;
-let PythonPath;
-let IconPath;
-if (os.platform() === 'win32') {
-  AppDir = process.defaultApp ? app.getAppPath() : path.dirname(app.getPath("exe"));
-  AppDataDir = app.getPath("userData");
-  CheckScriptPath = path.join(AppDir,  'system_dependent', 'win', 'py_check.bat');
-  InstallScriptPath = path.join(AppDir,  'system_dependent', 'win', 'py_install.bat');
-  PythonPath = path.join(AppDataDir, "python", "python.exe");
-  IconPath = path.join(AppDir, 'system_src', 'icon', 'cat_tail.ico');
-} else if (os.platform() === 'darwin') {
-  AppDir = process.defaultApp ? app.getAppPath() : path.join(path.dirname(app.getPath("exe")), "..");
-  AppDataDir = path.join("/", "Users", "Shared", app.getName());
-  CheckScriptPath = path.join(AppDir,  'system_dependent', 'mac', 'py_check.sh');
-  InstallScriptPath = path.join(AppDir,  'system_dependent', 'mac', 'py_install.sh');
-  PythonPath = path.join(AppDataDir, "python", "bin", "python3");
-  IconPath = path.join(AppDir, 'system_src', 'icon', 'cat_tail.ico');
+const selectPlatform = (win32, macos, linux) => {
+  if (os.platform() === 'win32') return win32;
+  else if (os.platform() === 'darwin') return macos;
+  else if (os.platform() === 'linux') return linux;
+  else return undefined;
+}
+
+const AppDir = selectPlatform(
+  process.defaultApp ? app.getAppPath() : path.dirname(app.getPath("exe")),
+  process.defaultApp ? app.getAppPath() : path.join(path.dirname(app.getPath("exe")), ".."),
+  undefined
+);
+
+const AppDataDir = selectPlatform(
+  app.getPath("userData"),
+  path.join("/", "Users", "Shared", app.getName()),
+  undefined
+);
+
+const CheckScriptPath = selectPlatform(
+  path.join(AppDir,  'system_dependent', 'win', 'py_check.bat'),
+  path.join(AppDir,  'system_dependent', 'mac', 'py_check.sh'),
+  undefined
+);
+
+const InstallScriptPath = selectPlatform(
+  path.join(AppDir,  'system_dependent', 'win', 'py_install.bat'),
+  path.join(AppDir,  'system_dependent', 'mac', 'py_install.sh'),
+  undefined
+);
+
+const PythonPath = selectPlatform(
+  path.join(AppDataDir, "python", "python.exe"),
+  path.join(AppDataDir, "python", "bin", "python3"),
+  undefined
+);
+
+const IconPath = path.join(AppDir, 'system_src', 'icon', 'cat_tail.ico')
+
+if (os.platform() === 'darwin') {
   Process.exec(`chmod +x \"${CheckScriptPath}\"`, (error, stdout, stderr) => {});
   Process.exec(`chmod +x \"${InstallScriptPath}\"`, (error, stdout, stderr) => {});
-} else {
-
 }
 
 const PORT = 8000;
