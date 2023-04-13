@@ -3,8 +3,8 @@ const { spawn } = require('child_process');
 
 const checkEnvironment = (outputCallback, normalCallback, abnormalCallback) => {
   const process = spawn(config.CheckScriptPath, [config.AppDir, config.AppDataDir]);
-  process.stdout.on('data', (data) => outputCallback(`${data}`));
-  process.stderr.on('data', (data) => outputCallback(`${data}`));
+  process.stdout.on('data', (data) => outputCallback(`${data}`.trimEnd()));
+  process.stderr.on('data', (data) => outputCallback(`${data}`.trimEnd()));
   process.on('close', (data) => {
     if (data == 0) {
       normalCallback();
@@ -16,8 +16,8 @@ const checkEnvironment = (outputCallback, normalCallback, abnormalCallback) => {
 
 const installEnvironment = (outputCallback, normalCallback, abnormalCallback) => {
   const process = spawn(config.InstallScriptPath, [config.AppDir, config.AppDataDir]);
-  process.stdout.on('data', (data) => outputCallback(`${data}`));
-  process.stderr.on('data', (data) => outputCallback(`${data}`));
+  process.stdout.on('data', (data) => outputCallback(`${data}`.trimEnd()));
+  process.stderr.on('data', (data) => outputCallback(`${data}`.trimEnd()));
   process.on('close', (data) => {
     if (data == 0) {
       normalCallback();
