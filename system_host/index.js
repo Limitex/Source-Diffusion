@@ -29,9 +29,9 @@ ipcMain.handle("exitAll", () => {
   app.once("window-all-closed", app.quit);
 });
 
-const sendLogText = (byteArray) => {
+const sendLogText = (text) => {
   if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
-    const hexString = Array.from(new TextEncoder().encode(byteArray));
+    const hexString = Array.from(new TextEncoder().encode(text));
     loadWindowObj.webContents.executeJavaScript(`setLogText([${hexString.join(",")}])`).catch();
   }
 }
