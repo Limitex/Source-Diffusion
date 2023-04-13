@@ -1,7 +1,7 @@
 const keepLogLines = 50;
 
-const setLogText = (text) => {
-  const newlog = String.fromCharCode(...text).trimEnd();
+const setLogText = (arrayText) => {
+  const newlog = String.fromCharCode(...arrayText).trimEnd();
   console.log(newlog);
   const logTextElement = document.getElementById("log-text");
   const logList = logTextElement.innerHTML.split("<br>");
@@ -13,17 +13,17 @@ const setLogText = (text) => {
     logTextElement.scrollHeight;
 };
 
-const setTopStatus = (text) => {
-  const newlog = String.fromCharCode(...text).trimEnd();
+const setTopStatus = (arrayText) => {
+  const newlog = String.fromCharCode(...arrayText).trimEnd();
   document.getElementById('top-status-text').innerText = newlog;
 }
 
-const setExitStatus = (text) => {
-  if (text == 0 || text == 1) {
+const setExitStatus = (arrayText) => {
+  exitCode = arrayText[0]
+  if (exitCode == 0 || exitCode == 1) {
     document.getElementById('button-container').style.display = '';
     document.getElementById('animation-container').classList = ''
-  }
-  if (text == -1) {
+  } else if (exitCode == -1) {
     document.getElementById('button-container').style.display = 'none';
   }
 }

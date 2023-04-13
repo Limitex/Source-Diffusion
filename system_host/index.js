@@ -22,24 +22,22 @@ ipcMain.handle("exitAll", () => {
   app.once("window-all-closed", app.quit);
 });
 
-const sendLogText = (text) => {
+const sendToRendre = (functionName, ...args) => {
   if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
-    const hexString = Array.from(new TextEncoder().encode(text));
-    loadWindowObj.webContents.executeJavaScript(`setLogText([${hexString.join(",")}])`).catch();
+    loadWindowObj.webContents.executeJavaScript(`${functionName}([${args.join(",")}])`).catch();
   }
+}
+
+const sendLogText = (text) => {
+  sendToRendre('setLogText', Array.from(new TextEncoder().encode(text)))
 }
 
 const sendTopStatus = (text) => {
-  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
-    const hexString = Array.from(new TextEncoder().encode(text));
-    loadWindowObj.webContents.executeJavaScript(`setTopStatus([${hexString.join(",")}])`).catch();
-  }
+  sendToRendre('setTopStatus', Array.from(new TextEncoder().encode(text)));
 }
 
 const sendExitStatus = (text) => {
-  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
-    loadWindowObj.webContents.executeJavaScript(`setExitStatus(${text})`).catch();
-  }
+  sendToRendre('setExitStatus', text);
 }
 
 const StartBackground = () => {
