@@ -10,7 +10,13 @@
     "release": "electron .",
     "fix": "npm audit fix --force",
     "build-win": "electron-builder --win --x64",
-    "build-win-dir": "electron-builder --win --x64 --dir"
+    "build-win-dir": "electron-builder --win --x64 --dir",
+    "build-mac": "electron-builder --mac --universal",
+    "build-mac-intel": "electron-builder --mac --x64",
+    "build-mac-apple": "electron-builder --mac --arm64",
+    "build-mac-dir": "electron-builder --mac --universal --dir",
+    "build-mac-intel-dir": "electron-builder --mac --x64 --dir",
+    "build-mac-apple-dir": "electron-builder --mac --arm64 --dir"
   },
   "author": "Limitex",
   "license": "MIT",
@@ -46,7 +52,7 @@
       "system_dependent/**/*"
     ],
     "mac": {
-      "icon": "",
+      "icon": "system_src/icon/cat_tail.ico",
       "target": [
         "dmg"
       ]
@@ -54,10 +60,6 @@
     "win": {
       "icon": "system_src/icon/cat_tail.ico",
       "target": "msi"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
     }
   }
 }
