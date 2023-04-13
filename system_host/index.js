@@ -12,11 +12,8 @@ if (!app.requestSingleInstanceLock()) {
 // app.disableHardwareAcceleration()
 
 let loadWindowObj = null;
-app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
-
-dev_data = JSON.stringify(config);
 ipcMain.handle("version", () => app.getVersion());
-ipcMain.handle("devout", () => dev_data);
+ipcMain.handle("devout", () => JSON.stringify(config));
 ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
 ipcMain.handle("envreset", () => installProcess());
@@ -85,9 +82,12 @@ const installProcess = () => {
   )
 }
 
-sendLogText("Checking required directories...");
-startup.checkEnvironment(
-  (data) => sendLogText(data),
-  () => StartBackground(),
-  () => installProcess()
-)
+app.once("ready", () =>{
+  loadWindowObj = iwl.loadWindow()
+  sendLogText("Checking required directories...");
+  startup.checkEnvironment(
+    (data) => sendLogText(data),
+    () => StartBackground(),
+    () => installProcess()
+  )
+});
