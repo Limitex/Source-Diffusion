@@ -2,8 +2,6 @@ const keepLogLines = 50;
 
 const id = setInterval(async function () {
   const status = await window.background.stdstatus();
-  const topstatus = await window.background.topstatus();
-  document.getElementById('top-status-text').innerText = topstatus;
   if (status == 0 || status == 1) {
     document.getElementById('button-container').style.display = '';
     document.getElementById('animation-container').classList = ''

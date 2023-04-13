@@ -10,3 +10,8 @@ const setLogText = (text) => {
   document.getElementById("log-text-container").scrollTop =
     logTextElement.scrollHeight;
 };
+
+const setTopStatus = (text) => {
+  const newlog = String.fromCharCode(...text).trimEnd();
+  document.getElementById('top-status-text').innerText = newlog;
+}

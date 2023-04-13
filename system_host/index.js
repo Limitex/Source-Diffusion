@@ -16,11 +16,9 @@ app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
 dev_data = JSON.stringify(config);
 std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
-top_status = ''
 ipcMain.handle("version", () => app.getVersion());
 ipcMain.handle("devout", () => dev_data);
 ipcMain.handle("stdstatus", () => std_status);
-ipcMain.handle("topstatus", () => top_status);
 ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
 ipcMain.handle("envreset", () => installProcess());
@@ -33,6 +31,13 @@ const sendLogText = (text) => {
   if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
     const hexString = Array.from(new TextEncoder().encode(text));
     loadWindowObj.webContents.executeJavaScript(`setLogText([${hexString.join(",")}])`).catch();
+  }
+}
+
+const sendTopStatus = (text) => {
+  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
+    const hexString = Array.from(new TextEncoder().encode(text));
+    loadWindowObj.webContents.executeJavaScript(`setTopStatus([${hexString.join(",")}])`).catch();
   }
 }
 
@@ -65,7 +70,7 @@ const StartBackground = () => {
 
 const installProcess = () => {
   std_status = -1;
-  top_status = 'Initial setup is in progress.'
+  sendTopStatus('Initial setup is in progress.')
   startup.installEnvironment(
     (data) => sendLogText(data),
     () => StartBackground(),
