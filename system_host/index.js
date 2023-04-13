@@ -14,12 +14,10 @@ if (!app.requestSingleInstanceLock()) {
 let loadWindowObj = null;
 app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
-std_data = [];
 dev_data = JSON.stringify(config);
 std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
 top_status = ''
 ipcMain.handle("version", () => app.getVersion());
-ipcMain.handle("stdout", () => std_data);
 ipcMain.handle("devout", () => dev_data);
 ipcMain.handle("stdstatus", () => std_status);
 ipcMain.handle("topstatus", () => top_status);
@@ -31,15 +29,22 @@ ipcMain.handle("exitAll", () => {
   app.once("window-all-closed", app.quit);
 });
 
+const sendLogText = (byteArray) => {
+  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
+    const hexString = Array.from(new TextEncoder().encode(byteArray));
+    loadWindowObj.webContents.executeJavaScript(`setLogText([${hexString.join(",")}])`).catch();
+  }
+}
+
 const StartBackground = () => {
-  std_data.push("Starting background app...");
+  sendLogText("Starting background app...");
   server.StartServer(
     (std) => {
-      std_data.push(std.trimEnd());
+      sendLogText(std.trimEnd());
       console.log(std.trimEnd());
     },
     (err) => {
-      std_data.push(err.trimEnd());
+      sendLogText(err.trimEnd());
       console.error(err.trimEnd());
       if (err.includes("Uvicorn running")) {
         if (config.isDevLoad) return;
@@ -52,7 +57,7 @@ const StartBackground = () => {
     (exi) => {
       std_status = 1;
       txt = `Process exited with code ${exi}`;
-      std_data.push(txt);
+      sendLogText(txt);
       console.log(txt);
     }
   );
@@ -62,18 +67,18 @@ const installProcess = () => {
   std_status = -1;
   top_status = 'Initial setup is in progress.'
   startup.installEnvironment(
-    (data) => std_data.push(data),
+    (data) => sendLogText(data),
     () => StartBackground(),
     () => {
-      std_data.push("Installation failed.");
+      sendLogText("Installation failed.");
       std_status = 1;
     }
   )
 }
 
-std_data.push("Checking required directories...");
+sendLogText("Checking required directories...");
 startup.checkEnvironment(
-  (data) => std_data.push(data),
+  (data) => sendLogText(data),
   () => StartBackground(),
   () => installProcess()
 )
