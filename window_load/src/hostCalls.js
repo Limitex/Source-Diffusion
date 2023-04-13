@@ -1,3 +1,5 @@
+const keepLogLines = 50;
+
 const setLogText = (text) => {
   const newlog = String.fromCharCode(...text).trimEnd();
   console.log(newlog);
@@ -14,4 +16,14 @@ const setLogText = (text) => {
 const setTopStatus = (text) => {
   const newlog = String.fromCharCode(...text).trimEnd();
   document.getElementById('top-status-text').innerText = newlog;
+}
+
+const setExitStatus = (text) => {
+  if (text == 0 || text == 1) {
+    document.getElementById('button-container').style.display = '';
+    document.getElementById('animation-container').classList = ''
+  }
+  if (text == -1) {
+    document.getElementById('button-container').style.display = 'none';
+  }
 }

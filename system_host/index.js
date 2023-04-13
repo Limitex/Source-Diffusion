@@ -15,10 +15,8 @@ let loadWindowObj = null;
 app.once("ready", () => (loadWindowObj = iwl.loadWindow()));
 
 dev_data = JSON.stringify(config);
-std_status = -1; // -1:Default, 0:ServerRunning, 1:ServerExitedForError
 ipcMain.handle("version", () => app.getVersion());
 ipcMain.handle("devout", () => dev_data);
-ipcMain.handle("stdstatus", () => std_status);
 ipcMain.handle("pid", () => process.pid);
 ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
 ipcMain.handle("envreset", () => installProcess());
@@ -41,6 +39,12 @@ const sendTopStatus = (text) => {
   }
 }
 
+const sendExitStatus = (text) => {
+  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
+    loadWindowObj.webContents.executeJavaScript(`setExitStatus(${text})`).catch();
+  }
+}
+
 const StartBackground = () => {
   sendLogText("Starting background app...");
   server.StartServer(
@@ -53,14 +57,14 @@ const StartBackground = () => {
       console.error(err.trimEnd());
       if (err.includes("Uvicorn running")) {
         if (config.isDevLoad) return;
-        std_status = 0;
+        sendExitStatus(0)
         loadWindowObj.close();
         iwm.mainWindow();
         app.once("window-all-closed", app.quit);
       }
     },
     (exi) => {
-      std_status = 1;
+      sendExitStatus(1)
       txt = `Process exited with code ${exi}`;
       sendLogText(txt);
       console.log(txt);
@@ -69,14 +73,14 @@ const StartBackground = () => {
 };
 
 const installProcess = () => {
-  std_status = -1;
+  sendExitStatus(-1)
   sendTopStatus('Initial setup is in progress.')
   startup.installEnvironment(
     (data) => sendLogText(data),
     () => StartBackground(),
     () => {
       sendLogText("Installation failed.");
-      std_status = 1;
+      sendExitStatus(1)
     }
   )
 }
