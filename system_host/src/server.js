@@ -1,5 +1,4 @@
 const { app } = require("electron");
-const Process = require("child_process");
 const psTree = require("ps-tree");
 const config = require("../config.js");
 const { spawn } = require('child_process');
