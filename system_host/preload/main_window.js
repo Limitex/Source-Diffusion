@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("background", {
-  version: () => ipcRenderer.invoke("version"),
   pid: () => ipcRenderer.invoke("pid"),
+  version: () => ipcRenderer.invoke("version"),
   openBrowser: (arg) => ipcRenderer.invoke("openBrowser", arg)
 });
