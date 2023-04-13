@@ -22,7 +22,7 @@ if (os.platform() === 'win32') {
 } else if (os.platform() === 'darwin') {
   AppDir = process.defaultApp ? app.getAppPath() : path.join(path.dirname(app.getPath("exe")), "..");
   AppDataDir = path.join("/", "Users", "Shared", app.getName());
-  CheckScriptPath = path.join(AppDir,  'system_dependent', 'macd', 'py_check.sh');
+  CheckScriptPath = path.join(AppDir,  'system_dependent', 'mac', 'py_check.sh');
   InstallScriptPath = path.join(AppDir,  'system_dependent', 'mac', 'py_install.sh');
   PythonPath = path.join(AppDataDir, "python", "bin", "python3");
   IconPath = path.join(AppDir, 'system_src', 'icon', 'cat_tail.ico');
