@@ -5,41 +5,6 @@ const server = require("./src/server.js");
 const startup = require("./src/startup.js");
 const config = require("./config.js");
 
-if (!app.requestSingleInstanceLock()) {
-  app.quit();
-}
-
-// app.disableHardwareAcceleration()
-
-let loadWindowObj = null;
-ipcMain.handle("version", () => app.getVersion());
-ipcMain.handle("devout", () => JSON.stringify(config));
-ipcMain.handle("pid", () => process.pid);
-ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
-ipcMain.handle("envreset", () => installProcess());
-ipcMain.handle("exitAll", () => {
-  loadWindowObj.close();
-  app.once("window-all-closed", app.quit);
-});
-
-const sendToRendre = (functionName, ...args) => {
-  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
-    loadWindowObj.webContents.executeJavaScript(`${functionName}([${args.join(",")}])`).catch();
-  }
-}
-
-const sendLogText = (text) => {
-  sendToRendre('setLogText', Array.from(new TextEncoder().encode(text)))
-}
-
-const sendTopStatus = (text) => {
-  sendToRendre('setTopStatus', Array.from(new TextEncoder().encode(text)));
-}
-
-const sendExitStatus = (text) => {
-  sendToRendre('setExitStatus', text);
-}
-
 const StartBackground = () => {
   sendLogText("Starting background app...");
   server.StartServer(
@@ -79,6 +44,34 @@ const installProcess = () => {
     }
   )
 }
+
+const sendToRendre = (functionName, ...args) => {
+  if (loadWindowObj != null && !loadWindowObj.isDestroyed() && !loadWindowObj.webContents.isDestroyed()) {
+    loadWindowObj.webContents.executeJavaScript(`${functionName}([${args.join(",")}])`).catch();
+  }
+}
+
+const sendLogText = (text) => sendToRendre('setLogText', Array.from(new TextEncoder().encode(text)))
+const sendTopStatus = (text) => sendToRendre('setTopStatus', Array.from(new TextEncoder().encode(text)));
+const sendExitStatus = (text) => sendToRendre('setExitStatus', text);
+
+
+if (!app.requestSingleInstanceLock()) {
+  app.quit();
+}
+
+// app.disableHardwareAcceleration()
+
+let loadWindowObj = null;
+ipcMain.handle("version", () => app.getVersion());
+ipcMain.handle("devout", () => JSON.stringify(config));
+ipcMain.handle("pid", () => process.pid);
+ipcMain.handle("openBrowser", (event, arg) => shell.openExternal(arg));
+ipcMain.handle("envreset", () => installProcess());
+ipcMain.handle("exitAll", () => {
+  loadWindowObj.close();
+  app.once("window-all-closed", app.quit);
+});
 
 app.once("ready", () =>{
   loadWindowObj = iwl.loadWindow()
