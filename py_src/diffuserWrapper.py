@@ -94,6 +94,7 @@ def diffusionGenerate_progress_callback(step: int, timestep: int, latents: torch
 async def diffusionGenerate_async(gc: GenerateContainer):
     global pipe
     positive_embeds, negative_embeds = token_auto_concat_embeds(pipe, gc.positive, gc.negative)
+    seed = torch.randint(0, 2 ** 32, [1]).item() if gc.seed == -1 else gc.seed
     return (await asyncio.to_thread(
         pipe,
         prompt_embeds=positive_embeds,
@@ -104,6 +105,6 @@ async def diffusionGenerate_async(gc: GenerateContainer):
         negative_prompt_embeds=negative_embeds,
         num_images_per_prompt=gc.num,
         eta=gc.eta,
-        generator=None if gc.seed == -1 else torch.manual_seed(gc.seed),
+        generator=torch.manual_seed(seed),
         callback=diffusionGenerate_progress_callback
     )).images
