@@ -142,6 +142,8 @@ const generateImage = () => {
 
           setMainImage(img);
         });
+        const generateconfigData = JSON.parse(data.json_output);
+        Notice.append('SEED : ' + generateconfigData.seed);
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);
         GenerationProgress.current(

@@ -89,7 +89,7 @@ async def generate(websocket: WebSocket):
     await websocket.accept()
     gc = GenerateContainer.parse_raw(await websocket.receive_text())
     py_src.diffuserWrapper.generate_progress_callback = progress
-    images = await diffusionGenerate_async(gc)
+    images, returnd_gc = await diffusionGenerate_async(gc)
     print(gc)
     images_encoded = []
     for x in range(len(images)):
@@ -99,7 +99,7 @@ async def generate(websocket: WebSocket):
         byte_image = output.getvalue()
         encoded_data = base64.b64encode(byte_image).decode('ascii')
         images_encoded.append(encoded_data)
-    data = GenerationOutput(type="generate", output=images_encoded).json()
+    data = GenerationOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_gc.dict())).json()
     await websocket.send_bytes(data)
 
 
