@@ -1,7 +1,7 @@
 const PORT = 8000;
 const HOST = "localhost";
 
-const GenerateContainer = class {
+const GenerateStreamContainer = class {
   constructor(positive, negative, height, width, steps, scale, num, eta, seed) {
     this.positive = positive;
     this.negative = negative;
@@ -47,7 +47,7 @@ const ModelChangeContainer = class {
   }
 };
 
-const LoadNewModelInfo = class {
+const AddNewModelContainer = class {
   constructor(path, name, description) {
     this.path = path;
     this.name = name;
@@ -63,7 +63,7 @@ const LoadNewModelInfo = class {
   }
 };
 
-const ChangeModelInput = class {
+const UpdateModelInfoContainer = class {
   constructor(path, name, description) {
     this.path = path;
     this.name = name;
@@ -79,7 +79,7 @@ const ChangeModelInput = class {
   }
 };
 
-class DeleteModelInput {
+class DeleteModelContainer {
   constructor(path) {
     this.path = path
   }
@@ -90,7 +90,7 @@ class DeleteModelInput {
   }
 }
 
-const PostPid = class {
+const PostPidContainer = class {
   constructor(pid) {
     this.pid = pid;
   }

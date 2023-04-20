@@ -34,7 +34,7 @@ const startupHeartBeat = setInterval(() => {
       getLoadedModel();
 
       callPid(pid => {
-        postRequest("/postpid", new PostPid(pid).convertToLiteral(), (data) => {});
+        postRequest("/postpid", new PostPidContainer(pid).convertToLiteral(), (data) => {});
       });
     }
   });
@@ -90,7 +90,7 @@ const generateImage = () => {
   let ie = document.getElementById("input-eta").value;
   let is = document.getElementById("input-seed").value;
 
-  let g_data = new GenerateContainer(
+  let g_data = new GenerateStreamContainer(
     (positive = pp),
     (negative = np),
     (height = ih),
@@ -314,7 +314,7 @@ const loadNewModel = () => {
   GenerateButton.Disable();
   LoadNewModelButton.Loading();
 
-  const data = new LoadNewModelInfo(
+  const data = new AddNewModelContainer(
     (path = pathData),
     (name = nameData),
     (description = descriptionData)
@@ -367,7 +367,7 @@ const editModelListEdit = (event) => {
     'Name : ' + targetName.dataset.default + ' -> \n' + targetName.value + '\n' +
     'Description : ' + targetDescriptionName.dataset.default + ' -> \n' + targetDescriptionName.value,
     ()=>{
-      const cmi = new ChangeModelInput(targetIdName.innerText, targetName.value, targetDescriptionName.value)
+      const cmi = new UpdateModelInfoContainer(targetIdName.innerText, targetName.value, targetDescriptionName.value)
       postRequest("/updatemodelinfo", cmi.convertToLiteral(), (data) => {
         Notice.append(data.status_str)
         getModelsList()
@@ -388,7 +388,7 @@ const editModelListTrash = (event) => {
     'Name : ' + targetName.dataset.default + '\n' +
     'Description : ' + targetDescriptionName.dataset.default,
     () => {
-      const dmi = new DeleteModelInput(targetIdName.innerText);
+      const dmi = new DeleteModelContainer(targetIdName.innerText);
       postRequest("/deletemodelinfo", dmi.convertToLiteral(), (data) => {
         Notice.append(data.status_str)
         getModelsList()
