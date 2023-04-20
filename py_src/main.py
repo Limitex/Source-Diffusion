@@ -82,12 +82,12 @@ async def generate(websocket: WebSocket):
             "max_steps": int(gc.steps),
             "timetep": int(timestep)
         }
-        data = GenerationOutput(
+        data = GenerateStreamOutput(
             type="progress", json_output=json.dumps(out)).json()
         executor.submit(asyncio.run, websocket.send_bytes(data))
 
     await websocket.accept()
-    gc = GenerateContainer.parse_raw(await websocket.receive_text())
+    gc = GenerateStreamInput.parse_raw(await websocket.receive_text())
     py_src.diffuserWrapper.generate_progress_callback = progress
     images, returnd_gc = await diffusionGenerate_async(gc)
     print(gc)
@@ -99,7 +99,7 @@ async def generate(websocket: WebSocket):
         byte_image = output.getvalue()
         encoded_data = base64.b64encode(byte_image).decode('ascii')
         images_encoded.append(encoded_data)
-    data = GenerationOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_gc.dict())).json()
+    data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_gc.dict())).json()
     await websocket.send_bytes(data)
 
 

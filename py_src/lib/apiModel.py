@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from py_src.loadModelsConfig import ModelType
 
 
-class GenerateContainer(BaseModel):
+class GenerateStreamInput(BaseModel):
     positive: str
     negative: str
     height: int
@@ -15,7 +15,7 @@ class GenerateContainer(BaseModel):
     seed: int
 
 
-class GenerationOutput(BaseModel):
+class GenerateStreamOutput(BaseModel):
     type: str
     output: Optional[List[str]] = None
     json_output: Optional[str] = None

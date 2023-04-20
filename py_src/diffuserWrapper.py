@@ -4,7 +4,7 @@ import time
 import torch
 from diffusers import DiffusionPipeline
 from diffusers.models import AutoencoderKL
-from py_src.lib.apiModel import GenerateContainer
+from py_src.lib.apiModel import GenerateStreamInput
 from py_src.lib.loadLora import load_safetensors_lora
 from py_src.loadModelsConfig import ModelType
 from py_src.osPath import get_models_path, get_cache_path
@@ -91,7 +91,7 @@ def diffusionGenerate_progress_callback(step: int, timestep: int, latents: torch
         generate_progress_callback(step, timestep, latents)
 
 
-async def diffusionGenerate_async(gc: GenerateContainer):
+async def diffusionGenerate_async(gc: GenerateStreamInput):
     global pipe
     positive_embeds, negative_embeds = token_auto_concat_embeds(pipe, gc.positive, gc.negative)
     gc.seed = torch.randint(0, 2 ** 32, [1]).item() if gc.seed == -1 else gc.seed
