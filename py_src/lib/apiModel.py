@@ -3,6 +3,15 @@ from pydantic import BaseModel
 from py_src.loadModelsConfig import ModelType
 
 
+class ServerStatus(BaseModel):
+    status: int
+    status_str: str
+
+
+class PostPid(BaseModel):
+    pid: int
+
+
 class GenerateStreamInput(BaseModel):
     positive: str
     negative: str
@@ -21,41 +30,34 @@ class GenerateStreamOutput(BaseModel):
     json_output: Optional[str] = None
 
 
-class ModelListOutput(BaseModel):
+class ModelInfoOutput(BaseModel):
     models_json: str
 
 
-class ModelOutput(BaseModel):
+class LoadedModelInfoOutput(BaseModel):
     model: Union[str, None]
     vae_model: Union[str, None]
     lora_model: Union[str, None]
 
 
-class ModelChangeContainer(BaseModel):
+class ModelChangeInput(BaseModel):
     mtype: Union[str, None]
     model_id: Union[str, None]
     vae_id: Union[str, None]
     lora_id: Union[str, None]
 
 
-class ServerStatus(BaseModel):
-    status: int
-    status_str: str
-
-
-class LoadNewModelInfo(BaseModel):
+class AddNewModelInput(BaseModel):
     path: str
     name: str
     description: str
 
 
-class ChangeModelInput(BaseModel):
+class UpdateModelInfoInput(BaseModel):
     path: str
     name: str
     description: str
+
 
 class DeleteModelInput(BaseModel):
     path: str
-
-class PostPid(BaseModel):
-    pid: int

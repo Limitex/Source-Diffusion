@@ -115,7 +115,7 @@ async def getModelsList():
                 "description": data.description
             }
         )
-    return ModelListOutput(models_json=json.dumps(sendData))
+    return ModelInfoOutput(models_json=json.dumps(sendData))
 
 
 @app.post('/getloadedmodel')
@@ -123,11 +123,11 @@ async def getloadedmodel():
     modelName = idToName(config, py_src.diffuserWrapper.loadedModelId)
     vaeName = idToName(config, py_src.diffuserWrapper.loadedVaeModelId)
     loraName = idToName(config, py_src.diffuserWrapper.loadedLoraModelId)
-    return ModelOutput(model=modelName, vae_model=vaeName, lora_model=loraName)
+    return LoadedModelInfoOutput(model=modelName, vae_model=vaeName, lora_model=loraName)
 
 
 @app.post('/switchModel')
-async def switchModel(mcc: ModelChangeContainer):
+async def switchModel(mcc: ModelChangeInput):
     try:
         load(get_model_type(mcc.mtype), mcc.model_id, torch.float16, mcc.vae_id, mcc.lora_id)
         return ServerStatus(status=0, status_str='server is ready')
@@ -136,7 +136,7 @@ async def switchModel(mcc: ModelChangeContainer):
 
 
 @app.post('/loadnewmodel')
-async def loadNewModel(lnmi: LoadNewModelInfo):
+async def loadNewModel(lnmi: AddNewModelInput):
     global config
 
     importType = determine_model_type(lnmi.path)
@@ -180,7 +180,7 @@ async def loadNewModel(lnmi: LoadNewModelInfo):
 
 
 @app.post('/updatemodelinfo')
-async def updateModelInfo(cmi: ChangeModelInput):
+async def updateModelInfo(cmi: UpdateModelInfoInput):
     global config
     if updateModelConfig(cmi.path, cmi.name, cmi.description):
         config = loadConfig()
