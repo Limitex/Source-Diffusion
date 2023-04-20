@@ -13,7 +13,7 @@ import py_src.diffuserWrapper
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
-from py_src.apiModel import *
+from py_src.lib.apiModel import *
 from py_src.diffuserWrapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
 from py_src.osPath import get_models_path
