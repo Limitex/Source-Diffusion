@@ -35,10 +35,7 @@ const startupHeartBeat = setInterval(() => {
 
       callPid(pid => {
         postRequest("/postpid", new PostPidContainer(pid).convertToLiteral(), (data) => {
-          postRequest("/getusersettings", "", (data) => {
-            const InputPath = document.getElementById("input-full-save-path");
-            InputPath.value = data.savepath;
-          });
+          getUserSettings();
         });
       });
     }

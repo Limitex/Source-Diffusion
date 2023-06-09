@@ -103,13 +103,15 @@ const PostPidContainer = class {
 };
 
 const UserSettingsContainer = class {
-  constructor(savepath) {
+  constructor(savepath, save_enabled) {
     this.savepath = savepath;
+    this.save_enabled = save_enabled;
   }
 
   convertToLiteral() {
     return {
-      savepath: this.savepath
+      savepath: this.savepath,
+      save_enabled: this.save_enabled
     };
   }
 };

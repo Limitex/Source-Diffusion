@@ -13,6 +13,7 @@ class PostPid(BaseModel):
 
 
 class UserSettingsInput(BaseModel):
+    save_enabled: bool
     savepath: str
 
 

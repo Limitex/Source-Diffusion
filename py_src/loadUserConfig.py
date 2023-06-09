@@ -4,6 +4,7 @@ import os
 from py_src.osPath import get_user_data_path, get_user_data
 
 defaultData = {
+    "save_enabled" : True,
     "savepath" : os.path.join(get_user_data(), 'images')
 }
 

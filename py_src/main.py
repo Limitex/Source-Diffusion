@@ -87,7 +87,7 @@ async def usersettings(usersettings: UserSettingsInput):
         return ServerStatus(status=1, status_str='Please enter full path')
     user_config = usersettings
     saveUserConfig(usersettings.__dict__)
-    return ServerStatus(status=0, status_str='server is ready')
+    return ServerStatus(status=0, status_str='Save completed.')
 
 @app.post('/getusersettings')
 async def getusersettings():
