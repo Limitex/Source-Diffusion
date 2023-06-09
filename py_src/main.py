@@ -74,6 +74,15 @@ async def postpid(pd: PostPid):
         executor.submit(checkParentRoop, pd.pid)
 
 
+@app.post('/usersettings')
+async def usersettings(savepath: UserSettingsInput):
+    print(savepath)
+    return ServerStatus(status=0, status_str='server is ready')
+
+@app.post('/getusersettings')
+async def getusersettings():
+    return {"SettingData"}
+
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
     def progress(step: int, timestep: int, latents: torch.FloatTensor):

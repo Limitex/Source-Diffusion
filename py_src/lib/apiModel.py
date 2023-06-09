@@ -12,6 +12,10 @@ class PostPid(BaseModel):
     pid: int
 
 
+class UserSettingsInput(BaseModel):
+    savepath: str
+
+
 class GenerateStreamInput(BaseModel):
     positive: str
     negative: str

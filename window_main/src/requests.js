@@ -102,6 +102,18 @@ const PostPidContainer = class {
   }
 };
 
+const UserSettingsContainer = class {
+  constructor(savepath) {
+    this.savepath = savepath;
+  }
+
+  convertToLiteral() {
+    return {
+      savepath: this.savepath
+    };
+  }
+};
+
 const postRequest = (path, body, result) => {
   fetch("http://" + HOST + ":" + PORT + path, {
     method: "POST",
