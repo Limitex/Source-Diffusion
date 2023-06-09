@@ -130,6 +130,11 @@ const generateImage = () => {
           container.className = "history-thumbnail";
           image_bod.prepend(container);
 
+          const seed = document.createElement("div");
+          seed.className = "history-thumbnail-seed";
+          seed.innerText = encoded_data[0];
+          container.appendChild(seed);
+
           const button = document.createElement('button');
           button.type = 'button';
           button.onclick = (event) => {setMainImage(event.target)};
@@ -142,8 +147,6 @@ const generateImage = () => {
 
           setMainImage(img);
         });
-        const generateconfigData = JSON.parse(data.json_output);
-        Notice.append('SEED : ' + generateconfigData.seed);
       } else if (data.type == "progress") {
         const progresData = JSON.parse(data.json_output);
         GenerationProgress.current(

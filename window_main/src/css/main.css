@@ -34,7 +34,21 @@
 }
 
 .history-thumbnail {
+  position: relative;
   margin: 10px;
+}
+
+.history-thumbnail-seed {
+  position: absolute;
+  background-color: #0009;
+  bottom: 0;
+  left: 0;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 .img-thumbnail {
