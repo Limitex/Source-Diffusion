@@ -1,6 +1,6 @@
 {
   "name": "source-diffusion",
-  "version": "0.1.4-alpha.0",
+  "version": "0.1.5-alpha.0",
   "description": "This is an image generation GUI that uses diffusers",
   "main": "system_host/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "author": "Limitex",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^23.2.3",
+    "electron": "^23.3.6",
     "electron-builder": "^24.1.2"
   },
   "dependencies": {
