@@ -27,6 +27,7 @@ class GenerateStreamInput(BaseModel):
 class GenerateStreamOutput(BaseModel):
     type: str
     output: Optional[List[str]] = None
+    output_seed: Optional[List[str]] = None
     json_output: Optional[str] = None
 
 
