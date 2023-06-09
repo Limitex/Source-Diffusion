@@ -92,16 +92,14 @@ async def generate(websocket: WebSocket):
     images, returnd_gc = await diffusionGenerate_async(gc)
     print(returnd_gc)
     images_encoded = []
-    images_seed = []
     for x in range(len(images)):
         print(images[x])
         output = io.BytesIO()
         images[x][0].save(output, format='PNG')
         byte_image = output.getvalue()
         encoded_data = base64.b64encode(byte_image).decode('ascii')
-        images_encoded.append(encoded_data)
-        images_seed.append(images[x][1])
-    data = GenerateStreamOutput(type="generate", output=images_encoded, output_seed=images_seed, json_output=json.dumps(returnd_gc.dict())).json()
+        images_encoded.append((images[x][1], encoded_data))
+    data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_gc.dict())).json()
     await websocket.send_bytes(data)
 
 

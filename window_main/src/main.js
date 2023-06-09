@@ -119,7 +119,7 @@ const generateImage = () => {
       if (data.type == "generate") {
         const image_bod = document.getElementById("generate-images");
         data.output.forEach((encoded_data) => {
-          const decoded_data = window.atob(encoded_data);
+          const decoded_data = window.atob(encoded_data[1]);
           const uint8_array = new Uint8Array(
             [...decoded_data].map((c) => c.charCodeAt(0))
           );

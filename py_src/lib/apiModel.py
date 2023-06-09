@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import Optional, List, Tuple, Union
 from pydantic import BaseModel
 from py_src.loadModelsConfig import ModelType
 
@@ -26,8 +26,7 @@ class GenerateStreamInput(BaseModel):
 
 class GenerateStreamOutput(BaseModel):
     type: str
-    output: Optional[List[str]] = None
-    output_seed: Optional[List[str]] = None
+    output: Optional[List[Tuple[int, str]]] = None
     json_output: Optional[str] = None
 
 
