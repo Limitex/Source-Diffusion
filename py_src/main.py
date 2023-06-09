@@ -16,7 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from py_src.lib.apiModel import *
 from py_src.diffuserWrapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
-from py_src.loadUserConfig import loadUserConfig
+from py_src.loadUserConfig import loadUserConfig, saveUserConfig
 from py_src.osPath import get_models_path
 from py_src.loadModelsConfig import ModelType, addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
 
@@ -81,9 +81,12 @@ async def postpid(pd: PostPid):
 
 
 @app.post('/usersettings')
-async def usersettings(savepath: UserSettingsInput):
-    print(savepath)
-    print(user_config)
+async def usersettings(usersettings: UserSettingsInput):
+    global user_config
+    if not os.path.isabs(usersettings.savepath):
+        return ServerStatus(status=1, status_str='Please enter full path')
+    user_config = usersettings
+    saveUserConfig(usersettings.__dict__)
     return ServerStatus(status=0, status_str='server is ready')
 
 @app.post('/getusersettings')

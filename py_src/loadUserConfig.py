@@ -16,3 +16,9 @@ def loadUserConfig():
         with open(configPath, "w") as f:
             f.write(json.dumps(defaultData))
         return defaultData
+    
+def saveUserConfig(config):
+    configPath = get_user_data_path()
+    with open(configPath, "w") as f:
+        f.write(json.dumps(config))
+    
