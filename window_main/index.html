@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="src/css/loading-animation.css">
     <link rel="stylesheet" type="text/css" href="src/css/edit-model.css">
     <link rel="stylesheet" type="text/css" href="src/css/message-window.css">
+    <link rel="stylesheet" type="text/css" href="src/css/settings.css">
   </head>
   <body>
     <div id="message-window" class="window-darkout" style="display: none;">
@@ -69,7 +70,34 @@
           </div>
         </div>
         <div id="float-window-contents-container" class="window-contents-container">
-          <div id="float-window-contents-setting" style="display: none;" data-title="Settings"></div>
+          <div id="float-window-contents-setting" style="display: none;" data-title="Settings">
+            <div class="generate-values-container">
+              <label class="gvc-label">FULL SAVE</label>
+              <div class="full-save-container">
+                <div class="full-save-column-box full-save-column-checkbox">
+                  <div class="form-check form-switch form-switch-margin">
+                    <input class="form-check-input" type="checkbox" role="switch" id="input-full-save-switch"/>
+                    <label class="form-check-label" for="input-full-save-switch"></label>
+                  </div>
+                </div>
+                <div class="full-save-column-box full-save-column-input-path">
+                  <div class="input-container">
+                    <div class="form-outline">
+                      <input type="text" id="input-full-save-path" class="form-control" />
+                      <label class="form-label" for="input-full-save-path">Save Path</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="full-save-column-box full-save-column-button">
+                  <div class="icon-button full-save-icon-btns">
+                    <button type="button" onclick="fullSaveSetting()">
+                      <i class="bi bi-check"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div id="float-window-contents-editmodels" style="display: none;" data-title="Edit Models">
             <div class="generate-values-container">
               <label class="gvc-label">Model List</label>
@@ -374,5 +402,6 @@ Lora Model : Safetensors Model
   <script src="src/processCommunicate.js"></script>
   <script src="src/requests.js"></script>
   <script src="src/float-window.js"></script>
+  <script src="src/settings.js"></script>
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 </html>

@@ -1,0 +1,37 @@
+.form-switch-margin {
+    margin-left: 25px;
+}
+
+.full-save-icon-btns {
+    width: 90px;
+    height: 50px;
+    margin: 0;
+    font-size: 20px;
+}
+
+.full-save-container {
+    display: flex;
+}
+
+.full-save-column-box {
+    display: flex;
+}
+
+.full-save-column-checkbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 10%;
+}
+
+.full-save-column-input-path {
+    width: 80%;
+}
+
+.full-save-column-button {
+    width: 10%;
+}
+
+.full-save-column-input-path .input-container {
+    width: 100%; 
+}
