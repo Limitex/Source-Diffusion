@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from py_src.lib.apiModel import *
 from py_src.diffuserWrapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
+from py_src.lib.save import saveimage
 from py_src.loadUserConfig import loadUserConfig, saveUserConfig
 from py_src.osPath import get_models_path
 from py_src.loadModelsConfig import ModelType, addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
@@ -85,16 +86,19 @@ async def usersettings(usersettings: UserSettingsInput):
     global user_config
     if not os.path.isabs(usersettings.savepath):
         return ServerStatus(status=1, status_str='Please enter full path')
-    user_config = usersettings
+    user_config = usersettings.__dict__
     saveUserConfig(usersettings.__dict__)
     return ServerStatus(status=0, status_str='Save completed.')
 
 @app.post('/getusersettings')
 async def getusersettings():
+    global user_config
     return user_config
 
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
+    global user_config
+
     def progress(step: int, timestep: int, latents: torch.FloatTensor):
         out = {
             "steps": int(step),
@@ -118,6 +122,10 @@ async def generate(websocket: WebSocket):
         byte_image = output.getvalue()
         encoded_data = base64.b64encode(byte_image).decode('ascii')
         images_encoded.append((images[x][1], encoded_data))
+        returnd_gc.seed = images[x][1]
+        if user_config["save_enabled"]:
+            saveimage(user_config["savepath"], images[x][0], returnd_gc)
+    returnd_gc.seed = -1
     data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_gc.dict())).json()
     await websocket.send_bytes(data)
 
