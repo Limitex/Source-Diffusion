@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from py_src.lib.apiModel import *
 from py_src.diffuserWrapper import TestLoad, diffusionGenerate_async, load
 from py_src.dirsChecker import determine_model_type
+from py_src.loadUserConfig import loadUserConfig
 from py_src.osPath import get_models_path
 from py_src.loadModelsConfig import ModelType, addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
 
@@ -35,6 +36,11 @@ try:
     config = loadConfig()
 except:
     raise FileNotFoundError('It could not be read because the structure of the models.json file is different.'
+                            'Please correct the contents of the file or delete it and try again.')
+try:
+    user_config = loadUserConfig()
+except:
+    raise FileNotFoundError('It could not be read because the structure of the user_config.json file is different.'
                             'Please correct the contents of the file or delete it and try again.')
 
 ClientRunningFlag = False
@@ -77,11 +83,12 @@ async def postpid(pd: PostPid):
 @app.post('/usersettings')
 async def usersettings(savepath: UserSettingsInput):
     print(savepath)
+    print(user_config)
     return ServerStatus(status=0, status_str='server is ready')
 
 @app.post('/getusersettings')
 async def getusersettings():
-    return {"SettingData"}
+    return user_config
 
 @app.websocket("/generate")
 async def generate(websocket: WebSocket):
