@@ -1,44 +1,40 @@
 import json
 import os
 import time
-
+from PIL import Image, PngImagePlugin
+import py_src.diffuserWrapper
 from py_src.lib.apiModel import GenerateStreamInput
+
+def save_image_with_metadata(image: Image.Image, save_path: str, metadata: dict):
+    img_info = image.info
+    img_info.update(metadata)
+    info = PngImagePlugin.PngInfo()
+    for k, v in img_info.items():
+        info.add_itxt(k, str(v))
+    image.save(save_path, pnginfo=info)
+
+def generate_unique_filepath(base_path, extension):
+    iteration = 0
+    suffix = '.' + extension
+    new_path = f'{base_path}{suffix}'
+    while os.path.exists(new_path):
+        iteration += 1
+        new_path = f'{base_path}-{iteration}{suffix}'
+    return new_path
+
+def save_image_base(image: Image.Image, dir_path: str, metadata: dict):
+    id = str(int(time.time() * 10 ** 6))
+    save_path = os.path.join(dir_path, generate_unique_filepath(id, 'png'))
+
+    os.makedirs(dir_path, exist_ok=True)
+    save_image_with_metadata(image, save_path, metadata)
 
 def saveimage(savepath, image, gc :GenerateStreamInput):
     os.makedirs(savepath, exist_ok=True)
-    generateData = json.dumps(gc.dict())
-
-    def dup(path, ext):
-        for n in range(1000000):
-            suff = '.' + ext
-            if n:
-                suff = f'-{n}.' + ext
-            if not os.path.exists(path + suff):
-                break
-        return path + suff
-
-    def save(path, mode, data, txt):
-        try:
-            with open(path, mode) as f:
-                f.write(data)
-        except Exception as e:
-            print(txt, e)
-
-    imagespath = os.path.join(savepath, "images")
-    datapath = os.path.join(savepath, "data")
-
-    os.makedirs(imagespath, exist_ok=True)
-    os.makedirs(datapath, exist_ok=True)
-
-    id = str(hex(int(time.time() * 10 ** 6))).replace('0x', '').upper()
-
-    imagefilepath = dup(os.path.join(imagespath, id), 'png')
-    datafilepath = dup(os.path.join(datapath, id), 'txt')
-
-    image.save(imagefilepath)
-
-    try:
-        with open(datafilepath, "w") as f:
-            f.write(generateData)
-    except Exception as e:
-        print("failed to save image data:", e)
+    generateData = gc.dict()
+    generateData.update({
+        "model": py_src.diffuserWrapper.loadedModelId,
+        "vae": py_src.diffuserWrapper.loadedVaeModelId,
+        "lora": py_src.diffuserWrapper.loadedLoraModelId,
+    })
+    save_image_base(image, savepath, generateData)
