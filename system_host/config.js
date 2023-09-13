@@ -44,6 +44,7 @@ const PythonPath = selectPlatform(
 );
 
 const IconPath = path.join(AppDir, 'system_src', 'icon', 'cat_tail.ico')
+const CachePath = path.join(AppDataDir, '.cache')
 
 if (os.platform() === 'darwin') {
   Process.exec(`chmod +x \"${CheckScriptPath}\"`, (error, stdout, stderr) => {});
@@ -64,6 +65,7 @@ module.exports = {
   InstallScriptPath: InstallScriptPath,
   PythonPath: PythonPath,
   IconPath: IconPath,
+  CachePath: CachePath,
 
   PORT: PORT,
   HOST: HOST,

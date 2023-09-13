@@ -5,9 +5,10 @@ const { spawn } = require('child_process');
 
 const StartServer = (stdout, stderr, exited) => {
   process.chdir(config.AppDir);
+  const env = Object.assign({}, process.env, { HUGGINGFACE_HUB_CACHE: config.CachePath });
   const ServerProcess = spawn(config.PythonPath, [
     "-m", "uvicorn", "--host", config.HOST, 
-    "--port=" + config.PORT, "--workers", "1", config.WORK]);
+    "--port=" + config.PORT, "--workers", "1", config.WORK], { env });
   ServerProcess.stdout.on('data', (data) => stdout(`${data}`));
   ServerProcess.stderr.on('data', (data) => stderr(`${data}`));
   ServerProcess.on('close', exited);
