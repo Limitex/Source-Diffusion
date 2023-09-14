@@ -9,7 +9,7 @@ from safetensors.torch import load_file
 from diffusers import StableDiffusionPipeline, AutoencoderKL
 
 from .convert_vae_pt_to_diffusers import vae_pt_to_vae_diffuser
-from .diffusion_error import ModelFormatError, ModelLoadError
+from .diffusion_error import ModelFormatError, ModelIdentificationError, ModelLoadError
 
 
 class LoadModelType(Enum):
@@ -63,6 +63,29 @@ class BaseLoader():
         elif re.fullmatch(r'^([^/]*?)/([^/]*?)$', model_path):
             return __logger(LoadModelType.HuggingFace)
         raise ValueError('The specified argument is malformed.')
+
+    def remove_model(self, model_path:str) -> (str, ModelType):
+        model_type = self.determine_model_from_file(model_path)
+
+        if model_type != LoadModelType.HuggingFace:
+            cache_path = os.path.abspath(self.cache)
+            target_path = os.path.abspath(model_path)
+            if not os.path.commonprefix([target_path, cache_path]) == cache_path:
+                raise ValueError('The specified path does not exist in the cache directory.')
+
+        if model_type in [LoadModelType.SD_model_Diffusers, LoadModelType.VAE_model_Diffusers]:
+            shutil.rmtree(model_path)
+        elif model_type in [LoadModelType.SD_model_Safetensors,
+                            LoadModelType.LORA_model_Safetensors,
+                            LoadModelType.SD_model_Ckpt,
+                            LoadModelType.VAE_model_Pt]:
+            os.remove(model_path)
+        elif model_type == LoadModelType.HuggingFace:
+            names = model_path.split('/')
+            shutil.rmtree(os.path.join(self.cache, f'models--{names[0]}--{names[1]}'))
+        else:
+            raise ModelIdentificationError('Could not identify type of model to delete.')
+        return model_path
 
     def set_model(self, model_path: str) -> (str, ModelType):
         pass
