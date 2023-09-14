@@ -64,6 +64,15 @@ class DiffusionTool:
         self.__generate_callback = None
         os.makedirs(cache, exist_ok=True)
     
+    def get_model_path(self):
+        return self.__basemodel
+    
+    def get_vae_path(self):
+        return self.__basevae
+    
+    def get_lora_path(self):
+        return self.__baselora
+    
     def set_model(self, model_path: str):
         self.__basemodel = model_path
         self.__pipeline = StableDiffusionPipeline.from_pretrained(

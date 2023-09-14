@@ -196,11 +196,11 @@ class AutoModelLoader(BaseLoader):
         model_type = self.__model_type_convert(model_path)
         print('Loading by model')
         if model_type == ModelType.SD_model:
-            self.basename, self.basetype = DiffusionModelLoader().set_model(model_path)
+            self.basename, self.basetype = DiffusionModelLoader(self.dtype, self.cache).set_model(model_path)
         elif model_type == ModelType.VAE_model:
-            self.basename, self.basetype = VaeModelLoader().set_model(model_path)
+            self.basename, self.basetype = VaeModelLoader(self.dtype, self.cache).set_model(model_path)
         elif model_type == ModelType.LORA_model:
-            self.basename, self.basetype = LoraModelLoader().set_model(model_path)
+            self.basename, self.basetype = LoraModelLoader(self.dtype, self.cache).set_model(model_path)
         else:
             raise ModelLoadError('Could not load model.')
         print(f'Model loading is complete. It is saved in \"{self.basename}\". The model type is \"{self.basetype.value}\"')
