@@ -6,4 +6,4 @@ accelerate==0.16.0
 fastapi==0.94.1
 uvicorn[standard]==0.21.1
 safetensors==0.3.0
-omegaconf=2.3.0
+omegaconf==2.3.0
