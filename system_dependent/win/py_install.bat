@@ -43,7 +43,7 @@ powershell -Command "[System.IO.File]::WriteAllLines(('%APP_DATA_PATH%\tmp\repla
 copy /y "%APP_DATA_PATH%\tmp\replaced" "%APP_DATA_PATH%\python\python310._pth" > nul
 
 echo Checking and installing modules...
-"%APP_DATA_PATH%\python\Scripts\pip.exe" install -r "%APP_PATH%\py_src\requirements.txt" --no-warn-script-location
+"%APP_DATA_PATH%\python\Scripts\pip.exe" install -r "%APP_PATH%\py_src\requirements.txt" --no-warn-script-location --no-cache
 
 rd /s /q "%APP_DATA_PATH%\tmp"
 

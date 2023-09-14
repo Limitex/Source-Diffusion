@@ -1,9 +1,10 @@
---extra-index-url https://download.pytorch.org/whl/cu116
-torch==1.12.1
-diffusers==0.13.1
-transformers==4.26.1
-accelerate==0.16.0
-fastapi==0.94.1
-uvicorn[standard]==0.21.1
-safetensors==0.3.0
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.0.1
+diffusers[torch]==0.21.0
+transformers==4.33.1
+accelerate==0.22.0
+fastapi==0.103.1
+uvicorn[standard]==0.23.2
+safetensors==0.3.3
 omegaconf==2.3.0
+pytorch_lightning==2.0.8
