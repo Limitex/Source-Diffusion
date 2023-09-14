@@ -1,6 +1,6 @@
 {
   "name": "source-diffusion",
-  "version": "0.1.5-alpha.0",
+  "version": "0.2.0-alpha.0",
   "description": "This is an image generation GUI that uses diffusers",
   "main": "system_host/index.js",
   "scripts": {
