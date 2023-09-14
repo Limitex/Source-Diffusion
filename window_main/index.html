@@ -184,31 +184,31 @@
             <div class="generate-values-container" id="model-explanation">
               <label class="gvc-label">Types of models that can be loaded</label>
               <pre style="margin: 0; margin-top: 20px;">
-Model : Diffusers Model, HuggingFace
-  Input Example : C:\DIR
-  Input Example : RepositoryAuthor/RepositoryName
-  Example :
-    DIR
-    |-feature_extractor
-    |-safety_checker
-    |-scheduler
-    |-text_encoder
-    |-tokenizer
-    |-unet
-    |-vae
-    |-model_index.json
+The following types of models can be loaded.
+Model identification is automatic, so you can write all paths and HuggingFace paths in the Model Path  
 
-Vae Model : Diffusers Model
-  Input Example : C:\DIR
-  Example :
-    DIR
-    |-config.json
-    |-diffusion_pytorch_model.bin
+Stable Diffusion Model
+  Can be
+    Huggingface Path
+      e.g. : RepositoryAuthor/RepositoryName
+    Diffusers Model
+      e.g. : C:\DIR
+    Safetensors Model
+      e.g. : C:\FILE.safetensors
+    CKPT Model
+      e.g. : C:\FILE.ckpt
 
-Lora Model : Safetensors Model
-  Input Example : C:\FileName.safetensors
-  Example :
-    FileName.safetensors
+Stable Diffusion Vae Model
+  Can be
+    Diffusers Model
+      e.g. : C:\DIR
+    PT Model
+      e.g. : C:\FILE.pt
+
+Stable Diffusion Lora Model
+  Can be
+    Safetensors Model
+      e.g. : C:\FILE.safetensors
               </pre>
             </div>
 
