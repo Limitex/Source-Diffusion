@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+from . import diffusionai
 from .diffusionai import ModelType
 from py_src.osPath import get_cache_path, get_models_config_path, get_models_path
 from enum import Enum
@@ -74,35 +75,15 @@ def addNewModelToConfig(type: ModelType, path: str, name: str, description: str)
             json.dump(json_load, f)
 
 def deleteModelConfig(path: str):
-    json_open = open(get_models_config_path(), 'r')
-    json_load = json.load(json_open)
-    target =  [model for model in json_load if model['path'] == path]
-    if len(target) == 0:
-        return 1
-    
-    deleted = [model for model in json_load if model['path'] != path]
+    with open(get_models_config_path(), 'r') as f:
+        json_load = json.load(f)
+    target_path =  [model for model in json_load if model['path'] == path]
+    if len(target_path) == 0:
+        raise ValueError('The specified path was not found in config')
+    deleted_config = [model for model in json_load if model['path'] != path]
     with open(get_models_config_path(), 'w') as f:
-        json.dump(deleted, f)
-    
-    targetPath = os.path.join(get_models_path(), target[0]['path'])
-    modelType = get_model_type(target[0]['type'])
-    try:
-        # TODO : Add code to delete cache
-        # if modelType == ModelType.HuggingFace:
-        #     cache_path = get_cache_path()
-        #     dirs = [d for d in os.listdir(cache_path) if os.path.isdir(os.path.join(cache_path, d))]
-        #     names = target[0]['path'].split('/')
-        #     targetNames = [d for d in dirs if names[0] in d and names[1] in d]
-        #     targetPath = os.path.join(cache_path, targetNames[0])
-        #     shutil.rmtree(targetPath)
-        # elif modelType == ModelType.Model or modelType == ModelType.Vae:
-        #     shutil.rmtree(targetPath)
-        # elif modelType == ModelType.Lora:
-        #     os.remove(targetPath)
-        pass
-    except:
-        raise
-    return 0
+        json.dump(deleted_config, f)
+    diffusionai.AutoModelLoader(cache=get_models_path()).remove_model(target_path[0]['path'])
 
 def updateModelConfig(path: str, name: str, description: str):
     json_open = open(get_models_config_path(), 'r')
