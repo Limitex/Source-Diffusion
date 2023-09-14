@@ -112,6 +112,7 @@ async def generate(websocket: WebSocket):
 
     await websocket.accept()
     Generator.set_generate_callback(progress)
+    # TODO : Remove deprecation
     gc = GenerateStreamInput.parse_raw(await websocket.receive_text())
     param = diffusionai.DiffusionImageParameters(
         positive=gc.positive,
