@@ -217,13 +217,11 @@ const getModelsList = () => {
       i.textContent = modelName;
       i.value = modelId;
       i.dataset.type = modelType
-      if (modelType == "model") {
+      if (modelType == "Stable Diffusion Model") {
         ml.appendChild(i);
-      } else if (modelType == "vae") {
+      } else if (modelType == "Stable Diffusion Vae") {
         vl.appendChild(i);
-      } else if (modelType == "huggingface") {
-        ml.appendChild(i);
-      } else if (modelType == "lora") {
+      } else if (modelType == "Stable Diffusion Lora") {
         ll.appendChild(i);
       }
       addEditModelColumn(
@@ -233,18 +231,15 @@ const getModelsList = () => {
         d['description']
       )
     }
-
-    if (groups['huggingface'] != undefined) {
-      groups['huggingface'].forEach(d => createElements(d));
+    
+    if (groups['Stable Diffusion Model'] != undefined) {
+      groups['Stable Diffusion Model'].forEach(d => createElements(d));
     }
-    if (groups['model'] != undefined) {
-      groups['model'].forEach(d => createElements(d));
+    if (groups['Stable Diffusion Vae'] != undefined) {
+      groups['Stable Diffusion Vae'].forEach(d => createElements(d));
     }
-    if (groups['vae'] != undefined) {
-      groups['vae'].forEach(d => createElements(d));
-    }
-    if (groups['lora'] != undefined) {
-      groups['lora'].forEach(d => createElements(d));
+    if (groups['Stable Diffusion Lora'] != undefined) {
+      groups['Stable Diffusion Lora'].forEach(d => createElements(d));
     }
   });
 };

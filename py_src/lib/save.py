@@ -2,7 +2,7 @@ import json
 import os
 import time
 from PIL import Image, PngImagePlugin
-import py_src.diffuserWrapper
+from py_src.diffusionai.diffusion_tool import DiffusionTool
 from py_src.lib.apiModel import GenerateStreamInput
 
 def save_image_with_metadata(image: Image.Image, save_path: str, metadata: dict):
@@ -29,12 +29,12 @@ def save_image_base(image: Image.Image, dir_path: str, metadata: dict):
     os.makedirs(dir_path, exist_ok=True)
     save_image_with_metadata(image, save_path, metadata)
 
-def saveimage(savepath, image, gc :GenerateStreamInput):
+def saveimage(savepath, image, gc :GenerateStreamInput, dt: DiffusionTool):
     os.makedirs(savepath, exist_ok=True)
     generateData = gc.dict()
     generateData.update({
-        "model": py_src.diffuserWrapper.loadedModelId,
-        "vae": py_src.diffuserWrapper.loadedVaeModelId,
-        "lora": py_src.diffuserWrapper.loadedLoraModelId,
+        "model": dt.get_model_path(),
+        "vae": dt.get_vae_path(),
+        "lora": dt.get_lora_path(),
     })
     save_image_base(image, savepath, generateData)

@@ -1,16 +1,9 @@
 import json
 import os
 import shutil
+from .diffusionai import ModelType
 from py_src.osPath import get_cache_path, get_models_config_path, get_models_path
 from enum import Enum
-
-
-class ModelType(Enum):
-    Model = 'model'
-    Vae = 'vae'
-    HuggingFace = 'huggingface'
-    Lora = 'lora'
-
 
 class DiffusersModel:
     def __init__(self, type: ModelType, path: str, name: str, description: str) -> None:
@@ -34,14 +27,12 @@ def loadConfig():
         json_load = json.load(json_open)
         data = []
         for json_data in json_load:
-            if json_data['type'] == 'model':
-                modelType = ModelType.Model
-            elif json_data['type'] == 'vae':
-                modelType = ModelType.Vae
-            elif json_data['type'] == 'huggingface':
-                modelType = ModelType.HuggingFace
-            elif json_data['type'] == 'lora':
-                modelType = ModelType.Lora
+            if json_data['type'] == ModelType.SD_model.value:
+                modelType = ModelType.SD_model
+            elif json_data['type'] == ModelType.VAE_model.value:
+                modelType = ModelType.VAE_model
+            elif json_data['type'] == ModelType.LORA_model.value:
+                modelType = ModelType.LORA_model
             else:
                 raise ValueError('An unsupported model type was found.'
                                  'Please correct the contents of the file or delete it and try again.')
@@ -96,17 +87,19 @@ def deleteModelConfig(path: str):
     targetPath = os.path.join(get_models_path(), target[0]['path'])
     modelType = get_model_type(target[0]['type'])
     try:
-        if modelType == ModelType.HuggingFace:
-            cache_path = get_cache_path()
-            dirs = [d for d in os.listdir(cache_path) if os.path.isdir(os.path.join(cache_path, d))]
-            names = target[0]['path'].split('/')
-            targetNames = [d for d in dirs if names[0] in d and names[1] in d]
-            targetPath = os.path.join(cache_path, targetNames[0])
-            shutil.rmtree(targetPath)
-        elif modelType == ModelType.Model or modelType == ModelType.Vae:
-            shutil.rmtree(targetPath)
-        elif modelType == ModelType.Lora:
-            os.remove(targetPath)
+        # TODO : Add code to delete cache
+        # if modelType == ModelType.HuggingFace:
+        #     cache_path = get_cache_path()
+        #     dirs = [d for d in os.listdir(cache_path) if os.path.isdir(os.path.join(cache_path, d))]
+        #     names = target[0]['path'].split('/')
+        #     targetNames = [d for d in dirs if names[0] in d and names[1] in d]
+        #     targetPath = os.path.join(cache_path, targetNames[0])
+        #     shutil.rmtree(targetPath)
+        # elif modelType == ModelType.Model or modelType == ModelType.Vae:
+        #     shutil.rmtree(targetPath)
+        # elif modelType == ModelType.Lora:
+        #     os.remove(targetPath)
+        pass
     except:
         raise
     return 0

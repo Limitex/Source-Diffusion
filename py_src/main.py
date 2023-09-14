@@ -9,17 +9,16 @@ import traceback
 import torch
 import base64
 import psutil
-import py_src.diffuserWrapper
+from . import diffusionai
+from .diffusionai import ModelType
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 from py_src.lib.apiModel import *
-from py_src.diffuserWrapper import TestLoad, diffusionGenerate_async, load
-from py_src.dirsChecker import determine_model_type
 from py_src.lib.save import saveimage
 from py_src.loadUserConfig import loadUserConfig, saveUserConfig
 from py_src.osPath import get_models_path
-from py_src.loadModelsConfig import ModelType, addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
+from py_src.loadModelsConfig import addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
 
 app = FastAPI()
 
@@ -43,6 +42,8 @@ try:
 except:
     raise FileNotFoundError('It could not be read because the structure of the user_config.json file is different.'
                             'Please correct the contents of the file or delete it and try again.')
+
+Generator = diffusionai.DiffusionTool(cache=get_models_path())
 
 ClientRunningFlag = False
 PidHeartbeatFlug = False
@@ -110,10 +111,22 @@ async def generate(websocket: WebSocket):
         executor.submit(asyncio.run, websocket.send_bytes(data))
 
     await websocket.accept()
+    Generator.set_generate_callback(progress)
     gc = GenerateStreamInput.parse_raw(await websocket.receive_text())
-    py_src.diffuserWrapper.generate_progress_callback = progress
-    images, returnd_gc = await diffusionGenerate_async(gc)
-    print(returnd_gc)
+    param = diffusionai.DiffusionImageParameters(
+        positive=gc.positive,
+        negative=gc.negative,
+        height=gc.height,
+        width=gc.width,
+        steps=gc.steps,
+        scale=gc.scale,
+        num=gc.num,
+        eta=gc.eta,
+        seed=gc.seed
+    )
+
+    images, returnd_param = await Generator.generate(param)
+    print(returnd_param)
     images_encoded = []
     for x in range(len(images)):
         print(images[x])
@@ -122,11 +135,11 @@ async def generate(websocket: WebSocket):
         byte_image = output.getvalue()
         encoded_data = base64.b64encode(byte_image).decode('ascii')
         images_encoded.append((images[x][1], encoded_data))
-        returnd_gc.seed = images[x][1]
+        returnd_param.seed = images[x][1]
         if user_config["save_enabled"]:
-            saveimage(user_config["savepath"], images[x][0], returnd_gc)
-    returnd_gc.seed = -1
-    data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_gc.dict())).json()
+            saveimage(user_config["savepath"], images[x][0], returnd_param, Generator)
+    returnd_param.seed = -1
+    data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_param.dict())).json()
     await websocket.send_bytes(data)
 
 
@@ -147,16 +160,24 @@ async def getModelsList():
 
 @app.post('/getloadedmodel')
 async def getloadedmodel():
-    modelName = idToName(config, py_src.diffuserWrapper.loadedModelId)
-    vaeName = idToName(config, py_src.diffuserWrapper.loadedVaeModelId)
-    loraName = idToName(config, py_src.diffuserWrapper.loadedLoraModelId)
+    modelName = idToName(config, Generator.get_model_path())
+    vaeName = idToName(config, Generator.get_vae_path())
+    loraName = idToName(config, Generator.get_lora_path())
     return LoadedModelInfoOutput(model=modelName, vae_model=vaeName, lora_model=loraName)
 
 
 @app.post('/switchModel')
 async def switchModel(mcc: ModelChangeInput):
+    global Generator
     try:
-        load(get_model_type(mcc.mtype), mcc.model_id, torch.float16, mcc.vae_id, mcc.lora_id)
+        if mcc.model_id:
+            Generator.set_model(mcc.model_id)
+        if mcc.vae_id:
+            Generator.set_vae(mcc.vae_id)
+        if mcc.lora_id:
+            Generator.set_lora(mcc.lora_i)
+        Generator.set_scheduler(diffusionai.Scheduler.EulerAncestralDiscrete)
+        Generator.set_ready()
         return ServerStatus(status=0, status_str='server is ready')
     except:
         return ServerStatus(status=2, status_str=traceback.format_exc())
@@ -166,36 +187,15 @@ async def switchModel(mcc: ModelChangeInput):
 async def loadNewModel(lnmi: AddNewModelInput):
     global config
 
-    importType = determine_model_type(lnmi.path)
-
-    if importType == ModelType.Model or importType == ModelType.Vae or importType == ModelType.Lora:
-        importPath = os.path.basename(lnmi.path)
-    elif importType == ModelType.HuggingFace:
-        importPath = lnmi.path
-    else:
-        return ServerStatus(status=1, status_str='The model type could not be determined from the input model path.')
-    
-    importName = lnmi.name
-    importDisc = lnmi.description
-
-    if any(data.path == importPath or data.name == importName for data in config):
-        return ServerStatus(status=1, status_str='The specified directory name or name has already been added.')
-    
-    if not TestLoad(lnmi.path, importType):
-        return ServerStatus(status=1, status_str='The specified directory is not a \"Diffusers model\" or \"Vae\".')
-    
-    if importType == ModelType.Model or importType == ModelType.Vae:
-        try:
-            shutil.copytree(lnmi.path, os.path.join(get_models_path(), importPath))
-        except FileNotFoundError:
-            return ServerStatus(status=1, status_str='Directory was not found.')
-        except FileExistsError:
-            return ServerStatus(status=1, status_str='That directory exists.')
-        except Exception as e:
-            return ServerStatus(status=1, status_str='Othe Error.\n' + e)
-    
-    if importType == ModelType.Lora:
-        shutil.copyfile(lnmi.path,  os.path.join(get_models_path(), importPath))
+    m = diffusionai.AutoModelLoader(cache=get_models_path())
+    try:
+        m.set_model(lnmi.path)
+        importPath = m.get_path()
+        importType = m.get_type()
+        importName = lnmi.name
+        importDisc = lnmi.description
+    except:
+        return ServerStatus(status=1, status_str='Failed to load model.')
     
     addNewModelToConfig(
         importType,
