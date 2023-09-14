@@ -141,6 +141,7 @@ async def generate(websocket: WebSocket):
     returnd_param.seed = -1
     data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_param.dict())).json()
     await websocket.send_bytes(data)
+    await websocket.close()
 
 
 @app.post('/getmodelslist')
@@ -195,7 +196,7 @@ async def loadNewModel(lnmi: AddNewModelInput):
         importName = lnmi.name
         importDisc = lnmi.description
     except:
-        return ServerStatus(status=1, status_str='Failed to load model.')
+        return ServerStatus(status=1, status_str=traceback.format_exc())
     
     addNewModelToConfig(
         importType,
