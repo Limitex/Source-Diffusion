@@ -103,29 +103,16 @@ async def generate(websocket: WebSocket):
     def progress(step: int, timestep: int, latents: torch.FloatTensor):
         out = {
             "steps": int(step),
-            "max_steps": int(gc.steps),
+            "max_steps": int(param.steps),
             "timetep": int(timestep)
         }
         data = GenerateStreamOutput(
-            type="progress", json_output=json.dumps(out)).json()
+            type="progress", json_output=json.dumps(out)).model_dump_json()
         executor.submit(asyncio.run, websocket.send_bytes(data))
 
     await websocket.accept()
     Generator.set_generate_callback(progress)
-    # TODO : Remove deprecation
-    gc = GenerateStreamInput.parse_raw(await websocket.receive_text())
-    param = diffusionai.DiffusionImageParameters(
-        positive=gc.positive,
-        negative=gc.negative,
-        height=gc.height,
-        width=gc.width,
-        steps=gc.steps,
-        scale=gc.scale,
-        num=gc.num,
-        eta=gc.eta,
-        seed=gc.seed
-    )
-
+    param = diffusionai.DiffusionImageParameters(**json.loads(await websocket.receive_text()))
     images, returnd_param = await Generator.generate(param)
     print(returnd_param)
     images_encoded = []

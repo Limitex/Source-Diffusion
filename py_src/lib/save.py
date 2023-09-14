@@ -31,7 +31,7 @@ def save_image_base(image: Image.Image, dir_path: str, metadata: dict):
 
 def saveimage(savepath, image, gc :GenerateStreamInput, dt: DiffusionTool):
     os.makedirs(savepath, exist_ok=True)
-    generateData = gc.dict()
+    generateData = gc.model_dump()
     generateData.update({
         "model": dt.get_model_path(),
         "vae": dt.get_vae_path(),
