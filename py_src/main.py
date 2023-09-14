@@ -113,8 +113,8 @@ async def generate(websocket: WebSocket):
     await websocket.accept()
     Generator.set_generate_callback(progress)
     param = diffusionai.DiffusionImageParameters(**json.loads(await websocket.receive_text()))
+    print(param)
     images, returnd_param = await Generator.generate(param)
-    print(returnd_param)
     images_encoded = []
     for x in range(len(images)):
         print(images[x])
