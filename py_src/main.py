@@ -175,7 +175,7 @@ async def switchModel(mcc: ModelChangeInput):
         if mcc.vae_id:
             Generator.set_vae(mcc.vae_id)
         if mcc.lora_id:
-            Generator.set_lora(mcc.lora_i)
+            Generator.set_lora(mcc.lora_id)
         Generator.set_scheduler(diffusionai.Scheduler.EulerAncestralDiscrete)
         Generator.set_ready()
         return ServerStatus(status=0, status_str='server is ready')
