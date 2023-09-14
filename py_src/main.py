@@ -211,6 +211,8 @@ async def deleteModelInfo(dmi: DeleteModelInput):
     try:
         deleteModelConfig(dmi.path)
     except:
-        ServerStatus(status=0, status_str=traceback.format_exc())
+        return ServerStatus(status=1, status_str=traceback.format_exc())
     finally:
         config = loadConfig()
+    return ServerStatus(status=0, status_str='Successfully deleted!')
+    
