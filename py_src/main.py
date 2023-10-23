@@ -15,7 +15,7 @@ from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from concurrent.futures import ThreadPoolExecutor
 from py_src.lib.apiModel import *
-from py_src.lib.save import saveimage
+from py_src.pilimage import PilImageTool, generate_unique_filepath
 from py_src.loadUserConfig import loadUserConfig, saveUserConfig
 from py_src.osPath import get_models_path
 from py_src.loadModelsConfig import addNewModelToConfig, deleteModelConfig, get_model_type, idToName, loadConfig, updateModelConfig
@@ -125,7 +125,15 @@ async def generate(websocket: WebSocket):
         images_encoded.append((images[x][1], encoded_data))
         returnd_param.seed = images[x][1]
         if user_config["save_enabled"]:
-            saveimage(user_config["savepath"], images[x][0], returnd_param, Generator)
+            generateData = returnd_param.model_dump()
+            generateData.update({
+                "model": Generator.get_model_path(),
+                "vae": Generator.get_vae_path(),
+                "lora": Generator.get_lora_path(),
+            })
+            id = str(int(time.time() * 10 ** 6))
+            save_path = os.path.join(user_config["savepath"], generate_unique_filepath(id, 'png'))
+            PilImageTool(images[x][0]).save_append_metadata(save_path, generateData)
     returnd_param.seed = -1
     data = GenerateStreamOutput(type="generate", output=images_encoded, json_output=json.dumps(returnd_param.dict())).json()
     await websocket.send_bytes(data)
